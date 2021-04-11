@@ -1,4 +1,4 @@
-##  1. Bubble Sort Visualization [ First homework in Bootcamp ] 
+##  1. Bubble Sort Visualization 
 Demonstration: [bootcamp-visualization-sort.surge.sh/](http://bootcamp-visualization-sort.surge.sh/)  
 
 

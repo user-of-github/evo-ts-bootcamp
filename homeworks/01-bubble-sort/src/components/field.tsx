@@ -1,10 +1,10 @@
 import React from 'react'
 import style from './field.module.css'
 
-const RECTANGLE_WIDTH: number = 30,
+const RECTANGLE_WIDTH: number = 20,
     ONE_POINT_OF_HEIGHT: number = 10,
     ROUNDING_UP: number = 5,
-    MARGIN_RIGHT: number = 10,
+    MARGIN_RIGHT: number = 2,
     PADDING_VERTICAL: number = 5
 
 const Reactangles = (numbers: number[], fullHeight: number): JSX.Element[] => {

@@ -38,3 +38,9 @@
     opacity: 0.5;
     cursor: default;
 }
+
+.btn[disabled]:hover {
+    color: #130f40;
+    border: 2px solid #130f40;
+    background-color: transparent;
+}

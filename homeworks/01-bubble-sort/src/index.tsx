@@ -7,7 +7,7 @@ import {BubbleSortNumbers} from './utilities/sort'
 
 const LATENCY: number = 200,
     MAXIMUM_ARRAY_ELEMENT: number = 30,
-    ARRAY_LENGTH: number = 20
+    ARRAY_LENGTH: number = 30
 
 ReactDOM.render(
     <React.StrictMode>

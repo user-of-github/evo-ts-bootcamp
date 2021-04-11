@@ -3,7 +3,9 @@ import {Header} from './header'
 import {Field} from './field'
 import {Management} from './management'
 import {CurrentState} from './state'
+import {Settings} from './settings'
 import style from './app.module.css'
+import {GenerateRandomArray} from "../utilities/randomArray";
 
 type Params = {
     arrayLength: number,
@@ -82,6 +84,40 @@ export class App extends React.Component<Params, State> {
         }, this.latency_)
     }
 
+    SetLatency: React.ChangeEventHandler<HTMLInputElement> = event => {
+        const newValue: string = event.target.value.toString().trim()
+        if (newValue === '')
+            return
+
+        const newValueNumber = Number.parseInt(newValue)
+        if (newValueNumber <= 99 || newValueNumber >= 2001)
+            return
+
+
+        this.latency_ = newValueNumber
+        this.setState({solved: false, inProcess: false})
+        window.clearInterval(this.timerID_)
+    }
+
+    SetArraySize: React.ChangeEventHandler<HTMLInputElement> = event => {
+        const newValue = event.target.value.toString().trim()
+        if (newValue === '')
+            return
+
+        const newValueNumber = Number.parseInt(newValue)
+        if (newValueNumber < 1 || newValueNumber > 50)
+            return
+
+        this.arrayLength_ = newValueNumber
+        this.setState({
+            numbers: GenerateRandomArray(this.arrayLength_, this.maximumArrayElement_),
+            solved: false,
+            inProcess: false
+        })
+        window.clearInterval(this.timerID_)
+    }
+
+
     componentWillUnmount() {
         clearInterval(this.timerID_)
     }
@@ -101,6 +137,10 @@ export class App extends React.Component<Params, State> {
                                     Run={this.Run}
                                     Change={this.Change}
                                     solved={solved}/>
+                        <Settings solved={solved}
+                                  inProcess={inProcess}
+                                  ChangeLatency={this.SetLatency}
+                                  ChangeArraySize={this.SetArraySize}/>
 
                         <CurrentState state={solved}/>
                     </div>

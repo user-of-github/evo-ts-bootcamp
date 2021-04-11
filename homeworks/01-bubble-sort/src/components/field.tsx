@@ -1,11 +1,13 @@
 import React from 'react'
 import style from './field.module.css'
 
-const RECTANGLE_WIDTH: number = 20,
-    ONE_POINT_OF_HEIGHT: number = 10,
-    ROUNDING_UP: number = 5,
+const ONE_POINT_OF_HEIGHT: number = 10,
+    ROUNDING_UP: number = 7,
     MARGIN_RIGHT: number = 2,
     PADDING_VERTICAL: number = 5
+
+let RECTANGLE_WIDTH: number = 20
+const MAX_RECTANGLE_WIDTH: number = 50
 
 const Reactangles = (numbers: number[], fullHeight: number): JSX.Element[] => {
     let xPosition: number = 1
@@ -30,8 +32,14 @@ type Params = {
 }
 
 export const Field = ({numbers, arraySize, maximumElement}: Params): JSX.Element => {
-    const FULL_SVG_WIDTH: number = arraySize * (RECTANGLE_WIDTH + MARGIN_RIGHT) + (2 * MARGIN_RIGHT),
-        FULL_SVG_HEIGHT: number = (maximumElement * ONE_POINT_OF_HEIGHT) + (2 * PADDING_VERTICAL)
+    let FULL_SVG_HEIGHT: number = (maximumElement * ONE_POINT_OF_HEIGHT) + (2 * PADDING_VERTICAL),
+        FULL_SVG_WIDTH: number = document.documentElement.clientWidth * 0.5
+
+    RECTANGLE_WIDTH = FULL_SVG_WIDTH / arraySize - MARGIN_RIGHT
+    if (RECTANGLE_WIDTH > MAX_RECTANGLE_WIDTH) {
+        RECTANGLE_WIDTH = MAX_RECTANGLE_WIDTH
+        FULL_SVG_WIDTH = (RECTANGLE_WIDTH + MARGIN_RIGHT) * arraySize
+    }
 
     return (
         <div className={style.visualizationWrapper}>

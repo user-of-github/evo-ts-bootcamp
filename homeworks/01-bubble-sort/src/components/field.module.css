@@ -10,15 +10,15 @@
     transition: 0.1s all;
 }
 
+
 .visualizationWrapper {
-    padding: 2rem 4rem;
     background-color: #f5f6fa;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 0.5rem;
-    margin: auto;
+
     text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     transition: 0.1s all;
+    min-width: 50%;
+    max-width: 80%;
+    margin: auto;
 }

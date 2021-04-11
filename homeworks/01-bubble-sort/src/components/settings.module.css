@@ -1,0 +1,22 @@
+.settingsBar {
+    border-top: 1px solid rgba(0, 0, 0, .1);
+    padding-top: 2rem;
+    margin-top: 2rem;
+    flex-basis: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+
+.input {
+    outline: none;
+    padding: 0.5rem 0;
+    border: 2px solid #130f40;
+    border-radius: 0.5rem;
+    min-width: 25%;
+    text-align: center;
+    font-size: 1.8rem;
+    color: #130f40;
+}

@@ -1,6 +1,6 @@
 type Data = {
     link: string,
-    description: string
+    title: string
 }
 
 
@@ -12,17 +12,26 @@ const LoadFromJSON = async (url: string) => {
         return await response.json()
 }
 
-const RenderPhotos = (array: Data[], container: HTMLElement) => {
-    array.forEach((item: Data) => {
-        container.textContent += item.link.toString()
-    })
-}
+const Card = (link: string, title: string): string => (`
+    <div class="app__image-block">
+        <img class="app__image-block-img" src="${link}" alt="image">
+        <span class="app__image-block-description">${title}</span>
+    </div>
+`)
 
-const Run = (rawData, container: HTMLElement) => rawData.then((arr: Data[]) => RenderPhotos(arr, container))
+
+const RenderPhotos = (array: Data[], container: HTMLElement): void =>
+    array.forEach((item: Data) =>
+        container.insertAdjacentHTML('beforeend', Card(item.link, item.title)))
+
+
+const Run = (rawData, container: HTMLElement): void => rawData.then((arr: Data[]) => RenderPhotos(arr, container))
+
 
 const Init = (): void => {
     const imagesContainer: HTMLElement = document.getElementById('app__images')
     const DataURL: string = 'database.json'
+
     Run(LoadFromJSON(DataURL), imagesContainer)
 }
 

@@ -1,58 +1,50 @@
 [
-    {
-        "link": "images/1.jpg",
-        "title": "the best dog ever. Description ..."
-    },
-    {
-        "link": "images/2.jpg",
-        "title": "the best dog ever. Description ..."
-    },
-    {
-        "link": "images/3.jpg",
-        "title": "the best dog ever. Description ..."
-    },
-    {
-        "link": "images/4.jpg",
-        "title": "the best dog ever. Description ..."
-    },
-    {
-        "link": "images/5.jpg",
-        "title": "the best dog ever. Description ..."
-    },
-    {
-        "link": "images/6.jpg",
-        "title": "the best dog ever. Description ..."
-    },
-    {
-        "link": "images/7.jpg",
-        "title": "the best dog ever. Description ..."
-    },
-    {
-        "link": "images/8.jpg",
-        "title": "the best dog ever. Description ..."
-    },
-    {
-        "link": "images/9.jpg",
-        "title": "the best dog ever. Description ..."
-    },
-    {
-        "link": "images/10.jpg",
-        "title": "the best dog ever. Description ..."
-    },
-    {
-        "link": "images/11.jpg",
-        "title": "the best dog ever. Description ..."
-    },
-    {
-        "link": "images/12.jpg",
-        "title": "the best dog ever. Description ..."
-    },
-    {
-        "link": "images/13.jpg",
-        "title": "the best dog ever. Description ..."
-    },
-    {
-        "link": "images/14.jpg",
-        "title": "the best dog ever. Description ..."
-    }
+  {
+    "link": "images/1.jpg",
+    "title": "Beautiful dog !"
+  },
+  {
+    "link": "images/2.jpg",
+    "title": "Look at this photo ! Nice !"
+  },
+  {
+    "link": "images/3.jpg",
+    "title": "the best dog ever. Description ..."
+  },
+  {
+    "link": "images/4.jpg",
+    "title": "Another pleasant photo"
+  },
+  {
+    "link": "images/5.jpg",
+    "title": "the best dog ever. Description ..."
+  },
+  {
+    "link": "images/6.jpg",
+    "title": "the best dog ever. Description ..."
+  },
+  {
+    "link": "images/7.jpg",
+    "title": "Emilia - one of the most attractive creatures"
+  },
+  {
+    "link": "images/8.jpg",
+    "title": "Jack. Click to see more"
+  },
+  {
+    "link": "images/9.jpg",
+    "title": "the best dog ever. Description ..."
+  },
+  {
+    "link": "images/10.jpg",
+    "title": "the best dog ever. Description ..."
+  },
+  {
+    "link": "images/11.jpg",
+    "title": "the best dog ever. Description ..."
+  },
+  {
+    "link": "images/12.jpg",
+    "title": "the best dog ever. Description ..."
+  }
 ]

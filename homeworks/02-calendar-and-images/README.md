@@ -1,2 +1,2 @@
-##  2. Calendar (CSS Grid) and Images Layout (CSS Grid and TypeScript) 
+##  2. Calendar (CSS Grid) and Images Layout (CSS Flexbox + TypeScript) 
  

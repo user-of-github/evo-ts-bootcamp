@@ -51,19 +51,13 @@ var LoadFromJSON = function (url) { return __awaiter(_this, void 0, void 0, func
         }
     });
 }); };
-var Card = function (link, title) { return ("\n    <div class=\"app__image-block\">\n        <img class=\"app__image-block-img\" src=\"" + link + "\" alt=\"image\">\n        <span class=\"app__image-block-description\">" + title + "</span>\n    </div>\n"); };
+var Card = function (link, title) { return ("\n    <div class=\"app__image-block\">\n        <img class=\"app__image-block-img\" src=\"" + link + "\" alt=\"image\">\n        <span class=\"app__image-block-description\">" + title + "</span\n    </div>\n"); };
 var RenderPhotos = function (array, container) {
-    array.forEach(function (item) { return container.insertAdjacentHTML('beforeend', Card(item.link, item.title)); });
-    AdaptBlocks();
+    return array.forEach(function (item) {
+        return container.insertAdjacentHTML('beforeend', Card(item.link, item.title));
+    });
 };
 var Run = function (rawData, container) { return rawData.then(function (arr) { return RenderPhotos(arr, container); }); };
-var AdaptBlocks = function () {
-    var blocks = document.querySelectorAll('.app__image-block');
-    for (var counter = 0; counter < blocks.length; ++counter) {
-        var imageChild = blocks[counter].getElementsByClassName('app__image-block-image')[0];
-        blocks[counter].setAttribute('width', imageChild.clientWidth + "px");
-    }
-};
 var Init = function () {
     var imagesContainer = document.getElementById('app__images');
     var DataURL = 'database.json';

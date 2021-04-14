@@ -15,7 +15,7 @@ const LoadFromJSON = async (url: string) => {
 const Card = (link: string, title: string): string => (`
     <div class="app__image-block">
         <img class="app__image-block-img" src="${link}" alt="image">
-        <span class="app__image-block-description">${title}</span>
+        <span class="app__image-block-description">${title}</span
     </div>
 `)
 

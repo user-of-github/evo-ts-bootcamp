@@ -1,7 +1,8 @@
-## Binary Tree  
+## Binary Tree  (TypeScript + Jest)
+  
 
 
-Test results:  
+###### Test results:  
 
 PASS  ./binaryTree.test.ts  
 &nbsp;&nbsp;&nbsp;&nbsp;binaryTree   
@@ -28,7 +29,8 @@ PASS  ./binaryTree.test.ts
 | File | % Stmts | % Branch |% Funcs  | % Lines | Uncovered Line #s|
 | :---:         |     :---:      |    :---:  | :---: | :---: | :---: |
 All files      |     100 |    93.75 |     100 |     100 |
-binaryTree.ts |     100 |    93.75 |     100 |     100 | 17, 56, 58, 63
+binaryTree.ts |     100 |    93.75 |     100 |     100 | 17, 56, 58, 63 |
+-------------------------------------------------------------------------
 
 Test Suites: 1 passed, 1 total   
 Tests:       15 passed, 15 total   

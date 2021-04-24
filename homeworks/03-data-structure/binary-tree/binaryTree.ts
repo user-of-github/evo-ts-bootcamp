@@ -110,6 +110,7 @@ export class BinaryTree<ValueType> {
         currentNode = null
     }
 
+
     public constructor() {
         this.size = 0
         this.root = null
@@ -202,3 +203,6 @@ export class BinaryTree<ValueType> {
     }
 }
 
+class BinarySearchTree extends BinaryTree<number> {
+
+}

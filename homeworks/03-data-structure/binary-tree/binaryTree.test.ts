@@ -21,7 +21,6 @@ describe('binaryTree', () => {
             test1.clear()
             expect(test1.traverse(TraverseType.InOrder)).toEqual([])
         })
-
     })
 
     describe('Base and other functions test with other types of demonstration', () => {
@@ -34,9 +33,8 @@ describe('binaryTree', () => {
         test2.insert(4.5)
         test2.insert(6)
 
-        test('PreOrder-traverse', () => {
-            expect(test2.traverse(TraverseType.PreOrder)).toEqual([4, -100, -1000, -20, 5, 4.5, 6])
-        })
+        test('PreOrder-traverse', () =>
+            expect(test2.traverse(TraverseType.PreOrder)).toEqual([4, -100, -1000, -20, 5, 4.5, 6]))
 
         test('One more preOrder-traverse', () => {
             test2.insert(1000)
@@ -44,25 +42,20 @@ describe('binaryTree', () => {
             expect(test2.traverse(TraverseType.PreOrder)).toEqual([4, -100, -1000, -20, 5, 4.5, 6, 1000, 2000])
         })
 
-        test('GetColumn-method', () => {
-            expect(test2.getColumn(0)).toEqual([-20, 4, 4.5])
-        })
+        test('GetColumn-method', () =>
+            expect(test2.getColumn(0)).toEqual([-20, 4, 4.5]))
 
-        test('BFS-traverse', () => {
-            expect(test2.traverse(TraverseType.BreadthFirst)).toEqual([4, -100, 5, -1000, -20, 4.5, 6, 1000, 2000])
-        })
+        test('BFS-traverse', () =>
+            expect(test2.traverse(TraverseType.BreadthFirst)).toEqual([4, -100, 5, -1000, -20, 4.5, 6, 1000, 2000]))
 
-        test('CurrentSize-method', () => {
-            expect(test2.currentSize()).toEqual(9)
-        })
+        test('CurrentSize-method', () =>
+            expect(test2.currentSize()).toEqual(9))
 
-        test('Empty-method', () => {
-            expect(test2.empty()).toEqual(false)
-        })
+        test('Empty-method', () =>
+            expect(test2.empty()).toEqual(false))
 
-        test('Has-method', () => {
-            expect(test2.has(123)).toEqual(false)
-        })
+        test('Has-method', () =>
+            expect(test2.has(123)).toEqual(false))
 
         test('PostOrder-traverse', () => {
             test2.insert(1000)
@@ -97,5 +90,4 @@ describe('binaryTree', () => {
             expect(test2.traverse(TraverseType.InOrder)).toEqual([-2021, 4, 2021])
         })
     })
-
 })

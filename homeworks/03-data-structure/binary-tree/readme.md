@@ -38,5 +38,5 @@ Snapshots:   0 total
 Time:        6.087 s   
 Ran all test suites.  
   
-#### © Slutski Nikita
+##### © Slutski Nikita
 

@@ -5,15 +5,19 @@ import style from './settings.module.css'
 type Params = {
     solved: boolean
     inProcess: boolean,
-    ChangeLatency: React.ChangeEventHandler<HTMLInputElement>,
-    ChangeArraySize: React.ChangeEventHandler<HTMLInputElement>,
+    changeLatency: React.ChangeEventHandler<HTMLInputElement>,
+    changeArraySize: React.ChangeEventHandler<HTMLInputElement>,
+    maxDelay: number,
+    minDelay: number,
+    maxElCount: number,
+    minElCount: number
 }
 
-export const Settings = ({solved, inProcess, ChangeLatency, ChangeArraySize}: Params): JSX.Element => (
+export const Settings = ({inProcess, changeLatency, changeArraySize, maxDelay, minDelay, maxElCount, minElCount}: Params): JSX.Element => (
     <div className={style.settingsBar}>
-        <input className={style.input} type="number" min="200" max="1000" placeholder="Latency" disabled={inProcess}
-               onChange={ChangeLatency}/>
-        <input className={style.input} type="number" min="2" max="30" placeholder={"Array length"}
-               disabled={inProcess} onChange={ChangeArraySize}/>
+        <input className={style.input} type="number" step="100" min={minDelay} max={maxDelay} placeholder="Latency" disabled={inProcess}
+               onChange={changeLatency}/>
+        <input className={style.input} type="number" step="1" min={minElCount} max={maxElCount} placeholder={"Array length"}
+               disabled={inProcess} onChange={changeArraySize}/>
     </div>
 )

@@ -28,15 +28,20 @@ type SortResult = {
 }
 
 export class App extends React.Component<Params, State> {
-    timerID_: any
+    timerID_: number
     arrayLength_: number
     maximumArrayElement_: number
     latency_: number
     randomizerFunction_: (a: number, b: number) => number[]
     sorter_: (array: number[]) => SortResult
+    readonly minDelay: number = 1
+    readonly maxDelay: number = 1000
+    readonly minElementsCount: number = 1
+    readonly maxElementsCount: number = 50
 
     constructor(params: Params) {
         super(params)
+        this.timerID_ = NaN
         this.arrayLength_ = params.arrayLength
         this.maximumArrayElement_ = params.maximumArrayElement
         this.randomizerFunction_ = params.randomizer
@@ -51,7 +56,7 @@ export class App extends React.Component<Params, State> {
     }
 
 
-    Change: React.MouseEventHandler<HTMLButtonElement> = event => {
+    change: React.MouseEventHandler<HTMLButtonElement> = event => {
         window.clearInterval(this.timerID_)
         this.setState({
             numbers: this.randomizerFunction_(this.arrayLength_, this.maximumArrayElement_),
@@ -60,7 +65,7 @@ export class App extends React.Component<Params, State> {
         })
     }
 
-    Run: React.MouseEventHandler<HTMLButtonElement> = event => {
+    run: React.MouseEventHandler<HTMLButtonElement> = event => {
         const {numbers, inProcess} = this.state
         this.setState({inProcess: !inProcess})
 
@@ -84,14 +89,20 @@ export class App extends React.Component<Params, State> {
         }, this.latency_)
     }
 
-    SetLatency: React.ChangeEventHandler<HTMLInputElement> = event => {
+    setLatency: React.ChangeEventHandler<HTMLInputElement> = event => {
         const newValue: string = event.target.value.toString().trim()
-        if (newValue === '')
+        if (newValue === '') {
+            window.alert(`Unacceptable value. Put value in the range [${this.minDelay} ... ${this.maxDelay}]`)
+            event.target.value = this.latency_.toString()
             return
+        }
 
-        const newValueNumber = Number.parseInt(newValue)
-        if (newValueNumber <= 99 || newValueNumber >= 2001)
+        const newValueNumber: number = Number.parseInt(newValue)
+        if (newValueNumber < this.minDelay || newValueNumber > this.maxDelay){
+            window.alert(`Unacceptable value. Put value in the range [${this.minDelay} ... ${this.maxDelay}]`)
+            event.target.value = this.latency_.toString()
             return
+        }
 
 
         this.latency_ = newValueNumber
@@ -99,14 +110,20 @@ export class App extends React.Component<Params, State> {
         window.clearInterval(this.timerID_)
     }
 
-    SetArraySize: React.ChangeEventHandler<HTMLInputElement> = event => {
-        const newValue = event.target.value.toString().trim()
-        if (newValue === '')
+    setArraySize: React.ChangeEventHandler<HTMLInputElement> = event => {
+        const newValue: string = event.target.value.toString().trim()
+        if (newValue === '') {
+            window.alert(`Unacceptable value. Put value in the range [${this.minElementsCount} ... ${this.maxElementsCount}]`)
+            event.target.value = this.arrayLength_.toString()
             return
+        }
 
-        const newValueNumber = Number.parseInt(newValue)
-        if (newValueNumber < 1 || newValueNumber > 50)
+        const newValueNumber: number = Number.parseInt(newValue)
+        if (newValueNumber < this.minElementsCount || newValueNumber > this.maxElementsCount) {
+            window.alert(`Unacceptable value. Put value in the range [${this.minElementsCount} ... ${this.maxElementsCount}]`)
+            event.target.value = this.arrayLength_.toString()
             return
+        }
 
         this.arrayLength_ = newValueNumber
         this.setState({
@@ -134,13 +151,17 @@ export class App extends React.Component<Params, State> {
                                maximumElement={this.maximumArrayElement_}/>
 
                         <Management inProcess={inProcess}
-                                    Run={this.Run}
-                                    Change={this.Change}
+                                    run={this.run}
+                                    change={this.change}
                                     solved={solved}/>
                         <Settings solved={solved}
                                   inProcess={inProcess}
-                                  ChangeLatency={this.SetLatency}
-                                  ChangeArraySize={this.SetArraySize}/>
+                                  changeLatency={this.setLatency}
+                                  changeArraySize={this.setArraySize}
+                                  minDelay={this.minDelay}
+                                  maxDelay={this.maxDelay}
+                                  minElCount={this.minElementsCount}
+                                  maxElCount={this.maxElementsCount}/>
 
                         <CurrentState state={solved}/>
                     </div>

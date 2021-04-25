@@ -88,6 +88,7 @@ html {
     padding: 0 1rem;
     display: flex;
     flex-wrap: wrap;
+    min-height: 600px;
 }
 
 .app__images::after{
@@ -96,23 +97,23 @@ html {
 }
 
 .app__image-block {
+    margin: 0.2rem;
+    background-color: transparent;
+    position: relative;
     flex-grow: 1;
-    margin: 0.3rem;
     height: 200px;
     overflow: hidden;
-    border-radius: 0.3rem;
-
+    width: auto;
     transition: 0.2s all;
-
-    position: relative;
 }
 
 
 .app__image-block-img {
+    min-width: 100%;
+    max-width: 100%;
     height: 200px;
     object-fit: cover;
-    max-width: 100%;
-    min-width: 100%;
+    vertical-align: bottom;
 }
 
 
@@ -129,10 +130,10 @@ html {
     font-weight: 900;
     letter-spacing: 2px;
     position: absolute;
-    bottom: 0;
     left: 0;
-    right: 0;
     top: 0;
+    height: 100%;
+    width: 100%;
 
     display: flex;
     justify-content: center;
@@ -142,7 +143,6 @@ html {
 }
 
 .app__image-block:hover {
-    transform: scale(1.03);
     z-index: 200;
     cursor: pointer;
 }

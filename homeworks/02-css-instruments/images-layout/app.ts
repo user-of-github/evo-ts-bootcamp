@@ -3,7 +3,6 @@ type Data = {
     title: string
 }
 
-
 const LoadFromJSON = async (url: string) => {
     const response = await fetch(url);
     if (!response.ok)
@@ -19,11 +18,9 @@ const Card = (link: string, title: string): string => (`
     </div>
 `)
 
-
 const RenderPhotos = (array: Data[], container: HTMLElement): void =>
     array.forEach((item: Data) =>
         container.insertAdjacentHTML('beforeend', Card(item.link, item.title)))
-
 
 const Run = (rawData, container: HTMLElement): void => rawData.then((arr: Data[]) => RenderPhotos(arr, container))
 

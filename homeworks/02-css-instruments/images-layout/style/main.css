@@ -16,7 +16,7 @@ html {
 }
 
 .container {
-    max-width: 1300px;
+    max-width: 1140px;
     margin: auto;
 }
 
@@ -82,38 +82,36 @@ html {
     transform: scale(0.8);
 }
 
+.btn[disabled] {
+    cursor: default;
+}
 
 .app__images {
     width: 100%;
     padding: 0 1rem;
     display: flex;
     flex-wrap: wrap;
-    min-height: 600px;
 }
 
-.app__images::after{
+.app__images::after {
     content: '';
     flex-grow: 1000;
 }
 
 .app__image-block {
-    margin: 0.2rem;
+    margin: 0.15rem;
     background-color: transparent;
     position: relative;
-    flex-grow: 1;
     height: 200px;
     overflow: hidden;
-    width: auto;
     transition: 0.2s all;
+    width: auto;
 }
 
 
 .app__image-block-img {
-    min-width: 100%;
-    max-width: 100%;
-    height: 200px;
-    object-fit: cover;
-    vertical-align: bottom;
+    height: 100%;
+    object-fit: contain;
 }
 
 
@@ -139,6 +137,7 @@ html {
     justify-content: center;
     align-items: center;
 
+
     opacity: 0;
 }
 
@@ -152,40 +151,35 @@ html {
 }
 
 
-@media (max-width: 576px)
-{
+@media (max-width: 576px) {
     .container {
         width: 100%;
         padding: 0 0.5rem;
     }
 }
 
-@media (max-width: 768px)
-{
+@media (max-width: 768px) {
     .container {
         max-width: 540px;
         padding: 0;
     }
 }
 
-@media (max-width: 992px)
-{
+@media (max-width: 992px) {
     .container {
         max-width: 720px;
         padding: 0;
     }
 }
 
-@media (max-width: 1200px)
-{
+@media (max-width: 1200px) {
     .container {
         max-width: 960px;
         padding: 0;
     }
 }
 
-@media (max-width: 1400px)
-{
+@media (max-width: 1400px) {
     .container {
         max-width: 1140px;
         padding: 0;

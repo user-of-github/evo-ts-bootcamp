@@ -35,6 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 var _this = this;
+var IMAGE_BLOCK_HEIGHT = 200;
 var LoadFromJSON = function (url) { return __awaiter(_this, void 0, void 0, function () {
     var response;
     return __generator(this, function (_a) {
@@ -51,16 +52,31 @@ var LoadFromJSON = function (url) { return __awaiter(_this, void 0, void 0, func
         }
     });
 }); };
-var Card = function (link, title) { return ("\n    <div class=\"app__image-block\">\n        <img class=\"app__image-block-img\" src=\"" + link + "\" alt=\"image\">\n        <span class=\"app__image-block-description\">" + title + "</span\n    </div>\n"); };
+var ImageBlock = function (newImage, title) {
+    var appImageBlock = document.createElement('div');
+    appImageBlock.classList.add('app__image-block');
+    var appImageBlockSpan = document.createElement('span');
+    appImageBlockSpan.classList.add('app__image-block-description');
+    appImageBlockSpan.textContent = title.toString();
+    appImageBlock.appendChild(newImage);
+    appImageBlock.appendChild(appImageBlockSpan);
+    return appImageBlock;
+};
 var RenderPhotos = function (array, container) {
-    return array.forEach(function (item) {
-        return container.insertAdjacentHTML('beforeend', Card(item.link, item.title));
+    array.sort(function () { return Math.random() - 0.5; });
+    array.forEach(function (item) {
+        var newImage = new Image();
+        newImage.src = item.link;
+        newImage.alt = item.title;
+        newImage.classList.add('app__image-block-img');
+        newImage.style.width = (newImage.width / (newImage.height / IMAGE_BLOCK_HEIGHT)).toString() + 'px';
+        newImage.style.height = IMAGE_BLOCK_HEIGHT.toString() + 'px';
+        newImage.onload = function () { return container.insertAdjacentElement('beforeend', ImageBlock(newImage, item.title)); };
     });
 };
 var Run = function (rawData, container) { return rawData.then(function (arr) { return RenderPhotos(arr, container); }); };
 var Init = function () {
-    var imagesContainer = document.getElementById('app__images');
-    var DataURL = 'database.json';
+    var imagesContainer = document.getElementById('app__images'), DataURL = 'database.json';
     Run(LoadFromJSON(DataURL), imagesContainer);
 };
-Init();
+document.addEventListener('DOMContentLoaded', Init);

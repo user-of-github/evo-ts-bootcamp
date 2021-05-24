@@ -24,7 +24,7 @@ html {
     grid-template-columns: repeat(10, 1fr);
     grid-template-rows: repeat(10, 1fr);
     margin: auto auto;
-    cursor: url("/fish.716826d0.png"), auto;
+    cursor: url("fish.716826d0.png"), auto;
 }
 
 .app__block {
@@ -35,15 +35,15 @@ html {
 }
 
 .app__block-cat {
-    background-image: url("/cat.ca0195bf.svg");
+    background-image: url("cat.ca0195bf.svg");
 }
 
 .app__block-wall {
-    background-image: url("/brickwall.7feda9c4.svg");
+    background-image: url("brickwall.7feda9c4.svg");
 }
 
 .app__block-window {
-    background-image: url("/window.095043f3.svg");
+    background-image: url("window.095043f3.svg");
 }
 
 .app__state {

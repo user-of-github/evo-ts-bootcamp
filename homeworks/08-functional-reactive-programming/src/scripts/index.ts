@@ -1,57 +1,59 @@
 import {fromEvent, timer} from 'rxjs'
-import {scan} from 'rxjs/operators'
-import {BlockType, GameState, Point, state} from './types'
-import {firstRenderApp, renderCat, moveCat, renderState, resizeApp} from './render'
+import {BlockType, Point, state} from './types'
+import {firstRenderApp, moveCat, renderState, resizeApp} from './render'
 import {changeCatPosition, generateNewField} from './game-utilities'
 import {CAT_TELEPORTATION_DELAY} from './configuration'
 
 const runApplication = (): void => {
     const app: HTMLDivElement = document.getElementById('app') as HTMLDivElement
-    const totallyClicked: HTMLSpanElement = document.getElementById('total')
-    const successfullyClicked: HTMLSpanElement = document.getElementById('successful')
+
+    const sound: HTMLAudioElement = document.getElementById('successFeed') as HTMLAudioElement
 
     const temp = generateNewField()
     state.field = temp.field
     state.windowsCoordinates = temp.coordinates
 
     resizeApp(app)
-    window.addEventListener('resize', () => resizeApp(app))
+    fromEvent(window, 'resize').subscribe(() => resizeApp(app))
 
     firstRenderApp(app, state.field)
-    renderState(state, totallyClicked, successfullyClicked)
+    renderState(state)
+
+    state.catPosition = state.windowsCoordinates[0]
+    let positionToRemember: Point = {row: state.catPosition.row, column: state.catPosition.column}
 
     const appBlocks: HTMLCollectionOf<HTMLDivElement> = document.getElementsByClassName(
         'app__block') as HTMLCollectionOf<HTMLDivElement>
 
-    for (let appBlock of appBlocks) {
+    for (const appBlock of appBlocks) {
         fromEvent(appBlock, 'click')
-            .pipe(scan((st: GameState) => {
-                const row: number = Number.parseInt(appBlock.getAttribute('data-row'))
-                const col: number = Number.parseInt(appBlock.getAttribute('data-col'))
-
-                return {
-                    clicked: st.clicked + 1,
-                    fed: st.fed + (row === st.catPosition.row && col === st.catPosition.column ? 1 : 0),
-                    field: st.field,
-                    catPosition: st.catPosition,
-                    windowsCoordinates: st.windowsCoordinates
+            .subscribe(() => {
+                let flag: boolean = false
+                if (state.catPosition.row.toString() === appBlock.getAttribute('data-row').trim() &&
+                    state.catPosition.column.toString() === appBlock.getAttribute('data-col').trim()) {
+                    ++state.fed
+                    flag = true
+                    sound.play()
                 }
-            }, state))
-            .subscribe((state) => renderState(state, totallyClicked, successfullyClicked))
+
+                if (state.field[Number.parseInt(appBlock.getAttribute('data-row'))][Number.parseInt(
+                    appBlock.getAttribute('data-col'))] === BlockType.WINDOW) {
+                    ++state.clicked
+                    flag = true
+                }
+
+                flag && renderState(state)
+            })
     }
 
 
-    changeCatPosition(state)
-    renderCat(state.catPosition)
-    console.dir(state)
-    let positionToRemember: Point = {row: state.catPosition.row, column: state.catPosition.column}
-
-    const sourceTimerCat = timer(CAT_TELEPORTATION_DELAY, CAT_TELEPORTATION_DELAY)
-    const subscribeCatTeleportation = sourceTimerCat.subscribe(() => {
+    timer(CAT_TELEPORTATION_DELAY, CAT_TELEPORTATION_DELAY).subscribe(() => {
         changeCatPosition(state)
         moveCat(state, positionToRemember)
         positionToRemember = {row: state.catPosition.row, column: state.catPosition.column}
     })
+
+
 }
 
 

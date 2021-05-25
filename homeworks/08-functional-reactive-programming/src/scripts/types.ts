@@ -1,5 +1,4 @@
 export const enum BlockType {
-    CAT = 'CAT',
     WALL = 'WALL',
     WINDOW = 'WINDOW'
 }

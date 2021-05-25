@@ -22,16 +22,17 @@ export const firstRenderApp = (app: HTMLDivElement, field: BlockType[][]): void 
     }
 }
 
+const successfullyClicked: HTMLSpanElement = document.getElementById('successful')
+const totallyClicked: HTMLSpanElement = document.getElementById('total')
 
-export const renderState = (state: GameState, totallyClicked: HTMLSpanElement,
-                            successfullyClicked: HTMLSpanElement): void => {
-    totallyClicked.textContent = state.clicked.toString()
-    successfullyClicked.textContent = state.fed.toString()
+export const renderState = (query: GameState): void => {
+    totallyClicked.textContent = query.clicked.toString()
+    successfullyClicked.textContent = query.fed.toString()
 }
 
 const generateQuery = (position: Point) => `[data-row="${position.row}"][data-col="${position.column}"]`
 
-const findDiv = (position: Point): HTMLDivElement => {
+export const findDiv = (position: Point): HTMLDivElement => {
     const all: HTMLCollectionOf<HTMLDivElement> = document.getElementsByClassName(
         'app__block') as HTMLCollectionOf<HTMLDivElement>
     for (let index: number = 0; index < all.length; ++index)

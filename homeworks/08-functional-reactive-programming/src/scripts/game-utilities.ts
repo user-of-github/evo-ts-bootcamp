@@ -41,7 +41,7 @@ export const generateNewField = (): { field: BlockType[][], coordinates: Point[]
 
 export const changeCatPosition = (state: GameState): void => {
     let index: number = Math.floor(Math.random() * state.windowsCoordinates.length)
-    console.log(state.windowsCoordinates)
+
     while (index >= state.windowsCoordinates.length && state.catPosition.row === state.windowsCoordinates[index].row &&
     state.catPosition.column === state.windowsCoordinates[index].column) {
         index = Math.round(Math.random() * state.windowsCoordinates.length)

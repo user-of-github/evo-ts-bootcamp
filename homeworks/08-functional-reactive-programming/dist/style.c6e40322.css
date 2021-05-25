@@ -2,11 +2,12 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Roboto Condensed', sans-serif;
+    font-family: Roboto Condensed, sans-serif;
+    transition: all .05s
 }
 
 html {
-    font-size: 10px;
+    font-size: 10px
 }
 
 .app-container {
@@ -16,34 +17,40 @@ html {
     background-color: #ecf0f1;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center
 }
 
 .app {
     display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(10, 1fr);
-    margin: auto auto;
-    cursor: url("fish.716826d0.png"), auto;
+    grid-template-columns:repeat(10, 1fr);
+    grid-template-rows:repeat(10, 1fr);
+    margin: auto;
+    cursor: url(fish.3dbe814a.png), auto
 }
 
 .app__block {
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
-    margin: 0.1rem;
+    background-position: 50%;
+    margin: .1rem;
+    transition: all .05s
+}
+
+.app__block:hover {
+    transform: scale(.95)
 }
 
 .app__block-cat {
-    background-image: url("cat.ca0195bf.svg");
+    background-image: url(cat.3a981882.svg)
 }
 
 .app__block-wall {
-    background-image: url("brickwall.7feda9c4.svg");
+    background-image: url(brickwall.6e6d05df.svg)
 }
 
 .app__block-window {
-    background-image: url("window.095043f3.svg");
+    background-color: #f05a29;
+    background-image: url(window.3bec984c.svg)
 }
 
 .app__state {
@@ -57,11 +64,11 @@ html {
     font-weight: 100;
     margin-top: 1rem;
     margin-right: 1rem;
-    min-width: 30rem;
+    min-width: 30rem
 }
 
 .app__state-block span {
-    font-weight: 500;
+    font-weight: 500
 }
 
-/*# sourceMappingURL=/style.e308ff8e.css.map */
+/*# sourceMappingURL=/style.c6e40322.css.map */

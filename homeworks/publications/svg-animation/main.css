@@ -1,0 +1,224 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    --delay: 200ms;
+    --accentColor: #2c3e50;
+    --backgroundFirst: #f5f6fa;
+    --backgroundSecond: #f7f1e3;
+}
+
+body {
+    overflow: hidden;
+}
+
+.container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    align-items: center;
+
+    background-color: #f7f1e3;
+    animation: backgroundChange calc(var(--delay) * (6 + 1) * 2) infinite;
+    animation-delay: var(--delay);
+}
+
+.animation {
+    margin: auto;
+    width: 500px;
+    height: 500px;
+}
+
+
+#externalOutline {
+    opacity: 0.1;
+    stroke: var(--accentColor);
+}
+
+#middleOutline {
+    opacity: 0.2;
+    stroke: var(--accentColor);
+}
+
+#middleOutlineArc {
+    opacity: 0.8;
+    transform-origin: center center;
+    stroke: var(--accentColor);
+
+    -webkit-animation: middleArcMovement 2s cubic-bezier(0.83, 0, 0.17, 1) infinite;
+    -moz-animation: middleArcMovement 2s cubic-bezier(0.83, 0, 0.17, 1) infinite;
+    -o-animation: middleArcMovement 2s cubic-bezier(0.83, 0, 0.17, 1) infinite;
+    animation: middleArcMovement 2s cubic-bezier(0.83, 0, 0.17, 1) infinite;
+}
+
+#internalOutline {
+    stroke: var(--accentColor);
+    opacity: 0.3;
+}
+
+#internalOutline2 {
+    stroke: var(--accentColor);
+    opacity: 0.5;
+    stroke-dasharray: 70%;
+    stroke-dashoffset: 25%;
+
+    -webkit-animation: internalArcMovement2 2s linear infinite;
+    -moz-animation: internalArcMovement2 2s linear infinite;
+    -o-animation: internalArcMovement2 2s linear infinite;
+    animation: internalArcMovement2 2s linear infinite;
+
+    transform-origin: center center;
+}
+
+#internalOutlineArc {
+    stroke: var(--accentColor);
+    -webkit-animation: internalArcMovement calc(var(--delay) * (6 + 1)) linear infinite;
+    -moz-animation: internalArcMovement calc(var(--delay) * (6 + 1)) linear infinite;
+    -o-animation: internalArcMovement calc(var(--delay) * (6 + 1)) linear infinite;
+    animation: internalArcMovement calc(var(--delay) * (6 + 1)) linear infinite;
+
+    transform-origin: center center;
+}
+
+.polygon {
+    opacity: 0;
+
+    transform-origin: center center;
+    transform-box: fill-box;
+    fill: var(--accentColor);
+
+    --pause: 200ms;
+
+    -webkit-animation: polygonAppearance calc(var(--delay) * (6 + 1) * 2) ease-in-out infinite;
+    -moz-animation: polygonAppearance calc(var(--delay) * (6 + 1) * 2) ease-in-out infinite;
+    -o-animation: polygonAppearance calc(var(--delay) * (6 + 1) * 2) ease-in-out infinite;
+    animation: polygonAppearance calc(var(--delay) * (6 + 1) * 2) ease-in-out infinite;
+}
+
+#polygon1 {
+    animation-delay: var(--delay);
+}
+
+#polygon2 {
+    animation-delay: calc(var(--delay) * 2);
+}
+
+#polygon3 {
+    animation-delay: calc(var(--delay) * 3);
+}
+
+#polygon4 {
+    animation-delay: calc(var(--delay) * 4);
+}
+
+#polygon5 {
+    animation-delay: calc(var(--delay) * 5);
+}
+
+#polygon6 {
+    animation-delay: calc(var(--delay) * 6);
+
+}
+
+#polygon7 {
+    animation-delay: calc(var(--delay) * 7);
+}
+
+
+@keyframes middleArcMovement {
+    from {
+        transform: rotate(0);
+    }
+
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
+@keyframes internalArcMovement {
+    from {
+        transform: rotate(0);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes internalArcMovement2 {
+   from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(-360deg);
+    }
+
+}
+
+@keyframes polygonAppearance {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    10% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    60% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+}
+
+@keyframes backgroundChange {
+    0% {
+        background-color: var(--backgroundFirst);
+    }
+    50% {
+        background-color: var(--backgroundSecond);
+    }
+    100% {
+        background-color: var(--backgroundFirst);
+    }
+}
+
+@media (max-width: 1200px) {
+    .animation {
+        width: 650px;
+        height: 650px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .animation {
+        width: 600px;
+        height: 600px;
+    }
+}
+
+@media (max-width: 800px) {
+    .animation {
+        width: 470px;
+        height: 470px;
+    }
+}
+
+@media (max-width: 600px) {
+    .animation {
+        width: 350px;
+        height: 350px;
+    }
+}
+
+@media (max-width: 400px) {
+    .animation {
+        width: 235px;
+        height: 235px;
+    }
+}

@@ -8,6 +8,6 @@ export interface MarsViewerState {
     loading: boolean
     loaded: boolean
     imagesLinks: Array<string>
-    alreadyLoadedImageLinks: Map<number, Array<string>>
     activeTab: MarsViewerTab
+    favourites: Set<string>
 }

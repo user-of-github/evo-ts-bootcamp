@@ -1,16 +1,13 @@
 import React from 'react'
-import {Provider} from 'react-redux'
-import {Header} from './header'
-import {marsStore} from '../store/marsViewerStore'
-import {MarsViewer} from './marsViewer/App'
 
-export const App = (): JSX.Element => (
+import {Header} from './header'
+import {MarsViewer} from './marsViewer/app'
+
+export const App = () =>
     <>
         <Header/>
         <div className="container">
-            <Provider store={marsStore}>
-                <MarsViewer />
-            </Provider>
+            <MarsViewer/>
         </div>
     </>
-)
+

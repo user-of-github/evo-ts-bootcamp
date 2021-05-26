@@ -1,0 +1,68 @@
+.marsViewer__gallery {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding-top: 4rem;
+}
+
+.marsViewer__gallery_warning {
+    font-size: 3rem;
+    text-transform: uppercase;
+}
+
+.marsViewer__gallery_container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 90%;
+    padding-top: 2rem;
+    margin: auto;
+}
+
+.marsViewer__gallery_container::after {
+    content: '';
+    flex-grow: 1000;
+}
+
+.marsViewer__gallery_imageBlock {
+    margin: 0.3rem;
+    background-color: transparent;
+    position: relative;
+    height: 150px;
+    overflow: hidden;
+    transition: 0.2s all;
+    width: auto;
+    object-fit: cover;
+}
+
+.marsViewer__gallery_imageBlock img {
+    height: 100%;
+    object-fit: cover;
+}
+
+.like {
+    position: absolute;
+    right: 0;
+    top: 0;
+    opacity: 0.5;
+    fill: #D7443E;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
+    transition-property: transform, opacity;
+}
+
+.like:hover {
+    opacity: 0.75;
+    transform: scale(1.2);
+}
+
+.like.liked {
+    opacity: 1;
+    transform: scale(1.5);
+    stroke: black;
+    fill: #c0392b;
+}

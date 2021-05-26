@@ -9,7 +9,6 @@
     font-size: 1.5rem;
     padding: 0.2rem 1rem;
     text-align: center;
-
     border: 1.5px solid #2C2C54;
 }
 
@@ -20,6 +19,7 @@
     cursor: pointer;
     background-color: transparent;
     transition: 0.2s all;
+    color: #2C2C54;
 }
 
 .marsViewer__settings_button:hover {
@@ -29,4 +29,20 @@
 
 .marsViewer__settings_button:active {
     transform: scale(0.9);
+}
+.marsViewer__settings_button[disabled]
+{
+    opacity: 0.5;
+    cursor: default;
+    color: #2C2C54;
+}
+
+.marsViewer__settings_button[disabled]:hover {
+    padding: 0.5rem 1rem;
+    font-weight: 900;
+    border: 1.5px solid #2C2C54;
+    background-color: transparent;
+    transition: 0.2s all;
+    cursor: default;
+    color: #2C2C54;
 }

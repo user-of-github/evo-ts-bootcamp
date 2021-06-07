@@ -1,0 +1,51 @@
+.marsViewerConfiguration {
+    width: auto;
+    display: flex;
+    margin: 2rem auto 0;
+    background-color: #FFF;
+    padding: 1.5rem;
+    border-radius: 0.7rem;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: #2C2C54;
+}
+
+.marsViewerConfiguration * {
+    margin: auto 2rem;
+}
+
+.marsViewerConfigurationInput {
+    padding: 0.5rem 1rem;
+    border: 0.15rem solid #2C2C54;
+    text-align: center;
+    color: #2C2C54;
+    border-radius: 0.7rem;
+    outline: none;
+}
+
+.marsViewerConfigurationButton {
+    padding: 0.5rem 1.5rem;
+    border: 0.2rem solid #2C2C54;
+    text-align: center;
+    color: #2C2C54;
+    border-radius: 0.7rem;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    background-color: transparent;
+    font-weight: 400;
+    outline: none;
+    cursor: pointer;
+
+    transition-duration: 0.3s;
+    transition-property: transform, color, background-color;
+}
+
+.marsViewerConfigurationButton:hover {
+    background-color: #2C2C54;
+    color: #FFF;
+}
+
+.marsViewerConfigurationButton:active {
+    transform: scale(0.9);
+}

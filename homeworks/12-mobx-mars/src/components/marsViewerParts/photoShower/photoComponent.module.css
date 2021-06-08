@@ -1,0 +1,68 @@
+
+.MarsViewerPhotoShowerImageBlock {
+    height: 250px;
+    overflow: hidden;
+    margin: 0.7rem;
+    position: relative;
+
+    transition-property: box-shadow, transform;
+    transition-duration: 0.2s;
+
+    border-radius: 0.7rem;
+
+    box-shadow: 0 0 5px transparent;
+}
+
+.MarsViewerPhotoShowerImageBlock:hover {
+    box-shadow: 0 0 5px rgba(0, 0, 0, .5);
+    transform: scale(0.97);
+}
+
+.MarsViewerPhotoShowerImageBlockImg {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.like {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0.5;
+    fill: white;
+    stroke-width: 20;
+    stroke: black;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    margin-top: 0.5rem;
+    margin-left: 0.5rem;
+    transition-property: transform, opacity;
+}
+
+.like:hover {
+    opacity: 0.75;
+    transform: scale(1.05);
+}
+
+.like:active {
+    transform: scale(0.8);
+}
+
+.like.liked {
+    opacity: 1;
+    transform: scale(1.2);
+    stroke: black;
+    fill: #c0392b;
+}
+
+.information {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    padding: 0.5rem 0;
+    text-align: center;
+    background-color: rgba(0, 0, 0, .7);
+    color: white;
+}

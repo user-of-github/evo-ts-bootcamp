@@ -1,0 +1,78 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    --delay: 70ms;
+    --accentColor: #2c3e50;
+    --backgroundFirst: #f5f6fa;
+    --backgroundSecond: #f7f1e3;
+}
+
+
+.animation {
+    margin: 0 auto;
+}
+
+.polygon {
+    opacity: 0;
+
+    transform-origin: center center;
+    transform-box: fill-box;
+    fill: var(--accentColor);
+
+    --pause: 200ms;
+
+    -webkit-animation: polygonAppearance calc(var(--delay) * (6 + 1) * 2) ease-in-out infinite;
+    -moz-animation: polygonAppearance calc(var(--delay) * (6 + 1) * 2) ease-in-out infinite;
+    -o-animation: polygonAppearance calc(var(--delay) * (6 + 1) * 2) ease-in-out infinite;
+    animation: polygonAppearance calc(var(--delay) * (6 + 1) * 2) ease-in-out infinite;
+}
+
+.polygon1 {
+    animation-delay: var(--delay);
+}
+
+.polygon2 {
+    animation-delay: calc(var(--delay) * 2);
+}
+
+.polygon3 {
+    animation-delay: calc(var(--delay) * 3);
+}
+
+.polygon4 {
+    animation-delay: calc(var(--delay) * 4);
+}
+
+.polygon5 {
+    animation-delay: calc(var(--delay) * 5);
+}
+
+.polygon6 {
+    animation-delay: calc(var(--delay) * 6);
+
+}
+
+.polygon7 {
+    animation-delay: calc(var(--delay) * 7);
+}
+
+
+@keyframes polygonAppearance {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    10% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    60% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+}

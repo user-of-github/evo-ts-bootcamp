@@ -1,8 +1,12 @@
 import React from 'react'
-import {MarsViewerState} from '../../store/marsViewerState'
+import {observer} from 'mobx-react-lite'
+
+import {Tab} from '../../../types/types'
+
+import {MarsViewerState} from '../../../store/marsViewerState'
+
 import Style from './tabChooser.module.css'
-import {Tab} from "../../types/types";
-import {observer} from "mobx-react-lite";
+
 
 const LOAD_PHOTOS_BTN_TITLE: string = 'Load photos'
 const SHOW_FAVOURITES_BTN_TITLE: string = 'Show favourites'

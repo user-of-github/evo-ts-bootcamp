@@ -1,2 +1,2 @@
 export const getApi = (solutionNumber: number): string =>
-    `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=${solutionNumber.toString()}&api_key=WXfRHHiCvKP1srvmO0EmL8DGs9Vz2Mj4UqWxqfF2`
+    `https://api.nasa.gov/mars-photos/api/v1/rovers/perseverance/photos?sol=${solutionNumber.toString()}&api_key=WXfRHHiCvKP1srvmO0EmL8DGs9Vz2Mj4UqWxqfF2`

@@ -4,38 +4,26 @@ import {fetchPhotos} from '../utilities/fetchPhotos'
 
 
 export class MarsViewerState implements IMarsViewerState {
-    activeTab: Tab = Tab.GALLERY
-    currentSolution: number = 0
-    photosToShow: Array<PhotoType> = new Array<PhotoType>()
-    favourites: Set<PhotoType> = new Set<PhotoType>()
-    loaded: boolean = false
-    loading: boolean = false
+    public activeTab: Tab = Tab.GALLERY
+    public currentSolution: number = 0
+    public photosToShow: Array<PhotoType> = new Array<PhotoType>()
+    public favourites: Map<string, PhotoType> = new Map<string, PhotoType>()
+    public alreadyLoaded: Map<number, Array<PhotoType>> = new Map<number, Array<PhotoType>>()
+    public loaded: boolean = false
+    public loading: boolean = false
 
     public constructor(defaultSolution: number) {
+        this.currentSolution = defaultSolution
         makeAutoObservable(this, {}, {deep: true})
     }
 
     public loadNewSolution(): void {
-        if (!this.loaded && !this.loading)
-            fetchPhotos(this)
+        !this.loading && fetchPhotos(this)
     }
 
     public changeTab(newTab: Tab) {
-        console.log('called' + this.activeTab + newTab)
         if (newTab === this.activeTab)
             return
-
-        switch (newTab) {
-            case Tab.GALLERY:
-                this.loading = false
-                this.loaded = false
-                this.photosToShow = []
-                break
-            case Tab.FAVOURITES:
-                this.loading = false
-                this.loaded = false
-                break
-        }
 
         this.activeTab = newTab
     }

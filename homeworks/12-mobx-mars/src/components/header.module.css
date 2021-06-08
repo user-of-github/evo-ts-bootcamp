@@ -36,10 +36,19 @@
 }
 
 .header__subsubtitle {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     font-weight: 900;
     margin-left: auto;
     width: auto;
     align-self: flex-end;
     text-align: right;
+}
+
+@media (max-width: 576px) {
+    .header__title {
+        font-size: 2rem;
+    }
+    .header__subtitle {
+        font-weight: 300;
+    }
 }

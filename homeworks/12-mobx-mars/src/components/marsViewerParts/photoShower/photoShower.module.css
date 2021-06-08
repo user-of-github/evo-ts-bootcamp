@@ -44,12 +44,19 @@
     .MarsViewerPhotoShowerGallery {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .message {
+        font-size: 1.7rem;
+    }
 }
 
 @media (max-width: 768px) {
     .container {
         max-width: 540px;
         padding: 0;
+    }
+    .MarsViewerPhotoShowerGallery {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 

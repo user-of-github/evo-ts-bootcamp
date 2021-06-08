@@ -1,13 +1,15 @@
 .marsViewerConfiguration {
     width: auto;
-    display: flex;
+
     margin: 2rem auto 0;
     background-color: #FFF;
     padding: 1.5rem;
     border-radius: 0.7rem;
+    display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
     color: #2C2C54;
 }
 
@@ -22,6 +24,7 @@
     color: #2C2C54;
     border-radius: 0.7rem;
     outline: none;
+    margin-top: 1rem;
 }
 
 .marsViewerConfigurationButton {
@@ -39,6 +42,7 @@
 
     transition-duration: 0.3s;
     transition-property: transform, color, background-color;
+    margin-top: 1rem;
 }
 
 .marsViewerConfigurationButton:hover {
@@ -48,4 +52,10 @@
 
 .marsViewerConfigurationButton:active {
     transform: scale(0.9);
+}
+
+@media (max-width: 576px) {
+    .marsViewerConfigurationButton {
+        font-size: 1.5rem
+    }
 }

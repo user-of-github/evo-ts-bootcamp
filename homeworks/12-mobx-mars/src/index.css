@@ -11,6 +11,9 @@ html {
     font-size: 10px;
 }
 
+body {
+    overflow-x: hidden !important;
+}
 .container {
     padding-top: 3rem;
     margin: auto;

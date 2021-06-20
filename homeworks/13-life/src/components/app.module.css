@@ -1,0 +1,59 @@
+.applicationContainer {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 2fr;
+    padding: 2rem;
+}
+
+
+.container {
+    max-width: 500px;
+    margin: auto;
+}
+
+
+@media (max-width: 576px) {
+    .container {
+        width: 100%;
+        padding: 0 0.5rem;
+    }
+    .applicationContainer {
+        grid-template-rows: auto;
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .container {
+        max-width: 540px;
+        padding: 0;
+    }
+    .applicationContainer {
+        grid-template-rows: auto;
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .container {
+        max-width: 720px;
+        padding: 0;
+    }
+}
+
+@media (max-width: 1200px) {
+    .container {
+        max-width: 960px;
+        padding: 0;
+    }
+}
+
+@media (max-width: 1400px) {
+    .container {
+        max-width: 1140px;
+        padding: 0;
+    }
+}

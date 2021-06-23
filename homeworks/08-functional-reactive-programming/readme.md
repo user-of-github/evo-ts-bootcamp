@@ -1,4 +1,4 @@
-##  8. Feed the cat - FxJS practice 
+##  8. Feed the cat - RxJS practice 
 Demonstration: [user-of-github.github.io/evo-ts-bootcamp/homeworks/publications/feed-the-cat/](https://user-of-github.github.io/evo-ts-bootcamp/homeworks/publications/feed-the-cat//)  
 
 

@@ -6,12 +6,11 @@ node_modules/
 coverage/
 coverage
 /coverage
-<<<<<<< HEAD
 /.cache
 .cache
 .cache/
-=======
 /build
 build
 build/
->>>>>>> 07-mars-viewer
+.cache
+/.cache

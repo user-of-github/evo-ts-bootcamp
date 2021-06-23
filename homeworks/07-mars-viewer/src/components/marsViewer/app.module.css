@@ -1,0 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap');
+
+.marsViewer {
+    margin: auto;
+    width: 100%;
+    padding-top: 3rem;
+    font-family: 'Roboto Condensed', sans-serif;
+}

@@ -1,0 +1,42 @@
+.marsViewer__tab {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin: auto;
+    width: 100%;
+    padding: 3rem;
+}
+
+.tab {
+    padding: 0.5rem 2rem;
+    font-size: 2rem;
+
+    display: block;
+
+    box-shadow: 0 0 7px rgba(0, 0, 0, .1);
+    border-radius: 10px;
+    cursor: pointer;
+    outline: none;
+    background-color: transparent;
+    border: none;
+
+    -webkit-transition: 0.1s ease-in-out;
+    -moz-transition: 0.1s ease-in-out;
+    -o-transition: 0.1s ease-in-out;
+    transition: 0.1s ease-in-out;
+
+
+    transition-property: box-shadow, transform;
+}
+
+.tab:hover {
+    box-shadow: 0 0 7px rgba(0, 0, 0, .3);
+}
+
+.tab:active {
+    transform: scale(0.9);
+}
+
+.tab.active {
+    font-weight: 900;
+}

@@ -1,0 +1,4 @@
+export enum BaseGameState {
+    ROULETTE_SPINNING= 'ROULETTE_SPINNING',
+    BETS_PLACING = 'BETS_PLACING'
+}

@@ -50,33 +50,11 @@ const fillBoardWithNumberCells = (data: Array<BoardCell>): void => {
 const fillBoardWithOtherCells = (data: Array<BoardCell>): void => {
     data.push({
         color: CellColor.OTHER,
-        type: CellValueType.FIRST_HALF,
-        value: '1 - 12',
-        location: {
-            gridStart: {row: 4, col: 1},
-            gridEnd: {row: 4, col: 7}
-        },
-        chipsPlaced: Array<Chip>()
-    })
-
-    data.push({
-        color: CellColor.OTHER,
-        type: CellValueType.LAST_HALF,
-        value: '19 - 36',
-        location: {
-            gridStart: {row: 4, col: 7},
-            gridEnd: {row: 4, col: 13}
-        },
-        chipsPlaced: Array<Chip>()
-    })
-
-    data.push({
-        color: CellColor.OTHER,
         type: CellValueType.FIRST_TWELVE,
         value: '1 - 12',
         location: {
-            gridStart: {row: 5, col: 1},
-            gridEnd: {row: 5, col: 5}
+            gridStart: {row: 4, col: 1},
+            gridEnd: {row: 4, col: 5}
         },
         chipsPlaced: Array<Chip>()
     })
@@ -86,8 +64,8 @@ const fillBoardWithOtherCells = (data: Array<BoardCell>): void => {
         type: CellValueType.SECOND_TWELVE,
         value: '13 - 24',
         location: {
-            gridStart: {row: 5, col: 5},
-            gridEnd: {row: 5, col: 9}
+            gridStart: {row: 4, col: 5},
+            gridEnd: {row: 4, col: 9}
         },
         chipsPlaced: Array<Chip>()
     })
@@ -97,8 +75,8 @@ const fillBoardWithOtherCells = (data: Array<BoardCell>): void => {
         type: CellValueType.THIRD_TWELVE,
         value: '25 - 36',
         location: {
-            gridStart: {row: 5, col: 9},
-            gridEnd: {row: 5, col: 13}
+            gridStart: {row: 4, col: 9},
+            gridEnd: {row: 4, col: 13}
         },
         chipsPlaced: Array<Chip>()
     })
@@ -108,8 +86,8 @@ const fillBoardWithOtherCells = (data: Array<BoardCell>): void => {
         type: CellValueType.EVEN_ONLY,
         value: 'EVEN',
         location: {
-            gridStart: {row: 6, col: 1},
-            gridEnd: {row: 6, col: 4}
+            gridStart: {row: 5, col: 1},
+            gridEnd: {row: 5, col: 4}
         },
         chipsPlaced: Array<Chip>()
     })
@@ -119,8 +97,8 @@ const fillBoardWithOtherCells = (data: Array<BoardCell>): void => {
         type: CellValueType.ODD_ONLY,
         value: 'ODD',
         location: {
-            gridStart: {row: 6, col: 4},
-            gridEnd: {row: 6, col: 7}
+            gridStart: {row: 5, col: 4},
+            gridEnd: {row: 5, col: 7}
         },
         chipsPlaced: Array<Chip>()
     })
@@ -130,8 +108,8 @@ const fillBoardWithOtherCells = (data: Array<BoardCell>): void => {
         type: CellValueType.RED_ONLY,
         value: '',
         location: {
-            gridStart: {row: 6, col: 7},
-            gridEnd: {row: 6, col: 10}
+            gridStart: {row: 5, col: 7},
+            gridEnd: {row: 5, col: 10}
         },
         chipsPlaced: Array<Chip>()
     })
@@ -141,8 +119,8 @@ const fillBoardWithOtherCells = (data: Array<BoardCell>): void => {
         type: CellValueType.BLACK_ONLY,
         value: '',
         location: {
-            gridStart: {row: 6, col: 10},
-            gridEnd: {row: 6, col: 13}
+            gridStart: {row: 5, col: 10},
+            gridEnd: {row: 5, col: 13}
         },
         chipsPlaced: Array<Chip>()
     })

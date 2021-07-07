@@ -9,17 +9,13 @@
 
 .container {
     width: 100%;
-    display: flex;
-    align-items: flex-start;
     justify-content: space-evenly;
-    height: auto;
-    perspective: 1000px;
-    flex-wrap: wrap;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
 }
 
 .svgChipContainer {
-    cursor: pointer;
-    flex-basis: 20%;
     margin: 1rem;
     border-radius: 100%;
     border: none;
@@ -33,35 +29,30 @@
     opacity: 0.7;
 }
 
+
 .svgChipContainer:hover {
     opacity: 0.85;
-
     transform: translateZ(100px) rotateX(10deg);
 }
 
 .svgChipContainer.selected {
     animation-name: selectedChip;
-    animation-duration: 4s;
-    animation-timing-function: linear;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
     animation-iteration-count: infinite;
+    transform: translateZ(200px);
     opacity: 1;
 }
 
 
 @keyframes selectedChip {
     0% {
-        transform: translateZ(100px) rotateX(15deg) rotateY(15deg);
-    }
-    25% {
-        transform: translateZ(100px) rotateX(-15deg) rotateY(15deg);
+        transform: translateZ(150px) rotateY(20deg);
     }
     50% {
-        transform: translateZ(100px) rotateX(-15deg) rotateY(-15deg);
-    }
-    75% {
-        transform: translateZ(100px) rotateX(15deg) rotateY(-15deg);
+        transform: translateZ(150px) rotateY(-20deg);
     }
     100% {
-        transform: translateZ(100px) rotateX(15deg) rotateY(15deg);
+        transform: translateZ(150px) rotateY(20deg);
     }
 }

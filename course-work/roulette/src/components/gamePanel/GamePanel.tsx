@@ -10,7 +10,7 @@ export const Panel = observer((props: { data: MainGameState }): JSX.Element => (
         <div className={Style.container}>
             <Chips data={props.data}/>
             <Board data={props.data}/>
-            <Controls/>
+            <Controls data={props.data}/>
         </div>
     </section>
 ))

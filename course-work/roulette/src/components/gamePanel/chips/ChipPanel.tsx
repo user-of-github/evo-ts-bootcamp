@@ -2,7 +2,7 @@ import Style from './ChipPanel.module.css'
 import {observer} from 'mobx-react-lite'
 import {MainGameState} from '../../../types/MainGameState'
 import {Chip} from '../../../types/Chip'
-import {chipsImagesLinks} from './chipsImagesLinks'
+import {chipsImagesSVGLinks} from './chipsImagesLinks'
 
 export const Chips = observer((props: { data: MainGameState }): JSX.Element => (
     <div className={Style.wrapper} key={'chipsWrapper2021'}>
@@ -12,7 +12,7 @@ export const Chips = observer((props: { data: MainGameState }): JSX.Element => (
                     <div key={`chip${index}`}
                         className={`${Style.svgChipContainer} ${item.active ? Style.selected : ''}`}
                          onClick={() => props.data.reselectChip(index)}>
-                        <img src={chipsImagesLinks[index]} alt="chip"/>
+                        <img src={chipsImagesSVGLinks[index]} alt="chip"/>
                     </div>
                 ))
             }

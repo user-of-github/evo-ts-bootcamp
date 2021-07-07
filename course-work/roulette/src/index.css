@@ -4,6 +4,13 @@
     box-sizing: border-box;
     font-family: 'Times New Roman ', sans-serif;
     font-weight: 100;
+
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none;
 }
 
 html {
@@ -20,4 +27,5 @@ body {
 body #root {
     height: 100% !important;
     width: 100% !important;
+    overflow: hidden;
 }

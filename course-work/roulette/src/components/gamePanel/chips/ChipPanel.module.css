@@ -12,11 +12,10 @@
     justify-content: space-evenly;
     height: 100%;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
 }
 
 .svgChipContainer {
-    margin: 1rem;
     border-radius: 100%;
     border: none;
     outline: none;
@@ -27,8 +26,14 @@
     transform-style: preserve-3d;
 
     opacity: 0.7;
+
+    width: 60%;
+    margin: auto;
 }
 
+.svgChipContainer * {
+    width: 100%;
+}
 
 .svgChipContainer:hover {
     opacity: 0.85;

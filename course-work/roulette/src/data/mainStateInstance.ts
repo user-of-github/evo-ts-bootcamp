@@ -1,4 +1,3 @@
-import {MainGameState} from "../types/MainGameState";
-
+import {MainGameState} from '../types/MainGameState'
 
 export const main: MainGameState = new MainGameState()

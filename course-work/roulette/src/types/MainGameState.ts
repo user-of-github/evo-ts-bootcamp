@@ -1,28 +1,33 @@
 import {makeAutoObservable} from 'mobx'
+
 import {Board} from './Board'
 import {Chip} from './Chip'
 import {BaseGameState} from './BaseGameState'
 import {createBoardForBets} from '../utilities/boardCreator'
 import {getGameChips} from '../utilities/gameChipsGetter'
-import {BoardCell} from './BoardCell'
-
-const DEFAULT_START_BALANCE: number = 10000
+import {BoardCell, CellValueType} from './BoardCell'
+import {HighlightedCellsOnHover} from './HighlightedCellsOnHover'
 
 export class MainGameState {
+    private static readonly DEFAULT_START_BALANCE: number = 10000
     public board: Board
     public currentStage: BaseGameState
     public userBalance: number
     public totalCurrentBet: number
     public chipActiveIndex: number
     public chipsSet: Array<Chip>
+    public currentlyHighlightedCells: HighlightedCellsOnHover | null
 
-    public constructor(startBalance: number = DEFAULT_START_BALANCE) {
-        this.userBalance = DEFAULT_START_BALANCE
+    public constructor(startBalance: number = MainGameState.DEFAULT_START_BALANCE) {
+        this.userBalance = startBalance
         this.currentStage = BaseGameState.BETS_PLACING
         this.totalCurrentBet = 0
         this.board = createBoardForBets()
         this.chipsSet = getGameChips()
-        this.chipActiveIndex = 0
+        this.chipActiveIndex = 1
+        this.chipsSet[this.chipActiveIndex].active = true
+        this.currentlyHighlightedCells = null
+        
         makeAutoObservable(this, {}, {deep: true})
     }
 

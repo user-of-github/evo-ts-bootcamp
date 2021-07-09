@@ -22,7 +22,7 @@
 .container {
     margin: auto;
     display: grid;
-    grid-template-columns: 2fr 6fr 2fr;
+    grid-template-columns: 2fr 7fr 3fr;
 
     background-image: url("../../images/grass-texture.jpg");
     background-size: contain;

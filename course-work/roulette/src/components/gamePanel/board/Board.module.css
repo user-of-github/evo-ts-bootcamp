@@ -9,8 +9,9 @@
     height: 100%;
     display: grid;
     grid-template-rows: repeat(5, 1fr);
-    grid-template-columns: repeat(13, 1fr);
+    grid-template-columns: repeat(14, 1fr);
     box-shadow: 0 0 30px rgba(0, 0, 0, 1);
     border-radius: 0.3rem;
     overflow: hidden;
+    background-color: transparent;
 }

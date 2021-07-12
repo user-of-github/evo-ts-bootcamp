@@ -1,10 +1,11 @@
 .container {
     width: 100%;
     height: 100%;
-    padding: 0.1rem;
+    --opacityLowestLevel: 0.5;
 }
 
 .board {
+    padding: 0;
     width: 100%;
     height: 100%;
     display: grid;
@@ -14,4 +15,30 @@
     border-radius: 0.3rem;
     overflow: hidden;
     background-color: transparent;
+    animation: activeBoard 0.25s ease-in-out;
+}
+
+.inactive {
+    pointer-events: none;
+    opacity: var(--opacityLowestLevel);
+    animation: inactiveBoard 0.5s ease-in-out;
+}
+
+
+@keyframes inactiveBoard {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: var(--opacityLowestLevel)
+    }
+}
+
+@keyframes activeBoard {
+    0% {
+        opacity: var(--opacityLowestLevel)
+    }
+    100% {
+        opacity: 1;
+    }
 }

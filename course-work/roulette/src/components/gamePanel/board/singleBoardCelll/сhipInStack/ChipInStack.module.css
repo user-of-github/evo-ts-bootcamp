@@ -2,24 +2,23 @@
     position: absolute;
     top: 0;
     right: 0;
-    overflow: hidden;
-    padding: 1rem;
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
     width: 30px;
     height: 30px;
     z-index: 2000;
-
+    overflow: hidden;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     animation: chipOnBoard 0.25s ease-in-out;
 }
 
 
 .chipInCellImage {
-    object-fit: contain;
     width: 30px;
     height: 30px;
+    object-fit: contain;
 }
 
 @keyframes chipOnBoard {

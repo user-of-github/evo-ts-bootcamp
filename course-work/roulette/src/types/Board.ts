@@ -1,7 +1,7 @@
-import {BoardCell} from './BoardCell'
+import {Spot} from './Spot'
 
 
 export interface Board {
     activeForBets: boolean
-    cells: Array<BoardCell>
+    spots: Array<Spot>
 }

@@ -1,9 +1,13 @@
-import Style from './GamePanel.module.css'
+import {observer} from 'mobx-react-lite'
+
+import {MainGameState} from '../../types/MainGameState'
+
 import {Chips} from './chips/ChipPanel'
 import {Board} from './board/Board'
 import {Controls} from './controls/Controls'
-import {observer} from 'mobx-react-lite'
-import {MainGameState} from '../../types/MainGameState'
+
+import Style from './GamePanel.module.css'
+
 
 export const Panel = observer((props: { data: MainGameState }): JSX.Element => (
     <section className={Style.wrapper}>

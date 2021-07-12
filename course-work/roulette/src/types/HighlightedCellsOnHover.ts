@@ -1,15 +1,15 @@
-import {CellValueType} from './BoardCell'
+import {SpotValueType} from './Spot'
 
 export type HighlightedCellsOnHover =
-    CellValueType.EVEN_ONLY
-    | CellValueType.ODD_ONLY
-    | CellValueType.BLACK_ONLY
-    | CellValueType.RED_ONLY
-    | CellValueType.FIRST_TWELVE
-    | CellValueType.SECOND_TWELVE
-    | CellValueType.THIRD_TWELVE
-    | CellValueType.FIRST_HALF
-    | CellValueType.SECOND_HALF
-    | CellValueType.FIRST_2_TO_1
-    | CellValueType.SECOND_2_TO_1
-    | CellValueType.THIRD_2_TO_1
+    SpotValueType.EVEN_ONLY
+    | SpotValueType.ODD_ONLY
+    | SpotValueType.BLACK_ONLY
+    | SpotValueType.RED_ONLY
+    | SpotValueType.FIRST_TWELVE
+    | SpotValueType.SECOND_TWELVE
+    | SpotValueType.THIRD_TWELVE
+    | SpotValueType.FIRST_HALF
+    | SpotValueType.SECOND_HALF
+    | SpotValueType.FIRST_2_TO_1
+    | SpotValueType.SECOND_2_TO_1
+    | SpotValueType.THIRD_2_TO_1

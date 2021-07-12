@@ -1,0 +1,43 @@
+.svgChipContainer {
+    width: 60%;
+    margin: auto;
+    border-radius: 100%;
+    border: none;
+    outline: none;
+    opacity: 0.7;
+    transition-property: transform, opacity;
+    transition-duration: 0.5s;
+    transform-origin: center;
+    transform-style: preserve-3d;
+}
+
+.svgChipContainer * {
+    width: 100%;
+}
+
+.svgChipContainer:hover {
+    opacity: 0.85;
+    transform: translateZ(100px) rotateX(10deg);
+}
+
+.svgChipContainer.selected {
+    animation-name: selectedChip;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    transform: translateZ(200px);
+    opacity: 1;
+}
+
+
+@keyframes selectedChip {
+    0% {
+        transform: translateZ(150px) rotateY(20deg);
+    }
+    50% {
+        transform: translateZ(150px) rotateY(-20deg);
+    }
+    100% {
+        transform: translateZ(150px) rotateY(20deg);
+    }
+}

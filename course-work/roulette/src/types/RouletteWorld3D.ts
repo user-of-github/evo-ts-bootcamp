@@ -46,9 +46,27 @@ export class RouletteWorld3D {
         this.camera.panningDistanceLimit = 0.0001
 
 
+        const assetsManager: BABYLON.AssetsManager = new BABYLON.AssetsManager(this.scene)
+        const meshTask: BABYLON.MeshAssetTask = assetsManager.addMeshTask(
+            'skull task',
+            'roulette',
+            '/meshes/',
+            'roulette-model.babylon')
+
+        meshTask.onSuccess = (task: BABYLON.MeshAssetTask) => {
+            task.loadedMeshes[0].position = BABYLON.Vector3.Zero()
+            window.alert('success')
+        }
+
+        assetsManager.onTaskSuccess = () => alert('successtask')
+
+        meshTask.onError = (task: BABYLON.MeshAssetTask, message: string | undefined, exception) => {
+            window.alert(message + ' ' + exception)
+        }
+
+
         engine.runRenderLoop(() => {
             this.scene.render()
         })
     }
-
 }

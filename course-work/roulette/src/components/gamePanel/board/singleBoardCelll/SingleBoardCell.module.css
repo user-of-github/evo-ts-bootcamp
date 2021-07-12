@@ -12,7 +12,7 @@
     font-weight: 300;
     text-transform: lowercase;
     box-shadow: inset 0 0 0;
-    border-width: 0.15rem;
+    border-width: 1.5px;
     border-style: dashed;
     border-color: #C4CEC1;
     transition-property: box-shadow, border-color;
@@ -20,20 +20,20 @@
 }
 
 .cell:hover {
-    box-shadow: inset 0 0 10rem rgba(255, 255, 255, 0.4);
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.4);
     border-color: white;
     font-weight: 500;
 }
 
 .highlighted {
-    box-shadow: inset 0 0 3rem rgba(255, 255, 255, 0.4);
+    box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.4);
     text-shadow: 0 0 1rem white;
     border-color: white;
     font-weight: 500;
 }
 
 .cell:active {
-    box-shadow: inset 0 0 10rem rgba(255, 255, 255, 0.6);
+    box-shadow: inset 0 0 100px rgba(255, 255, 255, 0.6);
 }
 
 .green {
@@ -52,100 +52,27 @@
     background-color: transparent;
 }
 
-
-@media (max-width: 1200px) {
+@media (max-width: 1100px) {
     .cell {
         font-size: 2rem;
     }
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1000px) {
     .cell {
         font-size: 1.7rem;
-        padding: 0.8rem;
-        border-width: 0.1rem;
-    }
-
-    .chipInCell {
-        width: 25px;
-        height: 25px;
-    }
-
-    .chipInCellImage {
-        width: 25px;
-        height: 25px;
     }
 }
 
 @media (max-width: 900px) {
     .cell {
-        font-size: 1.7rem;
-        padding: 0.65rem;
-    }
-
-    .chipInCell {
-        width: 24px;
-        height: 24px;
-    }
-
-    .chipInCellImage {
-        width: 24px;
-        height: 24px;
-    }
-}
-
-@media (max-width: 800px) {
-    .cell {
-        font-size: 1.6rem;
-        padding: 0.5rem;
-    }
-
-    .chipInCell {
-        width: 23px;
-        height: 23px;
-    }
-
-    .chipInCellImage {
-        width: 23px;
-        height: 23px;
-    }
-}
-
-@media (max-width: 750px) {
-    .cell {
-        padding: 0.35rem;
-        font-size: 1.6rem;
-        border-width: 0.1rem;
-    }
-
-    .chipInCell {
-        width: 22px;
-        height: 22px;
-    }
-
-    .chipInCellImage {
-        width: 22px;
-        height: 22px;
-    }
-}
-
-@media (max-width: 660px) {
-    .cell {
-        padding: 0.3rem;
         font-size: 1.5rem;
-        border-width: 0.1rem;
-        border-style: solid;
     }
+}
 
-    .chipInCell {
-        top: 0;
-        right: 0;
-        width: 25px;
-        height: 25px;
-    }
-
-    .chipInCellImage {
-        width: 25px;
-        height: 25px;
+@media (max-width: 850px) {
+    .cell {
+        font-size: 1.3rem;
+        border-width: 1px;
     }
 }

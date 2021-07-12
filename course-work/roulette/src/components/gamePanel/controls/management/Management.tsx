@@ -11,7 +11,8 @@ import Style from './Management.module.css'
 
 export const Management = observer((props: { data: MainGameState }): JSX.Element => (
     <div className={Style.container}>
-        <div className={Style.tablet}>
+        <div className={`${Style.tablet} ${props.data.currentStage === BaseGameState.ROULETTE_SPINNING ?
+            Style.inactive : ''}`}>
             <div className={Style.buttonManagerContainer}>
                 <button className={Style.buttonManager}
                         style={{cursor: `url(${cursor}), auto`}}

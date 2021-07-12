@@ -29,3 +29,12 @@
     border-radius: 2rem;
     padding: 0.1rem 0;
 }
+
+
+
+
+@media (max-width: 1000px) {
+    .container {
+        transform: rotateX(45deg) translateY(0) scale(1.15);
+    }
+}

@@ -41,3 +41,10 @@
         transform: translateZ(150px) rotateY(20deg);
     }
 }
+
+
+@media (max-width: 1000px) {
+    .svgChipContainer {
+        width: 90%;
+    }
+}

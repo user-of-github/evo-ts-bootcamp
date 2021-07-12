@@ -13,6 +13,7 @@
     margin: auto;
     text-align: center;
     padding: 0 0.75rem;
+    --opacityLowestLevel: 0.5;
 }
 
 .tablet {
@@ -26,4 +27,27 @@
     text-align: center;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+}
+
+.inactive {
+    pointer-events: none;
+    opacity: var(--opacityLowestLevel);
+    animation: inactiveBoard 0.5s ease-in-out;
+}
+
+
+@keyframes inactiveBoard {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: var(--opacityLowestLevel)
+    }
+}
+
+
+@media (max-width: 850px) {
+    .tablet {
+        border-width: 1px;
+    }
 }

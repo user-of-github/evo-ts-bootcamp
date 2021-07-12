@@ -61,38 +61,12 @@
 
 @media (max-width: 800px) {
     .chipInCell {
-        width: 23px;
-        height: 23px;
+        width: 20px;
+        height: 20px;
     }
 
     .chipInCellImage {
-        width: 23px;
-        height: 23px;
-    }
-}
-
-@media (max-width: 750px) {
-    .chipInCell {
-        width: 22px;
-        height: 22px;
-    }
-
-    .chipInCellImage {
-        width: 22px;
-        height: 22px;
-    }
-}
-
-@media (max-width: 660px) {
-    .chipInCell {
-        width: 25px;
-        top: 0;
-        right: 0;
-        height: 25px;
-    }
-
-    .chipInCellImage {
-        width: 25px;
-        height: 25px;
+        width: 20px;
+        height: 20px;
     }
 }

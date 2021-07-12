@@ -27,7 +27,6 @@
 
 .numbers {
     font-weight: 500;
-    font-size: 2.2rem;
     margin-left: 0.8rem;
     text-wrap: normal;
     word-wrap: normal;
@@ -36,4 +35,39 @@
 .numbers::after {
     display: inline;
     content: ' DEMO';
+}
+
+
+@media (max-width: 1330px) {
+    .data {
+        font-size: 2.1rem;
+    }
+}
+
+@media (max-width: 1180px) {
+    .data {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 1065px) {
+    .data {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 920px) {
+    .data {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 850px) {
+    .data {
+        font-size: 1rem;
+    }
+
+    .tablet {
+        border-width: 1px;
+    }
 }

@@ -7,7 +7,7 @@ import {MainGameState} from '../../types/MainGameState'
 import Style from './Roulette.module.css'
 
 
-export const Roulette = observer((props: {data: MainGameState}): JSX.Element => {
+export const Roulette = observer((props: { data: MainGameState }): JSX.Element => {
     const canvasRef: React.MutableRefObject<HTMLCanvasElement | null> = React.useRef<HTMLCanvasElement | null>(null)
     const world3D: React.MutableRefObject<RouletteWorld3D | null> = React.useRef<RouletteWorld3D | null>(null)
 
@@ -24,5 +24,4 @@ export const Roulette = observer((props: {data: MainGameState}): JSX.Element => 
                     ref={canvasRef}/>
         </section>
     )
-
 })

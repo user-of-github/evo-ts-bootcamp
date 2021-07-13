@@ -1,6 +1,12 @@
 import * as BABYLON from '@babylonjs/core'
+import '@babylonjs/inspector'
+
+const TABLE_NAME: string = 'TABLE'
+const ROULETTE_NAME: string = 'ROULETTE'
+
 
 export class RouletteWorld3D {
+    private engine: BABYLON.Engine
     private scene: BABYLON.Scene
     private camera: BABYLON.ArcRotateCamera
     private light: BABYLON.HemisphericLight
@@ -9,9 +15,9 @@ export class RouletteWorld3D {
     // private roulette: BABYLON.Mesh
 
 
-    constructor(mainCanvasForWorld3D: HTMLCanvasElement) {
-        const engine: BABYLON.Engine = new BABYLON.Engine(mainCanvasForWorld3D)
-        this.scene = new BABYLON.Scene(engine)
+    public constructor(mainCanvasForWorld3D: HTMLCanvasElement) {
+        this.engine = new BABYLON.Engine(mainCanvasForWorld3D)
+        this.scene = new BABYLON.Scene(this.engine)
         this.camera = new BABYLON.ArcRotateCamera(
             'Main camera',
             0,
@@ -21,6 +27,11 @@ export class RouletteWorld3D {
             this.scene
         )
 
+        // this.camera.lowerAlphaLimit = 1
+        // this.camera.lowerBetaLimit = 1
+        // this.camera.upperBetaLimit = 2
+        // this.camera.upperAlphaLimit = 2
+
         this.camera.attachControl(mainCanvasForWorld3D)
         //
         this.light = new BABYLON.HemisphericLight(
@@ -29,44 +40,55 @@ export class RouletteWorld3D {
             this.scene
         )
 
-        const ground = BABYLON.GroundBuilder.CreateGround(
-            "ground",
-            {
-                width: 5,
-                height: 5
-            },
-            this.scene
-        )
-
-        ground.checkCollisions = true
-
-        this.camera.setTarget(ground)
         this.camera.checkCollisions = true
         this.camera.panningSensibility = 0
-        this.camera.panningDistanceLimit = 0.0001
+        this.camera.panningDistanceLimit = 0.01
 
 
         const assetsManager: BABYLON.AssetsManager = new BABYLON.AssetsManager(this.scene)
-        const meshTask: BABYLON.MeshAssetTask = assetsManager.addMeshTask(
-            'skull task',
-            'roulette',
+
+        assetsManager.useDefaultLoadingScreen = false
+        this.loadAssets(assetsManager)
+
+        this.scene.debugLayer.show();
+    }
+
+    private async loadAssets(assetsManager: BABYLON.AssetsManager): Promise<void> {
+        assetsManager.addMeshTask(
+            TABLE_NAME,
+            '',
+            '/meshes/',
+            'table.babylon')
+
+        assetsManager.addMeshTask(
+            ROULETTE_NAME,
+            '',
             '/meshes/',
             'roulette-model.babylon')
 
-        meshTask.onSuccess = (task: BABYLON.MeshAssetTask) => {
-            task.loadedMeshes[0].position = BABYLON.Vector3.Zero()
-            window.alert('success')
+        assetsManager.onTaskSuccess = (task: BABYLON.AbstractAssetTask) => {
+            switch (task.name) {
+                case TABLE_NAME:
+                    if (task instanceof BABYLON.MeshAssetTask) {
+                        this.camera.setTarget(task.loadedMeshes[0])
+                    }
+                    break
+                case ROULETTE_NAME:
+                    if (task instanceof BABYLON.MeshAssetTask) {
+                        task.loadedMeshes[0].position.y = 12
+                    }
+                    break
+            }
         }
 
-        assetsManager.onTaskSuccess = () => alert('successtask')
-
-        meshTask.onError = (task: BABYLON.MeshAssetTask, message: string | undefined, exception) => {
-            window.alert(message + ' ' + exception)
-        }
-
-
-        engine.runRenderLoop(() => {
-            this.scene.render()
+        assetsManager.loadAsync().then(() => {
+            this.engine.runRenderLoop(() => {
+                this.scene.render()
+            })
         })
+    }
+
+    private locateTable(mesh: BABYLON.Mesh): void {
+
     }
 }

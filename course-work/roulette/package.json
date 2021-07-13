@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@babylonjs/core": "^4.2.0",
+    "@babylonjs/inspector": "^4.2.0",
     "@babylonjs/loaders": "^4.2.0",
     "@loaders.gl/gltf": "^2.3.13",
     "@testing-library/jest-dom": "^5.11.4",

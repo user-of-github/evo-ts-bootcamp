@@ -19,8 +19,8 @@ export const Roulette = observer((props: { data: MainGameState }): JSX.Element =
     return (
         <section className={Style.container}>
             <canvas className={Style.babylonCanvas}
-                    width={document.documentElement.offsetWidth}
-                    height={document.documentElement.offsetHeight}
+                    width={document.documentElement.offsetWidth * (window.devicePixelRatio | 2)}
+                    height={document.documentElement.offsetHeight * (window.devicePixelRatio | 2)}
                     ref={canvasRef}/>
         </section>
     )

@@ -5,6 +5,7 @@ import {BaseGameState} from '../../../../types/BaseGameState'
 import spinLogo from '../../../../images/swirl.svg'
 import removeBetsLogo from '../../../../images/remove.svg'
 import cursor from '../../../../images/cursor.png'
+import {playPressButtonSound} from '../../../../utilities/playSound'
 
 import Style from './Management.module.css'
 
@@ -17,14 +18,21 @@ export const Management = observer((props: { data: MainGameState }): JSX.Element
                 <button className={Style.buttonManager}
                         style={{cursor: `url(${cursor}), auto`}}
                         disabled={props.data.currentStage === BaseGameState.ROULETTE_SPINNING}
-                        onClick={() => props.data.spinRoulette()}>
+                        onClick={() => {
+                            playPressButtonSound()
+                            props.data.spinRoulette()
+                        }
+                        }>
                     <img className={Style.buttonManagerImage} src={spinLogo} alt="spin!"/>
                 </button>
             </div>
             <div className={Style.buttonManagerContainer}>
                 <button className={Style.buttonManager}
                         style={{cursor: `url(${cursor}), auto`}}
-                        onClick={() => props.data.cancelBets()}
+                        onClick={() => {
+                            playPressButtonSound()
+                            props.data.cancelBets()
+                        }}
                         disabled={props.data.currentStage === BaseGameState.ROULETTE_SPINNING}>
                     <img className={Style.buttonManagerImage} src={removeBetsLogo} alt="remove bets!"/>
                 </button>

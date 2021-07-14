@@ -13,9 +13,14 @@ export const App = (): JSX.Element => {
     const mainState: React.MutableRefObject<MainGameState> = React.useRef<MainGameState>(new MainGameState())
 
     return (
-        <section className={Style.mainContainer} style={{cursor: `url(${cursor}), auto`}}>
-            <Roulette data={mainState.current}/>
-            <Panel data={mainState.current}/>
-        </section>
+        <>
+            <section className={Style.mainContainer} style={{cursor: `url(${cursor}), auto`}}>
+                <Roulette data={mainState.current}/>
+                <Panel data={mainState.current}/>
+            </section>
+            <audio id="beep" loop autoPlay={true}>
+                <source src="sounds/background.mp3"/>
+            </audio>
+        </>
     )
 }

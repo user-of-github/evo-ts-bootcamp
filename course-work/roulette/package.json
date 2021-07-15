@@ -17,6 +17,7 @@
     "ammo.js": "kripken/ammo.js",
     "babylon": "^6.18.0",
     "babylonjs": "^4.2.0",
+    "cannon": "^0.6.2",
     "file-loader": "^6.2.0",
     "mobx": "^6.3.2",
     "mobx-react-lite": "^3.2.0",

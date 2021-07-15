@@ -17,7 +17,7 @@
 
 .svgChipContainer:hover {
     opacity: 0.85;
-    transform: translateZ(100px) rotateX(10deg);
+    transform: translateZ(100px) rotateX(10deg) scale(1.2);
 }
 
 .svgChipContainer.selected {
@@ -25,20 +25,20 @@
     animation-duration: 2s;
     animation-timing-function: ease-in-out;
     animation-iteration-count: infinite;
-    transform: translateZ(200px);
+    transform: translateZ(200px) scale(1.2);
     opacity: 1;
 }
 
 
 @keyframes selectedChip {
     0% {
-        transform: translateZ(150px) rotateY(20deg);
+        transform: translateZ(150px) rotateY(20deg) scale(1.2);
     }
     50% {
-        transform: translateZ(150px) rotateY(-20deg);
+        transform: translateZ(150px) rotateY(-20deg) scale(1.2);
     }
     100% {
-        transform: translateZ(150px) rotateY(20deg);
+        transform: translateZ(150px) rotateY(20deg) scale(1.2);
     }
 }
 

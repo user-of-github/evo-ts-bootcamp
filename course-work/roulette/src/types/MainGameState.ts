@@ -7,6 +7,9 @@ import {createBoardForBets} from '../utilities/boardCreator'
 import {getGameChips} from '../utilities/gameChipsGetter'
 import {RouletteSpot, Spot, SpotColor, SpotValueType} from './Spot'
 import {HighlightedCellsOnHover} from './HighlightedCellsOnHover'
+import {ModalsController} from './ModalsController'
+import {ResultsHistoryItem} from './ResultsHistoryItem'
+import {jackpotMoneySound, loseSound, winSound} from "../utilities/playSound";
 
 
 export class MainGameState {
@@ -35,6 +38,9 @@ export class MainGameState {
     public chipActiveIndex: number
     public chipsSet: Array<Chip>
     public currentlyHighlightedCells: HighlightedCellsOnHover | null
+    public modalsState: ModalsController
+    public resultsHistory: Array<ResultsHistoryItem>
+
 
     public constructor(startBalance: number = MainGameState.DEFAULT_START_BALANCE) {
         this.userBalance = startBalance
@@ -46,9 +52,16 @@ export class MainGameState {
         this.chipsSet[this.chipActiveIndex].active = true
         this.currentlyHighlightedCells = null
 
+        this.modalsState = {
+            modalWarningActive: false,
+            modalResultActive: false,
+            modalWarningText: ''
+        }
+
         makeAutoObservable(this, {}, {deep: true})
 
         this.spotsOnRoulette = this.formRouletteSpotsArray()
+        this.resultsHistory = Array<ResultsHistoryItem>()
     }
 
     public reselectChip(newIndex: number): void {
@@ -140,10 +153,19 @@ export class MainGameState {
             spot.chipsPlaced.length = 0
         })
 
-        window.alert(totalWin !== 0 ? `You won ${totalWin}` : 'No win')
+        // window.alert(totalWin !== 0 ? `You won ${totalWin}` : 'No win')
 
         this.userBalance += totalWin
         this.totalCurrentBet = 0
+
+        this.resultsHistory.push({award: totalWin, result: this.spotsOnRoulette[rouletteResult]})
+
+        this.modalsState.modalResultActive = true
+        totalWin > 0 && jackpotMoneySound.play().finally(() => winSound.play())
+        totalWin === 0 && loseSound.play()
+
+
+        window.setTimeout(() => this.modalsState.modalResultActive = false, 5000)
     }
 
     public spinRoulette(): void {
@@ -156,8 +178,6 @@ export class MainGameState {
         this.currentStage = BaseGameState.ROULETTE_SPINNING
         window.setTimeout(() => {
             const resIndex: number = Math.round(Math.random() * 36)
-            window.alert(`Roulette result: ${this.spotsOnRoulette[resIndex].color} 
-            ${this.spotsOnRoulette[resIndex].value}`)
             this.countResults(resIndex)
             this.currentStage = BaseGameState.BETS_PLACING
         }, 2000)

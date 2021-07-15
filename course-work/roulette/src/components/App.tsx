@@ -5,6 +5,7 @@ import {MainGameState} from '../types/MainGameState'
 
 import {Roulette} from './roulette/Roulette'
 import {Panel} from './gamePanel/GamePanel'
+import {ModalResult, ModalWarning} from './modal/Modal'
 
 import Style from './App.module.css'
 
@@ -17,10 +18,9 @@ export const App = (): JSX.Element => {
             <section className={Style.mainContainer} style={{cursor: `url(${cursor}), auto`}}>
                 <Roulette data={mainState.current}/>
                 <Panel data={mainState.current}/>
+                <ModalWarning state={mainState.current}/>
+                <ModalResult state={mainState.current}/>
             </section>
-            <audio id="beep" loop autoPlay={true}>
-                <source src="sounds/background.mp3"/>
-            </audio>
         </>
     )
 }

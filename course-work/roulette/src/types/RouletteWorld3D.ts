@@ -15,6 +15,9 @@ const ROULETTE_TASK_NAME: string = 'ROULETTE'
 const ENV_TEXTURE_TASK_NAME: string = 'ENV'
 const BALL_TASK_NAME: string = 'BALL'
 
+const CENTRAL_MESH_NAME: string = 'centralWithFloor'
+const SPOTS_MESH_NAME: string = 'spots'
+
 
 export class RouletteWorld3D {
     private readonly engine: BABYLON.Engine
@@ -24,8 +27,8 @@ export class RouletteWorld3D {
     private light: BABYLON.HemisphericLight
     private roulette: BABYLON.AbstractMesh | null
     private ball: BABYLON.AbstractMesh | null
-    private centralStateInRoulette: BABYLON.AbstractMesh
-    private spots: BABYLON.AbstractMesh
+    private centralStateInRoulette: BABYLON.AbstractMesh | null
+    private spots: BABYLON.AbstractMesh | null
 
     public constructor(mainCanvasForWorld3D: HTMLCanvasElement) {
         this.canvasReference = mainCanvasForWorld3D
@@ -36,12 +39,13 @@ export class RouletteWorld3D {
             0,
             0,
             0,
-            new BABYLON.Vector3(0, 0, -40),
+            new BABYLON.Vector3(0, 10, -20),
             this.scene
         )
         this.setUpCamera()
 
         this.roulette = this.ball = null
+        this.centralStateInRoulette = this.spots = null
 
         this.light = new BABYLON.HemisphericLight(
             'Main hemispheric light',
@@ -82,6 +86,12 @@ export class RouletteWorld3D {
                         this.roulette = task.loadedMeshes[0]
                         this.setUpRoulette()
                         this.camera.setTarget(this.roulette)
+
+                        for (const mesh of this.roulette.getChildren())
+                            if (mesh.name === SPOTS_MESH_NAME || mesh.name === CENTRAL_MESH_NAME)
+                                console.log(mesh)
+
+
                     }
                     break
                 case BALL_TASK_NAME:
@@ -111,14 +121,6 @@ export class RouletteWorld3D {
 
         this.scene.enablePhysics(new BABYLON.Vector3(0, -9.81, 0), new CannonJSPlugin());
 
-        this.roulette!.physicsImpostor = new BABYLON.PhysicsImpostor(
-            this.roulette!,
-            BABYLON.PhysicsImpostor.BoxImpostor,
-            {mass: 100, restitution: 0.9},
-            this.scene
-        )
-
-        this.roulette!.checkCollisions = true
 
         this.engine.runRenderLoop(() => this.scene.render())
     }
@@ -132,10 +134,10 @@ export class RouletteWorld3D {
         this.camera.checkCollisions = true
         this.camera.panningSensibility = 0
         this.camera.panningDistanceLimit = 0.01
-        // this.camera.lowerAlphaLimit = 1
-        // this.camera.lowerBetaLimit = 1
-        // this.camera.upperBetaLimit = 2
-        // this.camera.upperAlphaLimit = 2
+        this.camera.lowerAlphaLimit = 1
+        this.camera.lowerBetaLimit = 1
+        this.camera.upperBetaLimit = 1.5
+        this.camera.upperAlphaLimit = 2
 
         this.camera.attachControl(this.canvasReference)
     }

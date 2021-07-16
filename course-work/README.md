@@ -1,11 +1,11 @@
-# _Evolution Gaming TypeScript Bootcamp course project_
+# TypeScript Bootcamp course project
 
 ### _Final project to graduate from [Evolution Gaming TypeScript Bootcamp](https://github.com/evolution-gaming/typescript-bootcamp)_
 &nbsp;  
 
-* ### Topic: Gambling game — Virtual Roulette (Casino)  
-* ### Technologies: React, TypeScript, MobX, BabylonJS,  3Ds Max  
-* ### Terms of development: June, 22 —   &nbsp;  . . . 
+* __Topic: Gambling game — Virtual Roulette (Casino)__ 
+* __With and using: React, TypeScript, MobX, BabylonJS,  3Ds Max__  
+* __Terms of development: June 22, 2021 ———>   &nbsp;  . . .__ 
 &nbsp;
 ###### _Slutski Nikita | Слуцкий Никита_
 

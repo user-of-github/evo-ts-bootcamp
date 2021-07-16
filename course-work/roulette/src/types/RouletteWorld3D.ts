@@ -1,8 +1,10 @@
 import * as BABYLON from '@babylonjs/core'
 import '@babylonjs/inspector'
-import {AbstractMesh, CannonJSPlugin} from "@babylonjs/core";
+import {OimoJSPlugin} from '@babylonjs/core';
 
-window.CANNON = require('cannon')
+// @ts-ignore
+window.OIMO = require('oimo')
+
 
 const MESH_ROOT_URL: string = '/meshes/'
 
@@ -18,7 +20,8 @@ const BALL_TASK_NAME: string = 'BALL'
 const CENTRAL_MESH_NAME: string = 'centralWithFloor'
 const SPOTS_MESH_NAME: string = 'spots'
 
-const FRAME_RATE: number = 30
+const FRAME_RATE: number = 144
+
 
 export class RouletteWorld3D {
     private readonly engine: BABYLON.Engine
@@ -35,24 +38,12 @@ export class RouletteWorld3D {
         this.canvasReference = mainCanvasForWorld3D
         this.engine = new BABYLON.Engine(this.canvasReference)
         this.scene = new BABYLON.Scene(this.engine)
-        this.camera = new BABYLON.ArcRotateCamera(
-            'Main camera',
-            0,
-            0,
-            0,
-            new BABYLON.Vector3(0, 10, -20),
-            this.scene
-        )
+        this.camera = this.setUpCamera()
         this.setUpCamera()
+        this.light = this.setUpLight()
+        window.onresize = () => this.engine.resize()
 
-        this.roulette = this.ball = null
-        this.centralStateInRoulette = this.spots = null
-
-        this.light = new BABYLON.HemisphericLight(
-            'Main hemispheric light',
-            new BABYLON.Vector3(0, 2, 2),
-            this.scene
-        )
+        this.roulette = this.ball = this.centralStateInRoulette = this.spots = null
 
 
         const assetsManager: BABYLON.AssetsManager = new BABYLON.AssetsManager(this.scene)
@@ -60,12 +51,10 @@ export class RouletteWorld3D {
         assetsManager.useDefaultLoadingScreen = false
         this.loadAssets(assetsManager)
 
-        //this.scene.debugLayer.show();
-
-        window.onresize = () => this.engine.resize()
+        //   this.scene.debugLayer.show();
     }
 
-    private async loadAssets(assetsManager: BABYLON.AssetsManager): Promise<void> {
+    private loadAssets(assetsManager: BABYLON.AssetsManager): void {
         assetsManager.addMeshTask(
             ROULETTE_TASK_NAME,
             '',
@@ -88,11 +77,8 @@ export class RouletteWorld3D {
                         this.setUpRoulette()
                         this.camera.setTarget(this.roulette)
 
-                        for (const mesh of this.roulette.getChildren())
-                            if (mesh.name === SPOTS_MESH_NAME || mesh.name === CENTRAL_MESH_NAME)
-                                console.log(mesh)
-
                         this.spots = this.scene.getMeshByName(SPOTS_MESH_NAME)
+                        this.centralStateInRoulette = this.scene.getMeshByName(CENTRAL_MESH_NAME)
                         this.startSpotsAnimations()
                     }
                     break
@@ -119,62 +105,71 @@ export class RouletteWorld3D {
     }
 
     private physicsExample(): void {
-        this.camera.checkCollisions = true
+        this.scene.enablePhysics(new BABYLON.Vector3(0, -9.81, 0), new OimoJSPlugin())
 
-        this.scene.enablePhysics(new BABYLON.Vector3(0, -9.81, 0), new CannonJSPlugin());
+        for (const mesh of this.roulette!.getChildMeshes()) {
+            mesh.physicsImpostor = new BABYLON.PhysicsImpostor(
+                mesh,
+                BABYLON.PhysicsImpostor.MeshImpostor,
+                {mass: 0, friction: 1},
+                this.scene)
+        }
+
+
         this.ball!.physicsImpostor = new BABYLON.PhysicsImpostor(
             this.ball!,
-            BABYLON.PhysicsImpostor.SphereImpostor,
-            {mass: 1, restitution: 0.9},
+            BABYLON.PhysicsImpostor.SphereImpostor, {mass: 2, friction: 0.5, restitution: 0},
             this.scene
         )
 
-        // this.roulette!.physicsImpostor =
-        //     new BABYLON.PhysicsImpostor(this.roulette!,
-        //         BABYLON.PhysicsImpostor.MeshImpostor,
-        //         {mass: 0, friction: 1},
-        //         this.scene)
+
+        // тестовый ground
+        const ground = BABYLON.MeshBuilder.CreateGround('ground', {
+            width: 100,
+            height: 100
+        }, this.scene)
+        ground.position.y -= 10
+        ground.physicsImpostor = new BABYLON.PhysicsImpostor(
+            ground,
+            BABYLON.PhysicsImpostor.BoxImpostor,
+            {mass: 0, friction: 0.5, restitution: 0},
+            this.scene
+        )
+        ground.position.y -= 20
+
+
+        // последние изменения (подсмотрел тут: https://www.sitepoint.com/understanding-collisions-physics-babylon-js-oimo-js/)
+        const meshesColliderList = [];
+
+        for (let i: number = 1; i < this.scene.meshes.length; i++) {
+            if (this.scene.meshes[i].checkCollisions && this.scene.meshes[i].isVisible === false) {
+                // @ts-ignore
+                this.scene.meshes[i].setPhysicsState(BABYLON.PhysicsEngine.BoxImpostor, {
+                    mass: 0,
+                    friction: 0.5, restitution: 0.7
+                });
+                meshesColliderList.push(this.scene.meshes[i]);
+            }
+        }
 
         this.engine.runRenderLoop(() => this.scene.render())
     }
 
     private startSpotsAnimations(): void {
-        const spotAnimation: BABYLON.Animation = new BABYLON.Animation(
-            "yRot",
-            "rotation.y",
+        const rotateAnimation: BABYLON.Animation = new BABYLON.Animation(
+            "spotRotation", "rotation",
             FRAME_RATE,
-            BABYLON.Animation.ANIMATIONTYPE_FLOAT,
-            BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE
-        )
+            BABYLON.Animation.ANIMATIONTYPE_VECTOR3,
+            BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE)
 
         const keyFramesR: Array<BABYLON.IAnimationKey> = Array<BABYLON.IAnimationKey>()
+        keyFramesR.push({frame: 0, value: new BABYLON.Vector3(0, 0, 0)})
+        keyFramesR.push({frame: 2 * FRAME_RATE, value: new BABYLON.Vector3(0, Math.PI, 0)})
+        keyFramesR.push({frame: 4 * FRAME_RATE, value: new BABYLON.Vector3(0, 2 * Math.PI, 0)})
+        rotateAnimation.setKeys(keyFramesR)
 
-        keyFramesR.push({
-            frame: 0,
-            value: 0
-        })
-
-        keyFramesR.push({
-            frame: FRAME_RATE,
-            value: 4 * Math.PI
-        })
-
-        keyFramesR.push({
-            frame: 2 * FRAME_RATE,
-            value: 8 * Math.PI
-        })
-
-        spotAnimation.setKeys(keyFramesR)
-
-
-        this.scene.beginDirectAnimation(
-            this.spots,
-            [spotAnimation],
-            0,
-            2 * FRAME_RATE,
-            false,
-            1
-        )
+        this.scene.beginDirectAnimation(this.spots, [rotateAnimation], 0, 4 * FRAME_RATE, true)
+        this.scene.beginDirectAnimation(this.centralStateInRoulette, [rotateAnimation], 0, 4 * FRAME_RATE, true)
     }
 
     private setUpRoulette(): void {
@@ -182,10 +177,18 @@ export class RouletteWorld3D {
         this.roulette!.position.x = this.roulette!.position.y = this.roulette!.position.z = 0
     }
 
-    private setUpCamera(): void {
-        this.camera.checkCollisions = true
-        this.camera.panningSensibility = 0
-        this.camera.panningDistanceLimit = 0.01
+    private setUpCamera(): BABYLON.ArcRotateCamera {
+        const camera = new BABYLON.ArcRotateCamera(
+            'Main camera',
+            0,
+            0,
+            0,
+            new BABYLON.Vector3(0, 10, -15),
+            this.scene
+        )
+        camera.checkCollisions = true
+        camera.panningSensibility = 0
+        camera.panningDistanceLimit = 0.01
         // this.camera.lowerAlphaLimit = 1
         // this.camera.upperAlphaLimit = 3
         // this.camera.lowerBetaLimit = 1
@@ -193,7 +196,17 @@ export class RouletteWorld3D {
         // this.camera.lowerRadiusLimit = 1
         // this.camera.upperRadiusLimit = 20
 
-        this.camera.attachControl(this.canvasReference)
+        camera.attachControl(this.canvasReference)
+
+        return camera
+    }
+
+    private setUpLight(): BABYLON.HemisphericLight {
+        return new BABYLON.HemisphericLight(
+            'MainHemisphericLight',
+            new BABYLON.Vector3(0, 2, 2),
+            this.scene
+        )
     }
 
 }

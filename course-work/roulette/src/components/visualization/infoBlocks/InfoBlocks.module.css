@@ -8,6 +8,8 @@
     text-align: center;
 
     position: absolute;
+
+    min-width: 25%;
 }
 
 .title {
@@ -42,5 +44,5 @@
 }
 
 .tableBase:hover {
-    transform: scale(1.15);
+    transform: scale(1.10);
 }

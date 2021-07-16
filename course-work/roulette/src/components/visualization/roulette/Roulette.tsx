@@ -1,8 +1,8 @@
 import React from 'react'
 import {observer} from 'mobx-react-lite'
 
-import {RouletteWorld3D} from '../../types/RouletteWorld3D'
-import {MainGameState} from '../../types/MainGameState'
+import {RouletteWorld3D} from '../../../types/RouletteWorld3D'
+import {MainGameState} from '../../../types/MainGameState'
 
 import Style from './Roulette.module.css'
 

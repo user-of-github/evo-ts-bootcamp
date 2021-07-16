@@ -59,7 +59,7 @@ export class RouletteWorld3D {
         assetsManager.useDefaultLoadingScreen = false
         this.loadAssets(assetsManager)
 
-        this.scene.debugLayer.show();
+        //this.scene.debugLayer.show();
 
         window.onresize = () => this.engine.resize()
     }
@@ -120,7 +120,19 @@ export class RouletteWorld3D {
         this.camera.checkCollisions = true
 
         this.scene.enablePhysics(new BABYLON.Vector3(0, -9.81, 0), new CannonJSPlugin());
+        this.ball!.physicsImpostor = new BABYLON.PhysicsImpostor(
+            this.ball!,
+            BABYLON.PhysicsImpostor.SphereImpostor,
+            {mass: 1, restitution: 0.9},
+            this.scene
+        )
 
+        this.roulette!.physicsImpostor = new BABYLON.PhysicsImpostor(
+            this.ball!,
+            BABYLON.PhysicsImpostor.BoxImpostor,
+            {mass: 100, restitution: 0.9},
+            this.scene
+        )
 
         this.engine.runRenderLoop(() => this.scene.render())
     }
@@ -134,10 +146,12 @@ export class RouletteWorld3D {
         this.camera.checkCollisions = true
         this.camera.panningSensibility = 0
         this.camera.panningDistanceLimit = 0.01
-        this.camera.lowerAlphaLimit = 1
-        this.camera.lowerBetaLimit = 1
-        this.camera.upperBetaLimit = 1.5
-        this.camera.upperAlphaLimit = 2
+        // this.camera.lowerAlphaLimit = 1
+        // this.camera.upperAlphaLimit = 3
+        // this.camera.lowerBetaLimit = 1
+        // this.camera.upperBetaLimit = 1.5
+        // this.camera.lowerRadiusLimit = 1
+        // this.camera.upperRadiusLimit = 20
 
         this.camera.attachControl(this.canvasReference)
     }

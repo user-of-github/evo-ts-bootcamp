@@ -14,7 +14,7 @@ import {jackpotMoneySound, loseSound, winSound} from "../utilities/playSound";
 
 export class MainGameState {
     private static readonly DEFAULT_START_BALANCE: number = 5000
-    private static readonly COEFFICIENTS: Map<SpotValueType, number> = new Map<SpotValueType, number>([
+    public static readonly COEFFICIENTS: Map<SpotValueType, number> = new Map<SpotValueType, number>([
         [SpotValueType.EXACT_NUMBER, 36],
         [SpotValueType.RED_ONLY, 2],
         [SpotValueType.BLACK_ONLY, 2],

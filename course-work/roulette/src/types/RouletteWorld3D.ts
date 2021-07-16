@@ -18,6 +18,7 @@ const BALL_TASK_NAME: string = 'BALL'
 const CENTRAL_MESH_NAME: string = 'centralWithFloor'
 const SPOTS_MESH_NAME: string = 'spots'
 
+const FRAME_RATE: number = 30
 
 export class RouletteWorld3D {
     private readonly engine: BABYLON.Engine
@@ -91,7 +92,8 @@ export class RouletteWorld3D {
                             if (mesh.name === SPOTS_MESH_NAME || mesh.name === CENTRAL_MESH_NAME)
                                 console.log(mesh)
 
-
+                        this.spots = this.scene.getMeshByName(SPOTS_MESH_NAME)
+                        this.startSpotsAnimations()
                     }
                     break
                 case BALL_TASK_NAME:
@@ -127,14 +129,52 @@ export class RouletteWorld3D {
             this.scene
         )
 
-        this.roulette!.physicsImpostor = new BABYLON.PhysicsImpostor(
-            this.ball!,
-            BABYLON.PhysicsImpostor.BoxImpostor,
-            {mass: 100, restitution: 0.9},
-            this.scene
-        )
+        // this.roulette!.physicsImpostor =
+        //     new BABYLON.PhysicsImpostor(this.roulette!,
+        //         BABYLON.PhysicsImpostor.MeshImpostor,
+        //         {mass: 0, friction: 1},
+        //         this.scene)
 
         this.engine.runRenderLoop(() => this.scene.render())
+    }
+
+    private startSpotsAnimations(): void {
+        const spotAnimation: BABYLON.Animation = new BABYLON.Animation(
+            "yRot",
+            "rotation.y",
+            FRAME_RATE,
+            BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+            BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE
+        )
+
+        const keyFramesR: Array<BABYLON.IAnimationKey> = Array<BABYLON.IAnimationKey>()
+
+        keyFramesR.push({
+            frame: 0,
+            value: 0
+        })
+
+        keyFramesR.push({
+            frame: FRAME_RATE,
+            value: 4 * Math.PI
+        })
+
+        keyFramesR.push({
+            frame: 2 * FRAME_RATE,
+            value: 8 * Math.PI
+        })
+
+        spotAnimation.setKeys(keyFramesR)
+
+
+        this.scene.beginDirectAnimation(
+            this.spots,
+            [spotAnimation],
+            0,
+            2 * FRAME_RATE,
+            false,
+            1
+        )
     }
 
     private setUpRoulette(): void {

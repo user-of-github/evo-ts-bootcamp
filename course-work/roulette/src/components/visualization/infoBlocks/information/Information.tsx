@@ -12,7 +12,7 @@ export const Information = (): JSX.Element => (
                 Array.from(MainGameState.COEFFICIENTS).map(value => (
                     <div className={Style.item}>
                         <span className={Style.itemSpan}>{value[0]}</span>
-                        <span className={Style.itemSpan}>{value[1]}</span>
+                        <span className={`${Style.itemSpan} ${Style.coefficient}`}>{value[1]}</span>
                     </div>
                 ))
             }

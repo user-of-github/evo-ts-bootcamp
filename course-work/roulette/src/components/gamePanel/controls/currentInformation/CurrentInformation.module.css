@@ -18,11 +18,12 @@
     width: 100%;
     margin-top: 1rem;
     color: white;
-    font-size: 2.5rem;
+    font-size: 3rem;
     font-weight: 100;
     font-family: 'Roboto Condensed', sans-serif;
     text-align: left;
     text-shadow: 0 0 0.5rem white;
+
 }
 
 .numbers {
@@ -31,12 +32,6 @@
     text-wrap: normal;
     word-wrap: normal;
 }
-
-.numbers::after {
-    display: inline;
-    content: ' DEMO';
-}
-
 
 @media (max-width: 1330px) {
     .data {

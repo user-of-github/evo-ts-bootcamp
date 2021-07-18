@@ -17,7 +17,7 @@ export const History = observer((props: { data: MainGameState }): JSX.Element =>
                 ?
                 <div className={`${StyleBase.tableBase} ${Style.table}`}>
                     {
-                        props.data.resultsHistory.map((item: ResultsHistoryItem, index: number) =>
+                        props.data.resultsHistory.slice(-10).map((item: ResultsHistoryItem, index: number) =>
                             <HistoryItem item={item} key={index}/>)
                     }
                 </div>

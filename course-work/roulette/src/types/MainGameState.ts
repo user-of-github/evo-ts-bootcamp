@@ -10,16 +10,9 @@ import {ResultsHistoryItem} from './ResultsHistoryItem'
 import {RouletteWorld3D} from './RouletteWorld3D'
 
 import {createBoardForBets} from '../utilities/boardCreator'
-import * as SoundLinks from '../utilities/sounds'
 import {getGameChips} from '../utilities/gameChipsGetter'
-import {
-    addChipSoundRef, backgroundMusicSoundRef,
-    chooseChipSoundRef,
-    jackpotMoneySoundRef,
-    loseSoundRef, noBetsOnSpotsRef, notEnoughMoneySoundRef,
-    pressButtonSoundRef, putSomeBetsSoundRef, winSoundRef
-} from "../utilities/sounds";
-import {Sound} from "./Sound";
+import {backgroundMusicSoundRef,} from '../utilities/sounds'
+import {Sound} from './Sound'
 
 
 export class MainGameState {
@@ -38,6 +31,7 @@ export class MainGameState {
     public resultsHistory: Array<ResultsHistoryItem>
     public wayTo3DWorld: RouletteWorld3D | null
     public voiceTurnedOn: boolean
+    public toHighlightLastResult: boolean = false
 
 
     public constructor(startBalance: number = MainGameState.DEFAULT_START_BALANCE) {
@@ -86,11 +80,7 @@ export class MainGameState {
     public cancelBets(): void {
         this.userBalance += this.totalCurrentBet
         this.totalCurrentBet = 0
-        this.clearBetsFromBoard()
-    }
-
-    private clearBetsFromBoard(): void {
-        this.board.spots.forEach((cell: Spot) => cell.chipsPlaced.length = 0)
+        this.clearBoardFromBets()
     }
 
     private formRouletteSpotsArray(): Array<RouletteSpot> {
@@ -152,27 +142,36 @@ export class MainGameState {
             onlySpotsWithBets.forEach((spot: Spot) => {
                 if (this.checkIfBetWon(spot, rouletteResult))
                     totalWin += spot.totalBet * MainGameState.COEFFICIENTS.get(spot.type)!
-
-                spot.chipsPlaced.length = 0
             })
 
-            this.userBalance += totalWin
-            this.totalCurrentBet = 0
 
             totalWin > 0 && Sound.playWin(this.voiceTurnedOn)
             totalWin === 0 && Sound.playLose(this.voiceTurnedOn)
 
+
             this.resultsHistory.push({award: totalWin, result: this.spotsOnRoulette[rouletteResult]})
 
+            this.userBalance += totalWin
+
+            this.totalCurrentBet = 0
             this.modalsState.modalResultActive = true
 
-
             this.currentStage = BaseGameState.BETS_PLACING
+            this.toHighlightLastResult = true
+            window.setTimeout(() => this.toHighlightLastResult = false, 4000)
             window.setTimeout(() => {
+                this.clearBoardFromBets()
                 this.modalsState.modalResultActive = false
                 this.wayTo3DWorld!.moveTheCameraAway()
-            }, 5000)
-        }, this.voiceTurnedOn ? 2000 : 1)
+            }, 3000)
+        }, 2000)
+    }
+
+    private clearBoardFromBets(): void {
+        this.board.spots.forEach((spot: Spot) => {
+            spot.chipsPlaced.length = 0
+            spot.totalBet = 0
+        })
     }
 
     public spinRoulette(): void {

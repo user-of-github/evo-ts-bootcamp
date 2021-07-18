@@ -3,57 +3,66 @@ import {
     chooseChipSoundRef, dzenRef,
     jackpotMoneySoundRef,
     loseSoundRef, noBetsOnSpotsRef, notEnoughMoneySoundRef,
-    pressButtonSoundRef, putSomeBetsSoundRef, spinningRouletteRef, winSoundRef, resultsRef
+    pressButtonSoundRef, putSomeBetsSoundRef, spinningRouletteRef,
+    winSoundRef, resultsRef, winningMoney
 } from '../utilities/sounds'
 
 
 export class Sound {
     public static playAddChip(voiceTurnedOn: boolean): void {
-        voiceTurnedOn && addChipSoundRef.play()
+        addChipSoundRef.play()
     }
 
-    public static playPressButtonAddChip(voiceTurnedOn: boolean): void {
-        voiceTurnedOn && pressButtonSoundRef.play()
+    public static playPressButton(voiceTurnedOn: boolean): void {
+        pressButtonSoundRef.play()
     }
 
     public static playChooseChip(voiceTurnedOn: boolean): void {
-        voiceTurnedOn && chooseChipSoundRef.play()
+        chooseChipSoundRef.play()
     }
 
     public static playJackpotMoney(voiceTurnedOn: boolean): void {
-        voiceTurnedOn && jackpotMoneySoundRef.play()
+        jackpotMoneySoundRef.play()
     }
 
     public static playLose(voiceTurnedOn: boolean): void {
-        voiceTurnedOn && loseSoundRef.play()
+        loseSoundRef.play()
     }
 
     public static playWin(voiceTurnedOn: boolean): void {
-        voiceTurnedOn && winSoundRef.play().finally(() =>
+        winSoundRef.play().finally(() =>
             Sound.playJackpotMoney(voiceTurnedOn))
     }
 
     public static playPutBets(voiceTurnedOn: boolean): void {
-        voiceTurnedOn && putSomeBetsSoundRef.play()
+        putSomeBetsSoundRef.play()
     }
 
     public static playNotEnoughMoney(voiceTurnedOn: boolean): void {
-        voiceTurnedOn && notEnoughMoneySoundRef.play()
+        notEnoughMoneySoundRef.play()
     }
 
     public static playNoBets(voiceTurnedOn: boolean): void {
-        voiceTurnedOn && noBetsOnSpotsRef.play()
+        noBetsOnSpotsRef.play()
     }
 
     public static playDzen(voiceTurnedOn: boolean): void {
-        voiceTurnedOn && dzenRef.play()
+        dzenRef.play()
     }
 
     public static playSpinningRoulette(voiceTurnedOn: boolean): void {
-        voiceTurnedOn && spinningRouletteRef.play()
+        spinningRouletteRef.play()
     }
 
     public static playResultAnnouncement(voiceTurnedOn: boolean, result: number): void {
-        voiceTurnedOn && resultsRef[result].play()
+        resultsRef[result].play()
+    }
+
+    public static playWinningMoney(): void {
+        winningMoney.play()
+    }
+
+    public static stopWinningMoney(): void {
+        winningMoney.pause()
     }
 }

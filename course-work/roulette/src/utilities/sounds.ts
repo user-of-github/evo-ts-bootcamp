@@ -17,10 +17,11 @@ export const notEnoughMoneySoundRef: HTMLAudioElement = new Audio('/files/sounds
 export const noBetsOnSpotsRef: HTMLAudioElement = new Audio('/files/sounds/noBetsOnTheSpots.mp3')
 export const dzenRef: HTMLAudioElement = new Audio('/files/sounds/dzen.mp3')
 export const spinningRouletteRef: HTMLAudioElement = new Audio('/files/sounds/rouletteSpinning.mp3')
+export const winningMoney: HTMLAudioElement = new Audio('/files/sounds/plusWinMoney.mp3')
 
 pressButtonSoundRef.volume = 0.4
 
-backgroundMusicSoundRef.volume = 0.2
+backgroundMusicSoundRef.volume = 0.66
 backgroundMusicSoundRef.autoplay = true
 backgroundMusicSoundRef.loop = true
 

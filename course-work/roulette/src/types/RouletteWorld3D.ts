@@ -18,7 +18,6 @@ import {
 
 
 export class RouletteWorld3D {
-    private static readonly startCameraPosition: BABYLON.Vector3 = new BABYLON.Vector3(0, 14, -39)
     private readonly engine: BABYLON.Engine
     private readonly scene: BABYLON.Scene
     private readonly canvasReference: HTMLCanvasElement
@@ -32,6 +31,13 @@ export class RouletteWorld3D {
     private timerID: number = 0
     private summandForDisperse = 0.01
     public wayToGameState: MainGameState | null = null
+    private readonly startCamX: number = 0
+    private readonly startCamY: number = 14
+    private readonly startCamZ: number = -39
+
+    private readonly zoomCamX: number = 0
+    private readonly zoomCamY: number = 21
+    private readonly zoomCamZ: number = 0
 
     public constructor(mainCanvasForWorld3D: HTMLCanvasElement) {
         this.canvasReference = mainCanvasForWorld3D
@@ -169,14 +175,12 @@ export class RouletteWorld3D {
             0,
             0,
             0,
-            RouletteWorld3D.startCameraPosition,
+            new BABYLON.Vector3(this.startCamX, this.startCamY, this.startCamZ),
             this.scene
         )
         camera.checkCollisions = true
 
         camera.panningSensibility = 1
-        camera.upperRadiusLimit = 43
-        camera.lowerRadiusLimit = 0
         camera.attachControl(this.canvasReference)
 
         return camera
@@ -190,14 +194,11 @@ export class RouletteWorld3D {
         let minimumDistanceMeshIndex: number = 0
 
         this.spots!.getChildren().forEach((value: BABYLON.Node, index: number, spots: Array<BABYLON.Node>) => {
-            //console.log(RouletteWorld3D.getDistance((value as BABYLON.AbstractMesh).position, this.checkStick!.position))
             if (RouletteWorld3D.getDistance((value as BABYLON.AbstractMesh).absolutePosition,
                 this.checkStick!.absolutePosition) <
                 RouletteWorld3D.getDistance((spots[minimumDistanceMeshIndex] as BABYLON.AbstractMesh).absolutePosition,
                     this.checkStick!.absolutePosition))
                 minimumDistanceMeshIndex = index
-
-
         })
         return this.spots!.getChildren()[minimumDistanceMeshIndex].name
     }
@@ -223,7 +224,7 @@ export class RouletteWorld3D {
             value: this.camera.position
         }, {
             frame: FRAME_RATE * 32,
-            value: new BABYLON.Vector3(0, 15, -10)
+            value: new BABYLON.Vector3(this.zoomCamX, this.zoomCamY, this.zoomCamZ)
         }];
 
         positionAnimation.setKeys(keys1);
@@ -237,14 +238,16 @@ export class RouletteWorld3D {
             'position',
             FRAME_RATE,
             BABYLON.Animation.ANIMATIONTYPE_VECTOR3,
-            BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+            BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT)
+
+        console.log(new BABYLON.Vector3(this.startCamX, this.startCamY, this.startCamZ))
 
         const keys1: Array<BABYLON.IAnimationKey> = [{
             frame: 0,
             value: this.camera.position
         }, {
             frame: FRAME_RATE * 16,
-            value: RouletteWorld3D.startCameraPosition
+            value: new BABYLON.Vector3(this.startCamX, this.startCamY, this.startCamZ)
         }];
 
         positionAnimation.setKeys(keys1);

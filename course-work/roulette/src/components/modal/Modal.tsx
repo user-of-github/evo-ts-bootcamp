@@ -2,12 +2,13 @@ import {observer} from 'mobx-react-lite'
 
 import {MainGameState} from '../../types/MainGameState'
 import {SpotColor} from '../../types/Spot'
+import {CURRENCY} from '../../utilities/configuration'
 
 import Style from './Modal.module.css'
 
 
-const NO_AWARD_TEXT: string = 'No award'
-const WIN_TEXT: string = 'You have won: '
+const NO_AWARD_TEXT: string = 'You lose'
+const WIN_TEXT: string = 'You win: '
 
 export const ModalWarning = observer((props: { state: MainGameState }): JSX.Element => (
     <>
@@ -42,16 +43,18 @@ export const ModalResult = observer((props: { state: MainGameState }): JSX.Eleme
                      onClick={() => {
                          props.state.modalsState.modalResultActive = false
                      }}>
-                    <div className={Style.containerResult}
-                         onClick={(event) => {
-                             event.stopPropagation()
-                         }}>
+                    <div
+                        className={`${Style.containerResult} ${props.state.resultsHistory[props.state.resultsHistory.length -
+                        1].award > 0 ? Style.winBorder : Style.loseBorder}`}
+                        onClick={(event) => {
+                            event.stopPropagation()
+                        }}>
                         <div className={Style.resultInfo}>
                             {
                                 props.state.resultsHistory[props.state.resultsHistory.length - 1].award > 0
                                     ?
-                                    `${WIN_TEXT}\n${props.state.resultsHistory[props.state.resultsHistory.length -
-                                    1].award} DEMO`
+                                    `${WIN_TEXT}${props.state.resultsHistory[props.state.resultsHistory.length -
+                                    1].award} ${CURRENCY}`
                                     :
                                     NO_AWARD_TEXT
                             }

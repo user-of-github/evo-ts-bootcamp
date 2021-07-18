@@ -11,7 +11,7 @@
     height: 100%;
     margin: auto;
     animation-name: canvasAppears;
-    animation-duration: 2s;
+    animation-duration: 2500ms;
     animation-timing-function: ease;
 }
 
@@ -19,7 +19,7 @@
     0% {
         opacity: 0;
     }
-    45% {
+    66% {
         opacity: 0;
     }
     100% {

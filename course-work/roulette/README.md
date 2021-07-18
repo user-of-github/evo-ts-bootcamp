@@ -29,7 +29,7 @@ _Make bets, spin the roulette, check your luck and enjoy the process !_
 * _Real world coefficients_
 * _History of roulette results & bets_
 * _3D visualization & random results_
-* _Sound accompaniment and voice-over of actions_
+* _Full voice-over of all actions & sound accompaniment_
 
 ### Some development features:
 

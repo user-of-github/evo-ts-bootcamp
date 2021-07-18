@@ -3,35 +3,30 @@ import {makeAutoObservable} from 'mobx'
 import {Board} from './Board'
 import {Chip} from './Chip'
 import {BaseGameState} from './BaseGameState'
-import {createBoardForBets} from '../utilities/boardCreator'
-import {getGameChips} from '../utilities/gameChipsGetter'
 import {RouletteSpot, Spot, SpotColor, SpotValueType} from './Spot'
 import {HighlightedCellsOnHover} from './HighlightedCellsOnHover'
 import {ModalsController} from './ModalsController'
 import {ResultsHistoryItem} from './ResultsHistoryItem'
-import {jackpotMoneySound, loseSound, winSound} from "../utilities/playSound";
-import {RouletteWorld3D} from "./RouletteWorld3D";
+import {RouletteWorld3D} from './RouletteWorld3D'
+
+import {createBoardForBets} from '../utilities/boardCreator'
+import * as SoundLinks from '../utilities/sounds'
+import {getGameChips} from '../utilities/gameChipsGetter'
+import {
+    addChipSoundRef, backgroundMusicSoundRef,
+    chooseChipSoundRef,
+    jackpotMoneySoundRef,
+    loseSoundRef, noBetsOnSpotsRef, notEnoughMoneySoundRef,
+    pressButtonSoundRef, putSomeBetsSoundRef, winSoundRef
+} from "../utilities/sounds";
+import {Sound} from "./Sound";
 
 
 export class MainGameState {
     private static readonly DEFAULT_START_BALANCE: number = 5000
-    public static readonly COEFFICIENTS: Map<SpotValueType, number> = new Map<SpotValueType, number>([
-        [SpotValueType.EXACT_NUMBER, 36],
-        [SpotValueType.RED_ONLY, 2],
-        [SpotValueType.BLACK_ONLY, 2],
-        [SpotValueType.EVEN_ONLY, 2],
-        [SpotValueType.ODD_ONLY, 2],
-        [SpotValueType.FIRST_HALF, 2],
-        [SpotValueType.SECOND_HALF, 2],
-        [SpotValueType.FIRST_TWELVE, 3],
-        [SpotValueType.SECOND_TWELVE, 3],
-        [SpotValueType.THIRD_TWELVE, 3],
-        [SpotValueType.FIRST_2_TO_1, 3],
-        [SpotValueType.SECOND_2_TO_1, 3],
-        [SpotValueType.THIRD_2_TO_1, 3],
-
-    ])
+    public static readonly COEFFICIENTS: Map<SpotValueType, number> = MainGameState.getGameCoefficients()
     private readonly spotsOnRoulette: Array<RouletteSpot>
+
     public board: Board
     public currentStage: BaseGameState
     public userBalance: number
@@ -41,7 +36,8 @@ export class MainGameState {
     public currentlyHighlightedCells: HighlightedCellsOnHover | null
     public modalsState: ModalsController
     public resultsHistory: Array<ResultsHistoryItem>
-    public wayTo3DWorld: RouletteWorld3D | null = null
+    public wayTo3DWorld: RouletteWorld3D | null
+    public voiceTurnedOn: boolean
 
 
     public constructor(startBalance: number = MainGameState.DEFAULT_START_BALANCE) {
@@ -53,6 +49,8 @@ export class MainGameState {
         this.chipActiveIndex = 1
         this.chipsSet[this.chipActiveIndex].active = true
         this.currentlyHighlightedCells = null
+        this.wayTo3DWorld = null
+        this.voiceTurnedOn = true
 
         this.modalsState = {
             modalWarningActive: false,
@@ -144,40 +142,72 @@ export class MainGameState {
     }
 
     public countResults(rouletteResult: number): void {
-        let totalWin: number = 0
-        const onlySpotsWithBets: Array<Spot> = this.board.spots.filter((spot: Spot) =>
-            spot.chipsPlaced.length !== 0 && spot.totalBet !== 0)
+        Sound.playResultAnnouncement(this.voiceTurnedOn, rouletteResult)
 
-        onlySpotsWithBets.forEach((spot: Spot) => {
-            if (this.checkIfBetWon(spot, rouletteResult))
-                totalWin += spot.totalBet * MainGameState.COEFFICIENTS.get(spot.type)!
+        window.setTimeout(() => {
+            let totalWin: number = 0
+            const onlySpotsWithBets: Array<Spot> = this.board.spots.filter(
+                (spot: Spot) => spot.chipsPlaced.length !== 0 && spot.totalBet !== 0)
 
-            spot.chipsPlaced.length = 0
-        })
+            onlySpotsWithBets.forEach((spot: Spot) => {
+                if (this.checkIfBetWon(spot, rouletteResult))
+                    totalWin += spot.totalBet * MainGameState.COEFFICIENTS.get(spot.type)!
 
-        // window.alert(totalWin !== 0 ? `You won ${totalWin}` : 'No win')
+                spot.chipsPlaced.length = 0
+            })
 
-        this.userBalance += totalWin
-        this.totalCurrentBet = 0
+            this.userBalance += totalWin
+            this.totalCurrentBet = 0
 
-        this.resultsHistory.push({award: totalWin, result: this.spotsOnRoulette[rouletteResult]})
+            totalWin > 0 && Sound.playWin(this.voiceTurnedOn)
+            totalWin === 0 && Sound.playLose(this.voiceTurnedOn)
 
-        this.modalsState.modalResultActive = true
-        totalWin > 0 && jackpotMoneySound.play().finally(() => winSound.play())
-        totalWin === 0 && loseSound.play()
+            this.resultsHistory.push({award: totalWin, result: this.spotsOnRoulette[rouletteResult]})
 
-        this.currentStage = BaseGameState.BETS_PLACING
-        window.setTimeout(() => this.modalsState.modalResultActive = false, 5000)
+            this.modalsState.modalResultActive = true
+
+
+            this.currentStage = BaseGameState.BETS_PLACING
+            window.setTimeout(() => {
+                this.modalsState.modalResultActive = false
+                this.wayTo3DWorld!.moveTheCameraAway()
+            }, 5000)
+        }, this.voiceTurnedOn ? 2000 : 1)
     }
 
     public spinRoulette(): void {
-        if (this.currentStage === BaseGameState.ROULETTE_SPINNING)
-            return
-
-        if (this.totalCurrentBet === 0)
+        if (this.currentStage === BaseGameState.ROULETTE_SPINNING
+            || this.totalCurrentBet === 0)
             return
 
         this.currentStage = BaseGameState.ROULETTE_SPINNING
+        Sound.playSpinningRoulette(this.voiceTurnedOn)
         this.wayTo3DWorld!.startDisperse()
+    }
+
+    private static getGameCoefficients(): Map<SpotValueType, number> {
+        return new Map<SpotValueType, number>([
+            [SpotValueType.EXACT_NUMBER, 36],
+            [SpotValueType.RED_ONLY, 2],
+            [SpotValueType.BLACK_ONLY, 2],
+            [SpotValueType.EVEN_ONLY, 2],
+            [SpotValueType.ODD_ONLY, 2],
+            [SpotValueType.FIRST_HALF, 2],
+            [SpotValueType.SECOND_HALF, 2],
+            [SpotValueType.FIRST_TWELVE, 3],
+            [SpotValueType.SECOND_TWELVE, 3],
+            [SpotValueType.THIRD_TWELVE, 3],
+            [SpotValueType.FIRST_2_TO_1, 3],
+            [SpotValueType.SECOND_2_TO_1, 3],
+            [SpotValueType.THIRD_2_TO_1, 3],
+        ])
+    }
+
+    public changeSoundState(): void {
+        this.voiceTurnedOn = !this.voiceTurnedOn
+        if (this.voiceTurnedOn)
+            backgroundMusicSoundRef.play()
+        else
+            backgroundMusicSoundRef.pause()
     }
 }

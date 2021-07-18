@@ -5,18 +5,16 @@ import {BaseGameState} from '../../../../types/BaseGameState'
 import spinLogo from '../../../../images/swirl.svg'
 import removeBetsLogo from '../../../../images/remove.svg'
 import cursor from '../../../../images/cursor.png'
-import {noBetsOnSpots, pressButtonSound, putSomeBetsSound} from '../../../../utilities/playSound'
+import {Sound} from '../../../../types/Sound'
 
 import Style from './Management.module.css'
 
+
 const buttonPlayClicked = (data: MainGameState): void => {
-    pressButtonSound.play()
     if (data.totalCurrentBet === 0) {
-        putSomeBetsSound.play()
+        Sound.playPutBets(data.voiceTurnedOn)
         data.modalsState.modalWarningText = 'Please, make some bets'
         data.modalsState.modalWarningActive = true
-
-
         window.setTimeout(() => data.modalsState.modalWarningActive = false, 1500)
     } else {
         data.spinRoulette()
@@ -24,11 +22,10 @@ const buttonPlayClicked = (data: MainGameState): void => {
 }
 
 const buttonClearBetsPressed = (data: MainGameState): void => {
-    pressButtonSound.play()
     if (data.totalCurrentBet === 0) {
+        Sound.playNoBets(data.voiceTurnedOn)
         data.modalsState.modalWarningActive = true
         data.modalsState.modalWarningText = 'No bets on the spots'
-        noBetsOnSpots.play()
         window.setTimeout(() => data.modalsState.modalWarningActive = false, 2000)
     } else {
         data.cancelBets()
@@ -44,6 +41,7 @@ export const Management = observer((props: { data: MainGameState }): JSX.Element
                         style={{cursor: `url(${cursor}), auto`}}
                         onClick={() => buttonPlayClicked(props.data)}>
                     <img className={Style.buttonManagerImage} src={spinLogo} alt="spin!"/>
+                    Spin
                 </button>
             </div>
             <div className={Style.buttonManagerContainer}>
@@ -51,6 +49,7 @@ export const Management = observer((props: { data: MainGameState }): JSX.Element
                         style={{cursor: `url(${cursor}), auto`}}
                         onClick={() => buttonClearBetsPressed(props.data)}>
                     <img className={Style.buttonManagerImage} src={removeBetsLogo} alt="remove bets!"/>
+                    Clear
                 </button>
             </div>
         </div>

@@ -18,6 +18,7 @@ export const Roulette = observer((props: { data: MainGameState }): JSX.Element =
             world3D.current!.wayToGameState = props.data
         }
     }, [])
+
     return (
         <section className={Style.container}>
             <canvas className={Style.babylonCanvas}

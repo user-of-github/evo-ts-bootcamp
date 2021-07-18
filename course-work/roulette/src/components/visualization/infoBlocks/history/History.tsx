@@ -1,14 +1,15 @@
 import {observer} from 'mobx-react-lite'
 
 import {MainGameState} from '../../../../types/MainGameState'
-import {SpotColor} from '../../../../types/Spot'
+import {ResultsHistoryItem} from '../../../../types/ResultsHistoryItem'
+
+import {HistoryItem} from './histotyItem/HistoryItem'
 
 import StyleBase from '../InfoBlocks.module.css'
 import Style from './History.module.css'
 
 
 export const History = observer((props: { data: MainGameState }): JSX.Element => (
-
     <div className={`${StyleBase.containerBase} ${Style.container}`}>
         <h1 className={StyleBase.title}>Results history</h1>
         {
@@ -16,18 +17,16 @@ export const History = observer((props: { data: MainGameState }): JSX.Element =>
                 ?
                 <div className={`${StyleBase.tableBase} ${Style.table}`}>
                     {
-                        props.data.resultsHistory.map(item =>
-                            <div className={`${Style.item} ${item.result.color === SpotColor.GREEN ? Style.green :
-                                item.result.color === SpotColor.RED ? Style.red : Style.black}`}
-                                 title="Show result">
-                                {item.result.value}
-                            </div>
-                        )
+                        props.data.resultsHistory.map((item: ResultsHistoryItem, index: number) =>
+                            <HistoryItem item={item} key={index}/>)
                     }
                 </div>
                 :
-                <div className={StyleBase.tableBase}><span className={Style.noSpins}>No spins yet</span></div>
+                <div className={StyleBase.tableBase}>
+                    <span className={Style.noSpins}>
+                        No spins yet
+                    </span>
+                </div>
         }
     </div>
-
 ))

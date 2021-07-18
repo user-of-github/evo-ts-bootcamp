@@ -1,10 +1,13 @@
 import {observer} from 'mobx-react-lite'
 
-import Style from './Modal.module.css'
 import {MainGameState} from '../../types/MainGameState'
 import {SpotColor} from '../../types/Spot'
-import {pressButtonSound} from '../../utilities/playSound';
 
+import Style from './Modal.module.css'
+
+
+const NO_AWARD_TEXT: string = 'No award'
+const WIN_TEXT: string = 'You have won: '
 
 export const ModalWarning = observer((props: { state: MainGameState }): JSX.Element => (
     <>
@@ -13,13 +16,11 @@ export const ModalWarning = observer((props: { state: MainGameState }): JSX.Elem
                 ?
                 <div className={Style.wrapper}
                      onClick={() => {
-                         pressButtonSound.play()
                          props.state.modalsState.modalWarningActive = false
                      }}>
                     <div className={Style.containerWarning}
                          onClick={(event) => {
                              event.stopPropagation()
-                             pressButtonSound.play()
                          }
                          }>
                         {props.state.modalsState.modalWarningText}
@@ -39,21 +40,20 @@ export const ModalResult = observer((props: { state: MainGameState }): JSX.Eleme
                 ?
                 <div className={Style.wrapper}
                      onClick={() => {
-                         pressButtonSound.play()
                          props.state.modalsState.modalResultActive = false
                      }}>
                     <div className={Style.containerResult}
                          onClick={(event) => {
                              event.stopPropagation()
-                             pressButtonSound.play()
                          }}>
                         <div className={Style.resultInfo}>
                             {
                                 props.state.resultsHistory[props.state.resultsHistory.length - 1].award > 0
                                     ?
-                                    `You won\n${props.state.resultsHistory[props.state.resultsHistory.length - 1].award} DEMO`
+                                    `${WIN_TEXT}\n${props.state.resultsHistory[props.state.resultsHistory.length -
+                                    1].award} DEMO`
                                     :
-                                    'No award'
+                                    NO_AWARD_TEXT
                             }
                         </div>
                         <div

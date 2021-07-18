@@ -2,7 +2,22 @@ import {Spot, SpotColor, SpotValueType} from '../../../../types/Spot'
 import {MainGameState} from '../../../../types/MainGameState'
 
 import Style from './SingleBoardCell.module.css'
+import {Sound} from "../../../../types/Sound";
 
+
+const NOT_ENOUGH_MONEY_ERROR: string = 'Not enough money on your balance !'
+
+export const chipPutOnSpot = (state: MainGameState, cell: Spot): void => {
+    if (state.chipsSet[state.chipActiveIndex].chip > state.userBalance) {
+        Sound.playNotEnoughMoney(state.voiceTurnedOn)
+        state.modalsState.modalWarningText = NOT_ENOUGH_MONEY_ERROR
+        state.modalsState.modalWarningActive = true
+        window.setTimeout(() => state.modalsState.modalWarningActive = false, 2000)
+    } else {
+        Sound.playAddChip(state.voiceTurnedOn)
+        state.putChipOnCell(cell)
+    }
+}
 
 export const computeMouseOver = (cellHovered: Spot, mainState: MainGameState): void => {
     if (cellHovered.type === SpotValueType.RED_ONLY || cellHovered.type === SpotValueType.BLACK_ONLY ||
@@ -10,8 +25,10 @@ export const computeMouseOver = (cellHovered: Spot, mainState: MainGameState): v
         cellHovered.type === SpotValueType.FIRST_TWELVE || cellHovered.type === SpotValueType.SECOND_TWELVE ||
         cellHovered.type === SpotValueType.THIRD_TWELVE || cellHovered.type === SpotValueType.FIRST_2_TO_1 ||
         cellHovered.type === SpotValueType.SECOND_2_TO_1 || cellHovered.type === SpotValueType.THIRD_2_TO_1 ||
-        cellHovered.type === SpotValueType.FIRST_HALF || cellHovered.type === SpotValueType.SECOND_HALF)
+        cellHovered.type === SpotValueType.FIRST_HALF || cellHovered.type === SpotValueType.SECOND_HALF) {
+
         mainState.currentlyHighlightedCells = cellHovered.type
+    }
 }
 
 export const getClassesString = (cell: Spot, mainState: MainGameState): string => {

@@ -1,0 +1,74 @@
+.item {
+    width: 4rem;
+    height: 4rem;
+    margin: 0.5rem auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    opacity: 1;
+    border-radius: 100%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 500;
+    font-size: 1.5rem;
+    animation-name: itemAppears;
+    animation-duration: 0.4s;
+    animation-timing-function: ease-in-out;
+}
+
+.green {
+    background-color: #339F4E;
+}
+
+.red {
+    background-color: #9E2723;
+}
+
+.black {
+    background-color: #0E130D;
+}
+
+@keyframes itemAppears {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+@media (max-width: 1100px) {
+    .item {
+        width: 3rem;
+        height: 3rem;
+    }
+}
+
+@media (max-width: 1000px) {
+    .item {
+        width: 2rem;
+        height: 2rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 800px) {
+    .item {
+        width: 1.8rem;
+        height: 1.8rem;
+        font-size: 1rem;
+    }
+}
+
+
+@media (max-width: 700px) {
+    .item {
+        width: 1.75rem;
+        height: 1.75rem;
+        font-size: 0.9rem;
+    }
+}

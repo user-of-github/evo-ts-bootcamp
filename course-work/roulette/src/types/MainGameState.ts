@@ -10,6 +10,7 @@ import {HighlightedCellsOnHover} from './HighlightedCellsOnHover'
 import {ModalsController} from './ModalsController'
 import {ResultsHistoryItem} from './ResultsHistoryItem'
 import {jackpotMoneySound, loseSound, winSound} from "../utilities/playSound";
+import {RouletteWorld3D} from "./RouletteWorld3D";
 
 
 export class MainGameState {
@@ -40,6 +41,7 @@ export class MainGameState {
     public currentlyHighlightedCells: HighlightedCellsOnHover | null
     public modalsState: ModalsController
     public resultsHistory: Array<ResultsHistoryItem>
+    public wayTo3DWorld: RouletteWorld3D | null = null
 
 
     public constructor(startBalance: number = MainGameState.DEFAULT_START_BALANCE) {
@@ -141,7 +143,7 @@ export class MainGameState {
         return false
     }
 
-    private countResults(rouletteResult: number): void {
+    public countResults(rouletteResult: number): void {
         let totalWin: number = 0
         const onlySpotsWithBets: Array<Spot> = this.board.spots.filter((spot: Spot) =>
             spot.chipsPlaced.length !== 0 && spot.totalBet !== 0)
@@ -164,7 +166,7 @@ export class MainGameState {
         totalWin > 0 && jackpotMoneySound.play().finally(() => winSound.play())
         totalWin === 0 && loseSound.play()
 
-
+        this.currentStage = BaseGameState.BETS_PLACING
         window.setTimeout(() => this.modalsState.modalResultActive = false, 5000)
     }
 
@@ -176,10 +178,6 @@ export class MainGameState {
             return
 
         this.currentStage = BaseGameState.ROULETTE_SPINNING
-        window.setTimeout(() => {
-            const resIndex: number = Math.round(Math.random() * 36)
-            this.countResults(resIndex)
-            this.currentStage = BaseGameState.BETS_PLACING
-        }, 2000)
+        this.wayTo3DWorld!.startDisperse()
     }
 }

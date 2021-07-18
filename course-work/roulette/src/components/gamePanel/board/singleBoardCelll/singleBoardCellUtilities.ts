@@ -47,12 +47,12 @@ export const getClassesString = (cell: Spot, mainState: MainGameState): string =
                 : ''
             break
         case SpotValueType.RED_ONLY:
-            response += cell.type === SpotValueType.EXACT_NUMBER && cell.color == SpotColor.RED
+            response += cell.type === SpotValueType.EXACT_NUMBER && cell.color === SpotColor.RED
                 ? Style.highlighted
                 : ''
             break
         case SpotValueType.BLACK_ONLY:
-            response += cell.type === SpotValueType.EXACT_NUMBER && cell.color == SpotColor.BLACK
+            response += cell.type === SpotValueType.EXACT_NUMBER && cell.color === SpotColor.BLACK
                 ? Style.highlighted
                 : ''
             break

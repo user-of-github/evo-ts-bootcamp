@@ -14,6 +14,8 @@ export const Roulette = observer((props: { data: MainGameState }): JSX.Element =
     React.useLayoutEffect(() => {
         if (canvasRef) {
             world3D.current = new RouletteWorld3D(canvasRef.current as HTMLCanvasElement)
+            props.data.wayTo3DWorld = world3D.current
+            world3D.current!.wayToGameState = props.data
         }
     }, [])
     return (

@@ -1,14 +1,17 @@
-# TypeScript Bootcamp course project
+# Roulette | Поле чудес
 
-### _Final project to graduate from [Evolution Gaming TypeScript Bootcamp](https://github.com/evolution-gaming/typescript-bootcamp)_
-&nbsp;  
+### _Final project made by student [Slutski Nikita](https://github.com/user-of-github)_
 
-* __Topic: Gambling game — Virtual Roulette (Casino)__ 
-* __With and using: React, TypeScript, MobX, BabylonJS,  3Ds Max__  
-* __Terms of development: June 22, 2021 ———>   &nbsp;  . . .__ 
+__[This project is the property of its developer]__
+
 &nbsp;
-###### _Slutski Nikita | Слуцкий Никита_
 
-###### _Copyright &nbsp;© 2021 &nbsp;(June - July)_
+* __Technologies__: TypeScript, React, MobX, BabylonJS
+* __Terms of development__: June 20, 2021 ——> July 19, 2021  
+  &nbsp; &nbsp;
 
-###### _All rights reserved_
+###### Slutski Nikita
+
+###### Copyright &nbsp; © 2021 &nbsp;(June - July)
+
+###### All rights reserved

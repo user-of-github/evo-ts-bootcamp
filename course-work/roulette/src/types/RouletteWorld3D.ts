@@ -1,26 +1,24 @@
 import * as BABYLON from '@babylonjs/core'
 import '@babylonjs/inspector'
-import {OimoJSPlugin} from '@babylonjs/core';
+import {MainGameState} from "./MainGameState";
 
-// @ts-ignore
-window.OIMO = require('oimo')
 
 
 const MESH_ROOT_URL: string = '/meshes/'
 
 const ROULETTE_FILE_NAME: string = 'roulette-model.babylon'
 const BALL_FILE_NAME: string = 'ball.babylon'
-const ENV_TEXTURE_FILE_NAME: string = 'standard.env'
+const ENV_TEXTURE_FILE_NAME: string = 'studio.env'
 
-const TABLE_TASK_NAME: string = 'TABLE'
-const ROULETTE_TASK_NAME: string = 'ROULETTE'
 const ENV_TEXTURE_TASK_NAME: string = 'ENV'
-const BALL_TASK_NAME: string = 'BALL'
 
+const ROULETTE_MESH_NAME: string = 'ROULETTE'
 const CENTRAL_MESH_NAME: string = 'centralWithFloor'
 const SPOTS_MESH_NAME: string = 'spots'
+const CHECK_STICK_MESH_NAME: string = 'checkStick'
+const BALL_MESH_NAME: string = 'BALL'
 
-const FRAME_RATE: number = 144
+const FRAME_RATE: number = 30
 
 
 export class RouletteWorld3D {
@@ -29,10 +27,13 @@ export class RouletteWorld3D {
     private readonly canvasReference: HTMLCanvasElement
     private camera: BABYLON.ArcRotateCamera
     private light: BABYLON.HemisphericLight
-    private roulette: BABYLON.AbstractMesh | null
-    private ball: BABYLON.AbstractMesh | null
-    private centralStateInRoulette: BABYLON.AbstractMesh | null
-    private spots: BABYLON.AbstractMesh | null
+    private roulette: BABYLON.AbstractMesh | null = null
+    private centralStateInRoulette: BABYLON.AbstractMesh | null = null
+    private spots: BABYLON.AbstractMesh | null = null
+    private checkStick: BABYLON.AbstractMesh | null = null
+    private timerID: number = 0
+    private summandForDisperse = 0.01
+    public wayToGameState: MainGameState | null  = null
 
     public constructor(mainCanvasForWorld3D: HTMLCanvasElement) {
         this.canvasReference = mainCanvasForWorld3D
@@ -43,52 +44,36 @@ export class RouletteWorld3D {
         this.light = this.setUpLight()
         window.onresize = () => this.engine.resize()
 
-        this.roulette = this.ball = this.centralStateInRoulette = this.spots = null
+        this.loadMeshes()
 
+        //this.scene.debugLayer.show()
+        this.engine.runRenderLoop(() => this.scene.render())
+    }
+
+    private loadMeshes(): void {
+        BABYLON.SceneLoader.ImportMesh('',
+            MESH_ROOT_URL,
+            ROULETTE_FILE_NAME,
+            this.scene,
+            (importedMeshes: Array<BABYLON.AbstractMesh>) => {
+                this.roulette = this.scene.getMeshByName(ROULETTE_MESH_NAME)!
+                this.locateRoulette()
+                this.camera.setTarget(this.roulette)
+
+                this.spots = this.scene.getMeshByName(SPOTS_MESH_NAME)
+                this.centralStateInRoulette = this.scene.getMeshByName(CENTRAL_MESH_NAME)
+                this.checkStick = this.scene.getMeshByName(CHECK_STICK_MESH_NAME)
+                this.startDefaultAnimations(3000)
+            })
 
         const assetsManager: BABYLON.AssetsManager = new BABYLON.AssetsManager(this.scene)
 
         assetsManager.useDefaultLoadingScreen = false
-        this.loadAssets(assetsManager)
 
-        //   this.scene.debugLayer.show();
-    }
-
-    private loadAssets(assetsManager: BABYLON.AssetsManager): void {
-        assetsManager.addMeshTask(
-            ROULETTE_TASK_NAME,
-            '',
-            MESH_ROOT_URL,
-            ROULETTE_FILE_NAME)
-
-        assetsManager.addMeshTask(
-            BALL_TASK_NAME,
-            '',
-            MESH_ROOT_URL,
-            BALL_FILE_NAME)
-
-        assetsManager.addCubeTextureTask(ENV_TEXTURE_TASK_NAME, MESH_ROOT_URL + ENV_TEXTURE_FILE_NAME)
+        assetsManager.addCubeTextureTask(ENV_TEXTURE_TASK_NAME, MESH_ROOT_URL + ENV_TEXTURE_FILE_NAME);
 
         assetsManager.onTaskSuccess = (task: BABYLON.AbstractAssetTask) => {
             switch (task.name) {
-                case ROULETTE_TASK_NAME:
-                    if (task instanceof BABYLON.MeshAssetTask) {
-                        this.roulette = task.loadedMeshes[0]
-                        this.setUpRoulette()
-                        this.camera.setTarget(this.roulette)
-
-                        this.spots = this.scene.getMeshByName(SPOTS_MESH_NAME)
-                        this.centralStateInRoulette = this.scene.getMeshByName(CENTRAL_MESH_NAME)
-                        this.startSpotsAnimations()
-                    }
-                    break
-                case BALL_TASK_NAME:
-                    if (task instanceof BABYLON.MeshAssetTask) {
-                        this.ball = task.loadedMeshes[0]
-                        this.ball.position.x = this.ball.position.z = 2
-                        this.ball.position.y = 10
-                    }
-                    break
                 case ENV_TEXTURE_TASK_NAME:
                     if (task instanceof BABYLON.CubeTextureAssetTask) {
                         this.scene.environmentTexture = task.texture
@@ -97,65 +82,19 @@ export class RouletteWorld3D {
         }
 
         assetsManager.onFinish = () => {
-            this.physicsExample()
             this.engine.runRenderLoop(() => this.scene.render())
         }
 
         assetsManager.load()
-    }
-
-    private physicsExample(): void {
-        this.scene.enablePhysics(new BABYLON.Vector3(0, -9.81, 0), new OimoJSPlugin())
-
-        for (const mesh of this.roulette!.getChildMeshes()) {
-            mesh.physicsImpostor = new BABYLON.PhysicsImpostor(
-                mesh,
-                BABYLON.PhysicsImpostor.MeshImpostor,
-                {mass: 0, friction: 1},
-                this.scene)
-        }
-
-
-        this.ball!.physicsImpostor = new BABYLON.PhysicsImpostor(
-            this.ball!,
-            BABYLON.PhysicsImpostor.SphereImpostor, {mass: 2, friction: 0.5, restitution: 0},
-            this.scene
-        )
-
-
-        // тестовый ground
-        const ground = BABYLON.MeshBuilder.CreateGround('ground', {
-            width: 100,
-            height: 100
-        }, this.scene)
-        ground.position.y -= 10
-        ground.physicsImpostor = new BABYLON.PhysicsImpostor(
-            ground,
-            BABYLON.PhysicsImpostor.BoxImpostor,
-            {mass: 0, friction: 0.5, restitution: 0},
-            this.scene
-        )
-        ground.position.y -= 20
-
-
-        // последние изменения (подсмотрел тут: https://www.sitepoint.com/understanding-collisions-physics-babylon-js-oimo-js/)
-        const meshesColliderList = [];
-
-        for (let i: number = 1; i < this.scene.meshes.length; i++) {
-            if (this.scene.meshes[i].checkCollisions && this.scene.meshes[i].isVisible === false) {
-                // @ts-ignore
-                this.scene.meshes[i].setPhysicsState(BABYLON.PhysicsEngine.BoxImpostor, {
-                    mass: 0,
-                    friction: 0.5, restitution: 0.7
-                });
-                meshesColliderList.push(this.scene.meshes[i]);
-            }
-        }
 
         this.engine.runRenderLoop(() => this.scene.render())
     }
 
-    private startSpotsAnimations(): void {
+    private locateRoulette(): void {
+        this.roulette!.position.x = this.roulette!.position.y = this.roulette!.position.z = 0
+    }
+
+    private startDefaultAnimations(wholeTime: number): void {
         const rotateAnimation: BABYLON.Animation = new BABYLON.Animation(
             "spotRotation", "rotation",
             FRAME_RATE,
@@ -164,17 +103,47 @@ export class RouletteWorld3D {
 
         const keyFramesR: Array<BABYLON.IAnimationKey> = Array<BABYLON.IAnimationKey>()
         keyFramesR.push({frame: 0, value: new BABYLON.Vector3(0, 0, 0)})
-        keyFramesR.push({frame: 2 * FRAME_RATE, value: new BABYLON.Vector3(0, Math.PI, 0)})
-        keyFramesR.push({frame: 4 * FRAME_RATE, value: new BABYLON.Vector3(0, 2 * Math.PI, 0)})
+        keyFramesR.push({frame: 4 * FRAME_RATE, value: new BABYLON.Vector3(0, Math.PI, 0)})
+        keyFramesR.push({frame: 8 * FRAME_RATE, value: new BABYLON.Vector3(0, 2 * Math.PI, 0)})
         rotateAnimation.setKeys(keyFramesR)
 
-        this.scene.beginDirectAnimation(this.spots, [rotateAnimation], 0, 4 * FRAME_RATE, true)
+        this.scene.beginDirectAnimation(this.spots, [rotateAnimation], 0, 8 * FRAME_RATE, true)
         this.scene.beginDirectAnimation(this.centralStateInRoulette, [rotateAnimation], 0, 4 * FRAME_RATE, true)
     }
 
-    private setUpRoulette(): void {
-        this.roulette!.checkCollisions = true
-        this.roulette!.position.x = this.roulette!.position.y = this.roulette!.position.z = 0
+    public startDisperse(): void {
+        this.scene.stopAllAnimations()
+        this.disperseRecursive()
+    }
+
+    public disperseRecursive(): void {
+        this.timerID = window.setTimeout(() => {
+            this.spots!.rotation = new BABYLON.Vector3(0, this.spots!.rotation.y + this.summandForDisperse, 0)
+            this.centralStateInRoulette!.rotation = new BABYLON.Vector3(0, this.spots!.rotation.y + this.summandForDisperse, 0)
+            this.summandForDisperse += 0.0001
+            //console.log(this.scene!.getMeshByName('spot22')!._positions)
+            if (this.summandForDisperse >= 0.05) {
+                window.clearTimeout(this.timerID)
+                this.brakingRecursive()
+                return
+            }
+            this.disperseRecursive()
+        }, 14)
+    }
+
+    private brakingRecursive(): void {
+        this.timerID = window.setTimeout(() => {
+            this.spots!.rotation = new BABYLON.Vector3(0, this.spots!.rotation.y + this.summandForDisperse, 0)
+            this.centralStateInRoulette!.rotation = new BABYLON.Vector3(0, this.spots!.rotation.y + this.summandForDisperse, 0)
+            this.summandForDisperse -= 0.0002
+            if (this.summandForDisperse <= 0.01) {
+                this.wayToGameState!.countResults(Number.parseInt(this.getTheNearestSpot()!.slice(4)))
+                window.clearTimeout(this.timerID)
+                return
+            }
+            this.brakingRecursive()
+
+        }, 14)
     }
 
     private setUpCamera(): BABYLON.ArcRotateCamera {
@@ -183,22 +152,40 @@ export class RouletteWorld3D {
             0,
             0,
             0,
-            new BABYLON.Vector3(0, 10, -15),
+            new BABYLON.Vector3(0, 0, -13),
             this.scene
         )
         camera.checkCollisions = true
-        camera.panningSensibility = 0
-        camera.panningDistanceLimit = 0.01
-        // this.camera.lowerAlphaLimit = 1
-        // this.camera.upperAlphaLimit = 3
-        // this.camera.lowerBetaLimit = 1
-        // this.camera.upperBetaLimit = 1.5
-        // this.camera.lowerRadiusLimit = 1
-        // this.camera.upperRadiusLimit = 20
+        camera.lowerAlphaLimit = 1
+        camera.upperAlphaLimit = 1
+        camera.lowerBetaLimit = 0
+        camera.upperBetaLimit = 1.5
+        camera.lowerRadiusLimit = 15
+        camera.upperRadiusLimit = 17
 
         camera.attachControl(this.canvasReference)
 
         return camera
+    }
+
+    private static getDistance(a: BABYLON.Vector3, b: BABYLON.Vector3): number {
+        return (a.x - b.x) * (a.x - b.x) + (a.z - b.z) * (a.z - b.z)
+    }
+
+    private getTheNearestSpot(): string {
+        let minimumDistanceMeshIndex: number = 0
+
+        this.spots!.getChildren().forEach((value: BABYLON.Node, index: number, spots: Array<BABYLON.Node>) => {
+            //console.log(RouletteWorld3D.getDistance((value as BABYLON.AbstractMesh).position, this.checkStick!.position))
+            if (RouletteWorld3D.getDistance((value as BABYLON.AbstractMesh).absolutePosition, this.checkStick!.absolutePosition) <
+                RouletteWorld3D.getDistance((spots[minimumDistanceMeshIndex] as BABYLON.AbstractMesh).absolutePosition,
+                    this.checkStick!.absolutePosition))
+                minimumDistanceMeshIndex = index
+
+
+        })
+        console.log(this.spots!.getChildren()[minimumDistanceMeshIndex])
+        return this.spots!.getChildren()[minimumDistanceMeshIndex].name
     }
 
     private setUpLight(): BABYLON.HemisphericLight {

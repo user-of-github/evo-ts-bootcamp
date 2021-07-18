@@ -2,7 +2,8 @@ import {observer} from 'mobx-react-lite'
 
 import Style from './Modal.module.css'
 import {MainGameState} from '../../types/MainGameState'
-import {SpotColor} from "../../types/Spot";
+import {SpotColor} from '../../types/Spot'
+import {pressButtonSound} from '../../utilities/playSound';
 
 
 export const ModalWarning = observer((props: { state: MainGameState }): JSX.Element => (
@@ -11,9 +12,16 @@ export const ModalWarning = observer((props: { state: MainGameState }): JSX.Elem
             props.state.modalsState.modalWarningActive
                 ?
                 <div className={Style.wrapper}
-                     onClick={() => props.state.modalsState.modalWarningActive = false}>
+                     onClick={() => {
+                         pressButtonSound.play()
+                         props.state.modalsState.modalWarningActive = false
+                     }}>
                     <div className={Style.containerWarning}
-                         onClick={(event) => event.stopPropagation()}>
+                         onClick={(event) => {
+                             event.stopPropagation()
+                             pressButtonSound.play()
+                         }
+                         }>
                         {props.state.modalsState.modalWarningText}
                     </div>
                 </div>
@@ -30,9 +38,15 @@ export const ModalResult = observer((props: { state: MainGameState }): JSX.Eleme
             props.state.modalsState.modalResultActive
                 ?
                 <div className={Style.wrapper}
-                     onClick={() => props.state.modalsState.modalResultActive = false}>
+                     onClick={() => {
+                         pressButtonSound.play()
+                         props.state.modalsState.modalResultActive = false
+                     }}>
                     <div className={Style.containerResult}
-                         onClick={(event) => event.stopPropagation()}>
+                         onClick={(event) => {
+                             event.stopPropagation()
+                             pressButtonSound.play()
+                         }}>
                         <div className={Style.resultInfo}>
                             {
                                 props.state.resultsHistory[props.state.resultsHistory.length - 1].award > 0

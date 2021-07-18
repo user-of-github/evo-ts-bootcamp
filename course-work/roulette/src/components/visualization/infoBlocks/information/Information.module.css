@@ -26,9 +26,18 @@
     font-size: 1.3rem;
     text-transform: uppercase;
     font-family: 'Roboto Condensed', sans-serif;
-    font-weight: 300;
+    font-weight: 100;
 }
 
 .coefficient {
     font-weight: 900;
+}
+
+@media (max-width: 1000px) {
+   .item {
+       padding: 0.2rem;
+   }
+    .itemSpan {
+        font-size: 1.2rem;
+    }
 }

@@ -32,6 +32,8 @@ export class MainGameState {
     public wayTo3DWorld: RouletteWorld3D | null
     public voiceTurnedOn: boolean
     public toHighlightLastResult: boolean = false
+    public toShowCoefficientsTable: boolean = false
+    public toShowResultsHistory: boolean = false
 
 
     public constructor(startBalance: number = MainGameState.DEFAULT_START_BALANCE) {
@@ -163,6 +165,7 @@ export class MainGameState {
                 this.clearBoardFromBets()
                 this.modalsState.modalResultActive = false
                 this.wayTo3DWorld!.moveTheCameraAway()
+                this.wayTo3DWorld!.startDefaultAnimations()
             }, 3000)
         }, 2000)
     }

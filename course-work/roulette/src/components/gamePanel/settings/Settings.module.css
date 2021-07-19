@@ -10,7 +10,13 @@
 }
 
 .sound {
-    border: none;
+    border-radius: 100%;
+    height: 27px;
+    width: 27px;
+    border: 2px solid white;
     outline: none;
     background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

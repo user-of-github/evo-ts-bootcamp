@@ -1,8 +1,10 @@
 import {observer} from 'mobx-react-lite'
 
+
+import {SpotColor} from '../../../../../../types/Spot'
+import {ResultsHistoryItem} from '../../../../../../types/ResultsHistoryItem'
+
 import Style from './HistoryItem.module.css'
-import {SpotColor} from '../../../../../types/Spot'
-import {ResultsHistoryItem} from '../../../../../types/ResultsHistoryItem'
 
 
 export const HistoryItem = observer((props: { item: ResultsHistoryItem }): JSX.Element => (

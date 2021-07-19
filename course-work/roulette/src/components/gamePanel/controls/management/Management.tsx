@@ -28,7 +28,7 @@ const buttonClearBetsPressed = (data: MainGameState): void => {
         Sound.playNoBets(data.voiceTurnedOn)
         data.modalsState.modalWarningActive = true
         data.modalsState.modalWarningText = 'No bets on the spots'
-        window.setTimeout(() => data.modalsState.modalWarningActive = false, 2000)
+        window.setTimeout(() => data.modalsState.modalWarningActive = false, 1500)
     } else {
         data.cancelBets()
     }

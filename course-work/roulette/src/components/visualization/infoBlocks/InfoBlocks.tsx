@@ -2,13 +2,13 @@ import {observer} from 'mobx-react-lite'
 
 import {MainGameState} from '../../../types/MainGameState'
 
-import {Information} from './information/Information'
+import {Coefficients} from './information/Coefficients'
 import {History} from './history/History'
 
 
 export const InfoBlocks = observer((props: { data: MainGameState }): JSX.Element => (
     <>
-        <Information/>
+        <Coefficients data={props.data}/>
         <History data={props.data}/>
     </>
 ))

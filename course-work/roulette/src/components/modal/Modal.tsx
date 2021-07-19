@@ -1,8 +1,10 @@
 import {observer} from 'mobx-react-lite'
+import {Transition} from 'react-transition-group'
 
 import {MainGameState} from '../../types/MainGameState'
 import {SpotColor} from '../../types/Spot'
 import {CURRENCY} from '../../utilities/configuration'
+import {defaultStyles, transitionStyles} from './modalUtilities'
 
 import Style from './Modal.module.css'
 
@@ -10,11 +12,11 @@ import Style from './Modal.module.css'
 const NO_AWARD_TEXT: string = 'You lose'
 const WIN_TEXT: string = 'You win: '
 
+
 export const ModalWarning = observer((props: { state: MainGameState }): JSX.Element => (
-    <>
+    <Transition in={props.state.modalsState.modalWarningActive} timeout={100} unmountOnExit={true}>
         {
-            props.state.modalsState.modalWarningActive
-                ?
+            state => (
                 <div className={Style.wrapper}
                      onClick={() => {
                          props.state.modalsState.modalWarningActive = false
@@ -22,23 +24,24 @@ export const ModalWarning = observer((props: { state: MainGameState }): JSX.Elem
                     <div className={Style.containerWarning}
                          onClick={(event) => {
                              event.stopPropagation()
-                         }
-                         }>
+                         }}
+                         style={{
+                             ...defaultStyles, // @ts-ignore
+                             ...transitionStyles[state]
+                         }}>
                         {props.state.modalsState.modalWarningText}
                     </div>
                 </div>
-                :
-                <>
-                </>
+            )
         }
-    </>
+    </Transition>
 ))
 
+
 export const ModalResult = observer((props: { state: MainGameState }): JSX.Element => (
-    <>
+    <Transition timeout={100} in={props.state.modalsState.modalResultActive} unmountOnExit={true}>
         {
-            props.state.modalsState.modalResultActive
-                ?
+            state => (
                 <div className={Style.wrapper}
                      onClick={() => {
                          props.state.modalsState.modalResultActive = false
@@ -48,6 +51,10 @@ export const ModalResult = observer((props: { state: MainGameState }): JSX.Eleme
                         1].award > 0 ? Style.winBorder : Style.loseBorder}`}
                         onClick={(event) => {
                             event.stopPropagation()
+                        }}
+                        style={{
+                            ...defaultStyles, // @ts-ignore
+                            ...transitionStyles[state]
                         }}>
                         <div className={Style.resultInfo}>
                             {
@@ -70,9 +77,7 @@ export const ModalResult = observer((props: { state: MainGameState }): JSX.Eleme
                         </div>
                     </div>
                 </div>
-                :
-                <>
-                </>
+            )
         }
-    </>
+    </Transition>
 ))

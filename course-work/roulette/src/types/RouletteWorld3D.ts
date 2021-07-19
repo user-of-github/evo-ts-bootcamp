@@ -18,9 +18,9 @@ import {
 
 
 export class RouletteWorld3D {
+    private readonly canvasReference: HTMLCanvasElement
     private readonly engine: BABYLON.Engine
     private readonly scene: BABYLON.Scene
-    private readonly canvasReference: HTMLCanvasElement
     private camera: BABYLON.ArcRotateCamera
     private light: BABYLON.HemisphericLight
     private roulette: BABYLON.AbstractMesh | null = null
@@ -28,6 +28,7 @@ export class RouletteWorld3D {
     private centralStateInRoulette: BABYLON.AbstractMesh | null = null
     private spots: BABYLON.AbstractMesh | null = null
     private checkStick: BABYLON.AbstractMesh | null = null
+    private ball: BABYLON.AbstractMesh | null = null
     private timerID: number = 0
     private summandForDisperse = 0.01
     public wayToGameState: MainGameState | null = null
@@ -67,7 +68,7 @@ export class RouletteWorld3D {
                 this.spots = this.scene.getMeshByName(SPOTS_MESH_NAME)
                 this.centralStateInRoulette = this.scene.getMeshByName(CENTRAL_MESH_NAME)
                 this.checkStick = this.scene.getMeshByName(CHECK_STICK_MESH_NAME)
-                this.startDefaultAnimations(3000)
+                this.startDefaultAnimations()
             })
 
         BABYLON.SceneLoader.ImportMesh('',
@@ -107,6 +108,10 @@ export class RouletteWorld3D {
         this.roulette!.position.x = this.roulette!.position.y = this.roulette!.position.z = 0
     }
 
+    private locateBall(): void {
+
+    }
+
     private locateTable(): void {
         this.table!.position.x = 0
         this.table!.position.z = 0
@@ -114,7 +119,7 @@ export class RouletteWorld3D {
         this.table!.rotation = new BABYLON.Vector3(0, 0.785, 0)
     }
 
-    private startDefaultAnimations(wholeTime: number): void {
+    public startDefaultAnimations(): void {
         const rotateAnimation: BABYLON.Animation = new BABYLON.Animation(
             "spotRotation", "rotation",
             FRAME_RATE,
@@ -122,9 +127,10 @@ export class RouletteWorld3D {
             BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE)
 
         const keyFramesR: Array<BABYLON.IAnimationKey> = Array<BABYLON.IAnimationKey>()
-        keyFramesR.push({frame: 0, value: new BABYLON.Vector3(0, 0, 0)})
-        keyFramesR.push({frame: 16 * FRAME_RATE, value: new BABYLON.Vector3(0, -Math.PI, 0)})
-        keyFramesR.push({frame: 32 * FRAME_RATE, value: new BABYLON.Vector3(0, -2 * Math.PI, 0)})
+        keyFramesR.push({frame: 0, value: this.spots!.rotation})
+        keyFramesR.push({frame: 16 * FRAME_RATE, value: new BABYLON.Vector3(0, this.spots!.rotation.y - Math.PI, 0)})
+        keyFramesR.push(
+            {frame: 32 * FRAME_RATE, value: new BABYLON.Vector3(0, this.spots!.rotation.y - 2 * Math.PI, 0)})
         rotateAnimation.setKeys(keyFramesR)
 
         this.scene.beginDirectAnimation(this.spots, [rotateAnimation], 0, 32 * FRAME_RATE, true)

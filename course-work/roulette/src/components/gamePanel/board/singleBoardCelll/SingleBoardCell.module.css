@@ -20,7 +20,7 @@
 }
 
 .cell:hover {
-    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.4);
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.8);
     border-color: white;
     font-weight: 500;
 }

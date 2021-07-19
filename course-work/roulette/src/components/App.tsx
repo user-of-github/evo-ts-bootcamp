@@ -14,7 +14,7 @@ export const App = (): JSX.Element => {
     const mainState: React.MutableRefObject<MainGameState> = React.useRef<MainGameState>(new MainGameState())
 
     return (
-            <section className={Style.mainContainer} style={{cursor: `url(${cursor}), auto`}}>
+            <section className={Style.mainContainer}>
                 <Visualization data={mainState.current}/>
                 <Panel data={mainState.current}/>
                 <ModalWarning state={mainState.current}/>

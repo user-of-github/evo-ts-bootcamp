@@ -13,7 +13,19 @@ import {
     ROULETTE_MESH_NAME,
     FRAME_RATE,
     TABLE_FILE_NAME,
-    TABLE_MESH_NAME
+    TABLE_MESH_NAME,
+    ACCELERATION_FOR_SPEED_FOR_BRAKING,
+    ACCELERATION_FOR_SPEED_FOR_DISPERSE,
+    START_SPEED_FOR_DISPERSE,
+    LOWER_BRAKING_SPEED_LIMIT,
+    UPPER_DISPERSE_SPEED_LIMIT,
+    INTERVAL_OF_MOVING,
+    DEFAULT_CAMERA_Z,
+    DEFAULT_CAMERA_X,
+    DEFAULT_CAMERA_Y,
+    ZOOM_CAMERA_Z,
+    ZOOM_CAMERA_X,
+    ZOOM_CAMERA_Y
 } from '../utilities/World3DConfigurations'
 
 
@@ -21,24 +33,18 @@ export class RouletteWorld3D {
     private readonly canvasReference: HTMLCanvasElement
     private readonly engine: BABYLON.Engine
     private readonly scene: BABYLON.Scene
-    private camera: BABYLON.ArcRotateCamera
-    private light: BABYLON.HemisphericLight
+    private readonly camera: BABYLON.ArcRotateCamera
+    private readonly light: BABYLON.HemisphericLight
     private roulette: BABYLON.AbstractMesh | null = null
     private table: BABYLON.AbstractMesh | null = null
     private centralStateInRoulette: BABYLON.AbstractMesh | null = null
     private spots: BABYLON.AbstractMesh | null = null
     private checkStick: BABYLON.AbstractMesh | null = null
     private ball: BABYLON.AbstractMesh | null = null
-    private timerID: number = 0
-    private summandForDisperse = 0.01
+    private timerForSpinningRouletteAnimationID: number = 0
+    private speedForDisperse: number
     public wayToGameState: MainGameState | null = null
-    private readonly startCamX: number = 0
-    private readonly startCamY: number = 14
-    private readonly startCamZ: number = -39
 
-    private readonly zoomCamX: number = 0
-    private readonly zoomCamY: number = 21
-    private readonly zoomCamZ: number = 0
 
     public constructor(mainCanvasForWorld3D: HTMLCanvasElement) {
         this.canvasReference = mainCanvasForWorld3D
@@ -48,7 +54,7 @@ export class RouletteWorld3D {
         this.camera = this.setUpCamera()
         this.setUpCamera()
         this.light = this.setUpLight()
-
+        this.speedForDisperse = START_SPEED_FOR_DISPERSE
         this.loadMeshes()
 
         //this.scene.debugLayer.show()
@@ -138,41 +144,41 @@ export class RouletteWorld3D {
     }
 
     public startDisperse(): void {
+        this.speedForDisperse = START_SPEED_FOR_DISPERSE
         this.scene.stopAllAnimations()
         this.zoomInOnTheCamera()
         this.disperseRecursive()
     }
 
     public disperseRecursive(): void {
-        this.timerID = window.setTimeout(() => {
-            this.spots!.rotation = new BABYLON.Vector3(0, this.spots!.rotation.y + this.summandForDisperse, 0)
+        this.timerForSpinningRouletteAnimationID = window.setTimeout(() => {
+            this.spots!.rotation = new BABYLON.Vector3(0, this.spots!.rotation.y + this.speedForDisperse, 0)
             this.centralStateInRoulette!.rotation =
-                new BABYLON.Vector3(0, this.spots!.rotation.y + this.summandForDisperse, 0)
-            this.summandForDisperse += 0.0001
-            //console.log(this.scene!.getMeshByName('spot22')!._positions)
-            if (this.summandForDisperse >= 0.05) {
-                window.clearTimeout(this.timerID)
+                new BABYLON.Vector3(0, this.spots!.rotation.y + this.speedForDisperse, 0)
+            this.speedForDisperse += ACCELERATION_FOR_SPEED_FOR_DISPERSE
+            if (this.speedForDisperse >= UPPER_DISPERSE_SPEED_LIMIT) {
+                window.clearTimeout(this.timerForSpinningRouletteAnimationID)
                 this.brakingRecursive()
                 return
             }
             this.disperseRecursive()
-        }, 14)
+        }, INTERVAL_OF_MOVING)
     }
 
     private brakingRecursive(): void {
-        this.timerID = window.setTimeout(() => {
-            this.spots!.rotation = new BABYLON.Vector3(0, this.spots!.rotation.y + this.summandForDisperse, 0)
+        this.timerForSpinningRouletteAnimationID = window.setTimeout(() => {
+            this.spots!.rotation = new BABYLON.Vector3(0, this.spots!.rotation.y + this.speedForDisperse, 0)
             this.centralStateInRoulette!.rotation =
-                new BABYLON.Vector3(0, this.spots!.rotation.y + this.summandForDisperse, 0)
-            this.summandForDisperse -= 0.0002
-            if (this.summandForDisperse <= 0.008) {
+                new BABYLON.Vector3(0, this.spots!.rotation.y + this.speedForDisperse, 0)
+            this.speedForDisperse -= ACCELERATION_FOR_SPEED_FOR_BRAKING
+            if (this.speedForDisperse <= LOWER_BRAKING_SPEED_LIMIT) {
                 this.wayToGameState!.countResults(Number.parseInt(this.getTheNearestSpot()!.slice(4)))
-                window.clearTimeout(this.timerID)
+                window.clearTimeout(this.timerForSpinningRouletteAnimationID)
                 return
             }
             this.brakingRecursive()
 
-        }, 14)
+        }, INTERVAL_OF_MOVING)
     }
 
     private setUpCamera(): BABYLON.ArcRotateCamera {
@@ -181,7 +187,7 @@ export class RouletteWorld3D {
             0,
             0,
             0,
-            new BABYLON.Vector3(this.startCamX, this.startCamY, this.startCamZ),
+            new BABYLON.Vector3(DEFAULT_CAMERA_X, DEFAULT_CAMERA_Y, DEFAULT_CAMERA_Z),
             this.scene
         )
         camera.checkCollisions = true
@@ -230,7 +236,7 @@ export class RouletteWorld3D {
             value: this.camera.position
         }, {
             frame: FRAME_RATE * 32,
-            value: new BABYLON.Vector3(this.zoomCamX, this.zoomCamY, this.zoomCamZ)
+            value: new BABYLON.Vector3(ZOOM_CAMERA_X, ZOOM_CAMERA_Y, ZOOM_CAMERA_Z)
         }];
 
         positionAnimation.setKeys(keys1);
@@ -246,15 +252,13 @@ export class RouletteWorld3D {
             BABYLON.Animation.ANIMATIONTYPE_VECTOR3,
             BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT)
 
-        console.log(new BABYLON.Vector3(this.startCamX, this.startCamY, this.startCamZ))
-
         const keys1: Array<BABYLON.IAnimationKey> = [{
             frame: 0,
             value: this.camera.position
         }, {
             frame: FRAME_RATE * 16,
-            value: new BABYLON.Vector3(this.startCamX, this.startCamY, this.startCamZ)
-        }];
+            value: new BABYLON.Vector3(DEFAULT_CAMERA_X, DEFAULT_CAMERA_Y, DEFAULT_CAMERA_Z)
+        }]
 
         positionAnimation.setKeys(keys1);
         this.camera.animations.push(positionAnimation)

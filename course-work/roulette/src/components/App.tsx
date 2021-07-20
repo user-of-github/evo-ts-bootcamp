@@ -4,7 +4,7 @@ import cursor from '../images/cursor.png'
 import {MainGameState} from '../types/MainGameState'
 
 import {Panel} from './gamePanel/GamePanel'
-import {ModalResult, ModalWarning} from './modal/Modal'
+import {ModalApplicationInformation, ModalPreviousResult, ModalResult, ModalWarning} from './modal/Modal'
 import {Visualization} from './visualization/Visualization'
 
 import Style from './App.module.css'
@@ -17,8 +17,10 @@ export const App = (): JSX.Element => {
             <section className={Style.mainContainer}>
                 <Visualization data={mainState.current}/>
                 <Panel data={mainState.current}/>
-                <ModalWarning state={mainState.current}/>
+                <ModalWarning state={mainState.current.settingsState.modalsState}/>
                 <ModalResult state={mainState.current}/>
+                <ModalApplicationInformation state={mainState.current.settingsState.modalsState}/>
+                <ModalPreviousResult state={mainState.current.settingsState.modalsState}/>
             </section>
     )
 }

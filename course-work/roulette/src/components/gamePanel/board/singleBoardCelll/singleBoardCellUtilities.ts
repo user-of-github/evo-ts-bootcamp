@@ -9,12 +9,12 @@ const NOT_ENOUGH_MONEY_ERROR: string = 'Not enough money on your balance !'
 
 export const chipPutOnSpot = (state: MainGameState, cell: Spot): void => {
     if (state.chipsSet[state.chipActiveIndex].chip > state.userBalance) {
-        Sound.playNotEnoughMoney(state.voiceTurnedOn)
-        state.modalsState.modalWarningText = NOT_ENOUGH_MONEY_ERROR
-        state.modalsState.modalWarningActive = true
-        window.setTimeout(() => state.modalsState.modalWarningActive = false, 2000)
+        Sound.playNotEnoughMoney(state.settingsState.voiceTurnedOn)
+        state.settingsState.modalsState.modalWarningText = NOT_ENOUGH_MONEY_ERROR
+        state.settingsState.modalsState.modalWarningActive = true
+        window.setTimeout(() => state.settingsState.modalsState.modalWarningActive = false, 2000)
     } else {
-        Sound.playAddChip(state.voiceTurnedOn)
+        Sound.playAddChip(state.settingsState.voiceTurnedOn)
         state.putChipOnCell(cell)
     }
 }

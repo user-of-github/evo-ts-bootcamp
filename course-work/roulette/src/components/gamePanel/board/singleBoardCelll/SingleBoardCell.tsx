@@ -8,11 +8,12 @@ import {Sound} from "../../../../types/Sound";
 
 import Style from './SingleBoardCell.module.css'
 
+
 export const SingleBoardCell = observer((props: { cell: Spot, state: MainGameState }): JSX.Element => (
     <div className={`${getClassesString(props.cell, props.state)} ${props.cell.type === SpotValueType.EXACT_NUMBER &&
     props.state.resultsHistory.length !== 0 &&
     props.cell.value === props.state.resultsHistory[props.state.resultsHistory.length - 1].result.value &&
-    props.state.toHighlightLastResult ? Style.currentlyHighlightedLastResult : ''}`}
+    props.state.settingsState.toHighlightLastResult ? Style.currentlyHighlightedLastResult : ''}`}
          style={{
              gridColumnStart: props.cell.location.gridStart.col,
              gridColumnEnd: props.cell.location.gridEnd.col,
@@ -21,7 +22,7 @@ export const SingleBoardCell = observer((props: { cell: Spot, state: MainGameSta
          }}
          onClick={() => chipPutOnSpot(props.state, props.cell)}
          onMouseOver={() => {
-             Sound.playDzen(props.state.voiceTurnedOn)
+             Sound.playDzen(props.state.settingsState.voiceTurnedOn)
              computeMouseOver(props.cell, props.state)
          }}
          onMouseLeave={() => props.state.currentlyHighlightedCells = null}>

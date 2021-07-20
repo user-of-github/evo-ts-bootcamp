@@ -29,4 +29,4 @@ jackpotMoneySoundRef.volume = 0.5
 
 dzenRef.volume = 0.1
 
-spinningRouletteRef.volume = 0.2
+spinningRouletteRef.volume = 0.35

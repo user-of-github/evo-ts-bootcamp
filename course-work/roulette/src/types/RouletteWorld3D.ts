@@ -154,7 +154,7 @@ export class RouletteWorld3D {
         this.timerForSpinningRouletteAnimationID = window.setTimeout(() => {
             this.spots!.rotation = new BABYLON.Vector3(0, this.spots!.rotation.y + this.speedForDisperse, 0)
             this.centralStateInRoulette!.rotation =
-                new BABYLON.Vector3(0, this.spots!.rotation.y + this.speedForDisperse, 0)
+                new BABYLON.Vector3(0, this.centralStateInRoulette!.rotation.y + this.speedForDisperse, 0)
             this.speedForDisperse += ACCELERATION_FOR_SPEED_FOR_DISPERSE
             if (this.speedForDisperse >= UPPER_DISPERSE_SPEED_LIMIT) {
                 window.clearTimeout(this.timerForSpinningRouletteAnimationID)

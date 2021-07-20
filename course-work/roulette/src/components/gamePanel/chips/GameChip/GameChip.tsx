@@ -11,7 +11,7 @@ import Style from './GameChip.module.css'
 export const GameChip = observer((props: { item: Chip, state: MainGameState, index: number }): JSX.Element => (
     <div className={`${Style.svgChipContainer} ${props.item.active ? Style.selected : ''}`}
          onClick={() => {
-             Sound.playChooseChip(props.state.voiceTurnedOn)
+             Sound.playChooseChip(props.state.settingsState.voiceTurnedOn)
              props.state.reselectChip(props.index)
          }}>
         <img src={chipsImagesSVGLinks[props.index]} alt="chip"/>

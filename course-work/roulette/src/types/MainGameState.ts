@@ -5,7 +5,6 @@ import {Chip} from './Chip'
 import {BaseGameState} from './BaseGameState'
 import {RouletteSpot, Spot, SpotColor, SpotValueType} from './Spot'
 import {HighlightedCellsOnHover} from './HighlightedCellsOnHover'
-import {ModalsController} from './ModalsController'
 import {ResultsHistoryItem} from './ResultsHistoryItem'
 import {RouletteWorld3D} from './RouletteWorld3D'
 
@@ -13,6 +12,7 @@ import {createBoardForBets} from '../utilities/boardCreator'
 import {getGameChips} from '../utilities/gameChipsGetter'
 import {backgroundMusicSoundRef,} from '../utilities/sounds'
 import {Sound} from './Sound'
+import {SettingsState} from './SettingsState'
 
 
 export class MainGameState {
@@ -27,13 +27,9 @@ export class MainGameState {
     public chipActiveIndex: number
     public chipsSet: Array<Chip>
     public currentlyHighlightedCells: HighlightedCellsOnHover | null
-    public modalsState: ModalsController
     public resultsHistory: Array<ResultsHistoryItem>
     public wayTo3DWorld: RouletteWorld3D | null
-    public voiceTurnedOn: boolean
-    public toHighlightLastResult: boolean = false
-    public toShowCoefficientsTable: boolean = false
-    public toShowResultsHistory: boolean = false
+    public settingsState: SettingsState
 
 
     public constructor(startBalance: number = MainGameState.DEFAULT_START_BALANCE) {
@@ -46,14 +42,23 @@ export class MainGameState {
         this.chipsSet[this.chipActiveIndex].active = true
         this.currentlyHighlightedCells = null
         this.wayTo3DWorld = null
-        this.voiceTurnedOn = true
 
-        this.modalsState = {
-            modalWarningActive: false,
-            modalResultActive: false,
-            modalWarningText: ''
+        this.settingsState = {
+            voiceTurnedOn: true,
+            modalsState: {
+                modalWarningActive: false,
+                modalResultActive: false,
+                modalWarningText: '',
+                modalInformationActive: false,
+                modalPreviousResultActive: false,
+                modalPreviousResultData: null
+            }, toHighlightLastResult: false,
+            toShowCoefficientsTable: false,
+            toShowResultsHistory: false,
+            currentTime: new Date()
         }
 
+        this.startUpdatingTime()
         makeAutoObservable(this, {}, {deep: true})
 
         this.spotsOnRoulette = this.formRouletteSpotsArray()
@@ -134,7 +139,7 @@ export class MainGameState {
     }
 
     public countResults(rouletteResult: number): void {
-        Sound.playResultAnnouncement(this.voiceTurnedOn, rouletteResult)
+        Sound.playResultAnnouncement(this.settingsState.voiceTurnedOn, rouletteResult)
 
         window.setTimeout(() => {
             let totalWin: number = 0
@@ -147,28 +152,38 @@ export class MainGameState {
             })
 
 
-            totalWin > 0 && Sound.playWin(this.voiceTurnedOn)
-            totalWin === 0 && Sound.playLose(this.voiceTurnedOn)
+            totalWin > 0 && Sound.playWin(this.settingsState.voiceTurnedOn)
+            totalWin === 0 && Sound.playLose(this.settingsState.voiceTurnedOn)
 
 
-            this.resultsHistory.push({award: totalWin, result: this.spotsOnRoulette[rouletteResult]})
+            this.resultsHistory.push({
+                award: totalWin,
+                result: this.spotsOnRoulette[rouletteResult],
+                time: new Date(),
+                totalUserBet: this.totalCurrentBet
+            })
 
             this.userBalance += totalWin
 
-            this.totalCurrentBet = 0
-            this.modalsState.modalResultActive = true
+
+            this.settingsState.modalsState.modalResultActive = true
 
             this.currentStage = BaseGameState.BETS_PLACING
-            this.toHighlightLastResult = true
-            window.setTimeout(() => this.toHighlightLastResult = false, 4000)
+            this.settingsState.toHighlightLastResult = true
             window.setTimeout(() => {
+                Sound.playChooseChip(true)
+                this.totalCurrentBet = 0
                 this.clearBoardFromBets()
-                this.modalsState.modalResultActive = false
+                this.settingsState.toHighlightLastResult = false
+            }, 4000)
+            window.setTimeout(() => {
+                this.settingsState.modalsState.modalResultActive = false
                 this.wayTo3DWorld!.moveTheCameraAway()
                 this.wayTo3DWorld!.startDefaultAnimations()
             }, 3000)
         }, 2000)
     }
+
 
     private clearBoardFromBets(): void {
         this.board.spots.forEach((spot: Spot) => {
@@ -183,7 +198,7 @@ export class MainGameState {
             return
 
         this.currentStage = BaseGameState.ROULETTE_SPINNING
-        Sound.playSpinningRoulette(this.voiceTurnedOn)
+        Sound.playSpinningRoulette(this.settingsState.voiceTurnedOn)
         this.wayTo3DWorld!.startDisperse()
     }
 
@@ -206,10 +221,21 @@ export class MainGameState {
     }
 
     public changeSoundState(): void {
-        this.voiceTurnedOn = !this.voiceTurnedOn
-        if (this.voiceTurnedOn)
+        this.settingsState.voiceTurnedOn = !this.settingsState.voiceTurnedOn
+        if (this.settingsState.voiceTurnedOn)
             backgroundMusicSoundRef.play()
         else
             backgroundMusicSoundRef.pause()
+    }
+
+    private startUpdatingTime(): void {
+        this.updateTimeRecursive()
+    }
+
+    private updateTimeRecursive(): void {
+        window.setTimeout(() => {
+            this.settingsState.currentTime = new Date()
+            this.updateTimeRecursive()
+        }, 500)
     }
 }

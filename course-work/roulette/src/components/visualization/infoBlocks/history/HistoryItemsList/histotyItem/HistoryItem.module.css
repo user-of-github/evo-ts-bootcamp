@@ -15,6 +15,17 @@
     animation-name: itemAppears;
     animation-duration: 0.4s;
     animation-timing-function: ease-in-out;
+
+    transition-duration: 0.2s;
+    transition-property: transform;
+}
+
+.item:hover {
+    transform: scale(1.1);
+}
+
+.item:active {
+    transform: scale(0.5);
 }
 
 .green {

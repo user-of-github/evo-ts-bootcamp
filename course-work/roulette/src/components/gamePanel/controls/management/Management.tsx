@@ -11,24 +11,24 @@ import Style from './Management.module.css'
 
 
 const buttonPlayClicked = (data: MainGameState): void => {
-    Sound.playPressButton(data.voiceTurnedOn)
+    Sound.playPressButton(data.settingsState.voiceTurnedOn)
     if (data.totalCurrentBet === 0) {
-        Sound.playPutBets(data.voiceTurnedOn)
-        data.modalsState.modalWarningText = 'Please, make some bets'
-        data.modalsState.modalWarningActive = true
-        window.setTimeout(() => data.modalsState.modalWarningActive = false, 1500)
+        Sound.playPutBets(data.settingsState.voiceTurnedOn)
+        data.settingsState.modalsState.modalWarningText = 'Please, make some bets'
+        data.settingsState.modalsState.modalWarningActive = true
+        window.setTimeout(() => data.settingsState.modalsState.modalWarningActive = false, 1500)
     } else {
         data.spinRoulette()
     }
 }
 
 const buttonClearBetsPressed = (data: MainGameState): void => {
-    Sound.playPressButton(data.voiceTurnedOn)
+    Sound.playPressButton(data.settingsState.voiceTurnedOn)
     if (data.totalCurrentBet === 0) {
-        Sound.playNoBets(data.voiceTurnedOn)
-        data.modalsState.modalWarningActive = true
-        data.modalsState.modalWarningText = 'No bets on the spots'
-        window.setTimeout(() => data.modalsState.modalWarningActive = false, 1500)
+        Sound.playNoBets(data.settingsState.voiceTurnedOn)
+        data.settingsState.modalsState.modalWarningActive = true
+        data.settingsState.modalsState.modalWarningText = 'No bets on the spots'
+        window.setTimeout(() => data.settingsState.modalsState.modalWarningActive = false, 1500)
     } else {
         data.cancelBets()
     }
@@ -39,7 +39,7 @@ export const Management = observer((props: { data: MainGameState }): JSX.Element
         <div className={`${Style.tablet} ${props.data.currentStage === BaseGameState.ROULETTE_SPINNING ?
             Style.inactive : ''}`}>
             <div className={Style.buttonManagerContainer}>
-                <button className={Style.buttonManager}
+                <button className={`${Style.buttonManager} ${Style.buttonManagerSpin}`}
                         style={{cursor: `url(${cursor}), auto`, color: 'yellow'}}
                         onClick={() => buttonPlayClicked(props.data)}>
                     <img className={Style.buttonManagerImage} src={spinLogo} alt="spin!"/>
@@ -47,7 +47,7 @@ export const Management = observer((props: { data: MainGameState }): JSX.Element
                 </button>
             </div>
             <div className={Style.buttonManagerContainer}>
-                <button className={Style.buttonManager}
+                <button className={`${Style.buttonManager} ${Style.buttonManagerClear}`}
                         style={{cursor: `url(${cursor}), auto`, color: '#FF9494'}}
                         onClick={() => buttonClearBetsPressed(props.data)}>
                     <img className={Style.buttonManagerImage} style={{width: '30%', height: '30%'}} src={removeBetsLogo} alt="remove bets!"/>

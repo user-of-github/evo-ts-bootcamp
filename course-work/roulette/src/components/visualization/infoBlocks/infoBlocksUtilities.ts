@@ -1,10 +1,6 @@
 import {ANIMATION_BEZIER} from '../../../utilities/configuration'
 
 
-export const TITLE_COEFFICIENTS: string = 'Coefficients'
-export const TITLE_HISTORY: string = 'Results history'
-export const EMPTY_HISTORY_TEXT: string = 'No spins yet'
-
 const duration: number = 200
 
 export const defaultStyles = {

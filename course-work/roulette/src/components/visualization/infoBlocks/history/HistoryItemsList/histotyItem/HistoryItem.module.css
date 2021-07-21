@@ -15,7 +15,6 @@
     animation-name: itemAppears;
     animation-duration: 0.4s;
     animation-timing-function: ease-in-out;
-
     transition-duration: 0.2s;
     transition-property: transform;
 }
@@ -39,6 +38,7 @@
 .black {
     background-color: #0E130D;
 }
+
 
 @keyframes itemAppears {
     0% {

@@ -22,3 +22,10 @@ models
 roulette-fields-of-mystery-edition-backup
 roulette-fields-of-mystery-edition-backup/
 /roulette-fields-of-mystery-edition-backup
+.drawio
+*.drawio
+/*.drawio
+build/
+*/build
+build
+/build

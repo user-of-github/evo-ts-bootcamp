@@ -7,12 +7,12 @@ import {RouletteSpot, Spot, SpotColor, SpotValueType} from './Spot'
 import {HighlightedCellsOnHover} from './HighlightedCellsOnHover'
 import {ResultsHistoryItem} from './ResultsHistoryItem'
 import {RouletteWorld3D} from './RouletteWorld3D'
+import {Sound} from './Sound'
+import {SettingsState} from './SettingsState'
 
 import {createBoardForBets} from '../utilities/boardCreator'
 import {getGameChips} from '../utilities/gameChipsGetter'
 import {backgroundMusicSoundRef,} from '../utilities/sounds'
-import {Sound} from './Sound'
-import {SettingsState} from './SettingsState'
 
 
 export class MainGameState {
@@ -164,7 +164,6 @@ export class MainGameState {
             })
 
             this.userBalance += totalWin
-
 
             this.settingsState.modalsState.modalResultActive = true
 

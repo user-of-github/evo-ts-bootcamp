@@ -1,11 +1,10 @@
 import {Spot, SpotColor, SpotValueType} from '../../../../types/Spot'
 import {MainGameState} from '../../../../types/MainGameState'
+import {Sound} from '../../../../types/Sound'
+import {NOT_ENOUGH_MONEY_ERROR} from '../../../../utilities/configuration'
 
 import Style from './SingleBoardCell.module.css'
-import {Sound} from "../../../../types/Sound";
 
-
-const NOT_ENOUGH_MONEY_ERROR: string = 'Not enough money on your balance !'
 
 export const chipPutOnSpot = (state: MainGameState, cell: Spot): void => {
     if (state.chipsSet[state.chipActiveIndex].chip > state.userBalance) {
@@ -116,5 +115,12 @@ export const getClassesString = (cell: Spot, mainState: MainGameState): string =
                     : ''
             break
     }
+
+    if (cell.type === SpotValueType.EXACT_NUMBER && mainState.resultsHistory.length !== 0 && cell.value ===
+        mainState.resultsHistory[mainState.resultsHistory.length - 1].result.value &&
+        mainState.settingsState.toHighlightLastResult) {
+        response += (' ' + Style.currentlyHighlightedLastResult)
+    }
+
     return response
 }

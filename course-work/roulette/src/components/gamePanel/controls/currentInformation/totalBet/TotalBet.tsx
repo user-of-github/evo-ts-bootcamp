@@ -9,7 +9,7 @@ export const TotalBet = observer((props: { currentBet: number }): JSX.Element =>
     <div className={Style.data}>
         Total bet:
         <span className={Style.numbers}>
-            {props.currentBet} {CURRENCY}
+            {props.currentBet}&nbsp;{CURRENCY}
         </span>
     </div>
 ))

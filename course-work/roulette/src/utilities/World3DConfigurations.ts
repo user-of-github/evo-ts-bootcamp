@@ -21,7 +21,7 @@ export const CHECK_STICK_MESH_NAME: string = 'checkStick'
 export const FRAME_RATE: number = 30
 
 export const START_SPEED_FOR_DISPERSE: number = 0.01
-export const ACCELERATION_FOR_SPEED_FOR_DISPERSE: number = 0.00015
+export const ACCELERATION_FOR_SPEED_FOR_DISPERSE: number = 0.0002
 export const ACCELERATION_FOR_SPEED_FOR_BRAKING: number = 0.0002
 export const UPPER_DISPERSE_SPEED_LIMIT: number = 0.07
 export const LOWER_BRAKING_SPEED_LIMIT: number = 0.001

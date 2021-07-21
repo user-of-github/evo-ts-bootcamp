@@ -9,7 +9,7 @@ export const UserBalance = observer((props: { userBalance: number }): JSX.Elemen
     <div className={Style.data}>
         Cash:
         <span className={Style.numbers}>
-            {props.userBalance} {CURRENCY}
+            {props.userBalance}&nbsp;{CURRENCY}
         </span>
     </div>
 ))

@@ -3,13 +3,13 @@ import {Transition} from 'react-transition-group'
 
 import {MainGameState} from '../../../../types/MainGameState'
 import bgc from '../../../../images/grass-texture.jpg'
-import {defaultStyles, transitionStyles, TITLE_COEFFICIENTS} from '../infoBlocksUtilities'
+import {defaultStyles, transitionStyles} from '../infoBlocksUtilities'
 import {Sound} from '../../../../types/Sound'
+import {TITLE_COEFFICIENTS} from '../../../../utilities/configuration'
+import {SettingsState} from '../../../../types/SettingsState'
 
 import StyleBase from '../InfoBlocks.module.css'
 import Style from './Coefficients.module.css'
-import {SettingsState} from '../../../../types/SettingsState'
-
 
 
 export const Coefficients = observer((props: { data: SettingsState }): JSX.Element => (

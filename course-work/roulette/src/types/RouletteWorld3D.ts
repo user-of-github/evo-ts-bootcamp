@@ -40,7 +40,6 @@ export class RouletteWorld3D {
     private centralStateInRoulette: BABYLON.AbstractMesh | null = null
     private spots: BABYLON.AbstractMesh | null = null
     private checkStick: BABYLON.AbstractMesh | null = null
-    private ball: BABYLON.AbstractMesh | null = null
     private timerForSpinningRouletteAnimationID: number = 0
     private speedForDisperse: number
     public wayToGameState: MainGameState | null = null
@@ -62,6 +61,7 @@ export class RouletteWorld3D {
     }
 
     private loadMeshes(): void {
+
         BABYLON.SceneLoader.ImportMesh('',
             MESH_ROOT_URL,
             ROULETTE_FILE_NAME,
@@ -77,6 +77,7 @@ export class RouletteWorld3D {
                 this.startDefaultAnimations()
             })
 
+
         BABYLON.SceneLoader.ImportMesh('',
             MESH_ROOT_URL,
             TABLE_FILE_NAME,
@@ -87,11 +88,8 @@ export class RouletteWorld3D {
             })
 
         const assetsManager: BABYLON.AssetsManager = new BABYLON.AssetsManager(this.scene)
-
         assetsManager.useDefaultLoadingScreen = false
-
         assetsManager.addCubeTextureTask(ENV_TEXTURE_TASK_NAME, MESH_ROOT_URL + ENV_TEXTURE_FILE_NAME);
-
         assetsManager.onTaskSuccess = (task: BABYLON.AbstractAssetTask) => {
             switch (task.name) {
                 case ENV_TEXTURE_TASK_NAME:
@@ -100,22 +98,15 @@ export class RouletteWorld3D {
                     }
             }
         }
-
-        assetsManager.onFinish = () => {
-            this.engine.runRenderLoop(() => this.scene.render())
-        }
-
+        assetsManager.onFinish = () => this.engine.runRenderLoop(() => this.scene.render())
         assetsManager.load()
+
 
         this.engine.runRenderLoop(() => this.scene.render())
     }
 
     private locateRoulette(): void {
         this.roulette!.position.x = this.roulette!.position.y = this.roulette!.position.z = 0
-    }
-
-    private locateBall(): void {
-
     }
 
     private locateTable(): void {
@@ -127,7 +118,7 @@ export class RouletteWorld3D {
 
     public startDefaultAnimations(): void {
         const rotateAnimation: BABYLON.Animation = new BABYLON.Animation(
-            "spotRotation", "rotation",
+            'spotRotation', 'rotation',
             FRAME_RATE,
             BABYLON.Animation.ANIMATIONTYPE_VECTOR3,
             BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE)
@@ -191,7 +182,6 @@ export class RouletteWorld3D {
             this.scene
         )
         camera.checkCollisions = true
-
         camera.panningSensibility = 1
         camera.attachControl(this.canvasReference)
 
@@ -237,7 +227,7 @@ export class RouletteWorld3D {
         }, {
             frame: FRAME_RATE * 32,
             value: new BABYLON.Vector3(ZOOM_CAMERA_X, ZOOM_CAMERA_Y, ZOOM_CAMERA_Z)
-        }];
+        }]
 
         positionAnimation.setKeys(keys1);
         this.camera.animations.push(positionAnimation)

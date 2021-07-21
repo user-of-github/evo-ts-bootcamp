@@ -105,23 +105,23 @@
 
 
 .containerInformation {
-    background-color: white;
-    border-radius: 0.7rem;
     margin: auto;
     padding: 4rem;
+    background-color: white;
+    border-radius: 0.7rem;
     box-shadow: 0 0 3rem rgba(0, 0, 0, 0.8);
 }
 
 .infoContainer {
-    display: grid;
     width: 100%;
+    display: grid;
     grid-template-columns: 3fr 5fr;
     grid-gap: 1rem;
 }
 
 .infoItem {
-    text-align: left;
     padding: 1rem 2rem;
+    text-align: left;
     border-radius: 0.35rem;
     color: black;
     font-family: 'Roboto Condensed', sans-serif;
@@ -143,16 +143,44 @@
 }
 
 .containerHistory {
-    background-color: white;
-    border-radius: 0.7rem;
     margin: auto;
     padding: 2rem;
+    background-color: white;
+    border-radius: 0.7rem;
     box-shadow: 0 0 3rem rgba(0, 0, 0, 0.8);
 }
 
 .historicalListContainer {
-    display: grid;
     width: 100%;
+    display: grid;
     grid-template-columns: 3fr 5fr;
     grid-gap: 1rem;
+}
+
+
+@media (max-width: 1000px) {
+    .containerWarning {
+        font-size: 2rem;
+    }
+    .infoItem, .link {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .containerWarning {
+        font-size: 1.5rem;
+    }
+    .infoItem, .link {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 700px) {
+    .containerWarning {
+        font-size: 1.1rem;
+    }
+    .infoItem, .link {
+        font-size: 1.1rem;
+    }
 }

@@ -3,16 +3,13 @@ import {Transition} from 'react-transition-group'
 
 import {MainGameState} from '../../types/MainGameState'
 import {SpotColor} from '../../types/Spot'
-import {CURRENCY} from '../../utilities/configuration'
+import {CURRENCY, NO_AWARD_TEXT, WIN_TEXT} from '../../utilities/configuration'
 import {APPLICATION_INFORMATION, defaultStyles, transitionStyles} from './modalUtilities'
 import {ModalsController} from '../../types/ModalsController'
+import {Sound} from '../../types/Sound'
+import {getTimeString} from '../../utilities/getTimeString'
 
 import Style from './Modal.module.css'
-import {Sound} from "../../types/Sound";
-
-
-const NO_AWARD_TEXT: string = 'You lose'
-const WIN_TEXT: string = 'You win: '
 
 
 export const ModalWarning = observer((props: { state: ModalsController }): JSX.Element => (
@@ -163,17 +160,7 @@ export const ModalPreviousResult = observer((props: { state: ModalsController })
                         <div className={Style.historicalListContainer}>
                             <div className={Style.infoItem}>Time of bet :</div>
                             <div className={`${Style.infoItem} ${Style.yellow}`}>
-                                {props.state.modalPreviousResultData!.time.getHours() > 9 ?
-                                    props.state.modalPreviousResultData!.time.getHours() :
-                                    ('0' + props.state.modalPreviousResultData!.time.getHours())}
-                                :
-                                {props.state.modalPreviousResultData!.time.getMinutes() > 9 ?
-                                    props.state.modalPreviousResultData!.time.getMinutes() :
-                                    ('0' + props.state.modalPreviousResultData!.time.getMinutes())}
-                                :
-                                {props.state.modalPreviousResultData!.time.getSeconds() > 9 ?
-                                    props.state.modalPreviousResultData!.time.getSeconds() :
-                                    ('0' + props.state.modalPreviousResultData!.time.getSeconds())}
+                                {getTimeString(props.state.modalPreviousResultData!.time)}
                             </div>
 
                             <div className={Style.infoItem}>Value :</div>
@@ -182,12 +169,12 @@ export const ModalPreviousResult = observer((props: { state: ModalsController })
                             </div>
                             <div className={Style.infoItem}>Your total bet :</div>
                             <div className={`${Style.infoItem} ${Style.yellow}`}>
-                                {props.state.modalPreviousResultData!.totalUserBet} $
+                                {props.state.modalPreviousResultData!.totalUserBet} {CURRENCY}
                             </div>
 
                             <div className={Style.infoItem}>Your win :</div>
                             <div className={`${Style.infoItem} ${Style.yellow}`}>
-                                {props.state.modalPreviousResultData!.award} $
+                                {props.state.modalPreviousResultData!.award} {CURRENCY}
                             </div>
                         </div>
                     </div>

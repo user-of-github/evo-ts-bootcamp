@@ -1,6 +1,7 @@
 import {observer} from 'mobx-react-lite'
 
 import {Chip} from '../../../../../types/Chip'
+
 import {ChipInStack} from './сhipInStack/ChipInStack'
 
 

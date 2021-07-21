@@ -1,9 +1,10 @@
 import {ANIMATION_BEZIER} from '../../utilities/configuration'
 
-const duration: number = 200
+
+const DURATION: number = 200
 
 export const defaultStyles = {
-    transitionDuration: `${duration}ms`,
+    transitionDuration: `${DURATION}ms`,
     transitionProperty: 'transform, opacity',
     transformOrigin: 'top',
     transitionTimingFunction: ANIMATION_BEZIER,
@@ -24,7 +25,7 @@ export const APPLICATION_INFORMATION = {
     authorName: 'Nikita Slutski',
     githubLink: 'user-of-github',
     location: 'Minsk, Belarus',
-    termsOfDeveloping: '22 June, 2021 ——> 20 July, 2021',
+    termsOfDeveloping: '22 June, 2021 ——> 21 July, 2021',
     technologiesStack: 'React, TypeScript, BabylonJS, MobX',
     copyright: 'copyright © 2021 | All rights reserved',
     inspiredBy: 'Evolution Gaming & Evo TypeScript Bootcamp'

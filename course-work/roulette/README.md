@@ -5,8 +5,8 @@
 &nbsp;  
 _Welcome to free online roulette !_  
 _Make bets, spin the roulette, check your luck and enjoy the process !_
+##[Live demo]()  
 &nbsp;
-
 ### Technologies stack:
 
 * [React](https://reactjs.org/)
@@ -47,6 +47,10 @@ _Make bets, spin the roulette, check your luck and enjoy the process !_
 [Flat Icon](https://www.flaticon.com/),
 [Flat UI Colors 2](https://flatuicolors.com/)
 
+### General structure of React components:
+![alt text](types-scheme-demo.svg "Roulette")
+### General structure of React components:
+![alt text](components-scheme-demo.svg "Roulette")
 ### Models in 3Ds Max:
 
 * __Roulette__

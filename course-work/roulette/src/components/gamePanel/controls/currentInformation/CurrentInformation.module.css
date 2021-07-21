@@ -39,30 +39,37 @@
     }
 }
 
-@media (max-width: 1180px) {
-    .data {
-        font-size: 1.8rem;
-    }
-}
-
-@media (max-width: 1065px) {
-    .data {
-        font-size: 1.4rem;
-    }
-}
-
 @media (max-width: 920px) {
     .data {
-        font-size: 1.2rem;
+        font-size: 1.7rem;
     }
 }
 
 @media (max-width: 850px) {
     .data {
-        font-size: 1rem;
+        font-size: 1.4rem;
     }
 
     .tablet {
         border-width: 1px;
+    }
+}
+
+@media (max-width: 750px) {
+    .data {
+        font-size: 1.2rem;
+    }
+}
+
+
+@media (max-width: 690px) {
+    .data {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 650px) {
+    .data {
+        font-size: 0.8rem;
     }
 }

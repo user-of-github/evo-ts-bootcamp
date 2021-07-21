@@ -5,9 +5,9 @@ import {MainGameState} from '../../types/MainGameState'
 import {Chips} from './chips/ChipPanel'
 import {Board} from './board/Board'
 import {Controls} from './controls/Controls'
+import {Settings} from './settings/Settings'
 
 import Style from './GamePanel.module.css'
-import {Settings} from "./settings/Settings";
 
 
 export const Panel = observer((props: { data: MainGameState }): JSX.Element => (

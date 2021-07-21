@@ -7,7 +7,7 @@ __[This project is the property of its developer]__
 &nbsp;
 
 * __Technologies__: TypeScript, React, MobX, BabylonJS
-* __Terms of development__: June 20, 2021 ——> July 19, 2021  
+* __Terms of development__: June 22, 2021 ——> July 21, 2021  
   &nbsp; &nbsp;
 
 ###### Slutski Nikita

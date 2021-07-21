@@ -1,10 +1,11 @@
 import {observer} from 'mobx-react-lite'
 import {Transition} from 'react-transition-group'
 
-import {TITLE_HISTORY, defaultStyles, transitionStyles} from '../infoBlocksUtilities'
+import {defaultStyles, transitionStyles} from '../infoBlocksUtilities'
 import {Sound} from '../../../../types/Sound'
 import {SettingsState} from '../../../../types/SettingsState'
 import {ResultsHistoryItem} from '../../../../types/ResultsHistoryItem'
+import {TITLE_HISTORY} from '../../../../utilities/configuration'
 
 import {HistoryItemList} from './HistoryItemsList/HistoryItemList'
 

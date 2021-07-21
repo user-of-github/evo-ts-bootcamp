@@ -5,7 +5,7 @@
 &nbsp;  
 _Welcome to free online roulette !_  
 _Make bets, spin the roulette, check your luck and enjoy the process !_
-##[Live demo](http://roulette-course-project.surge.sh/) 
+## [Live demo](http://roulette-course-project.surge.sh/) 
 &nbsp;
 ### Technologies stack:
 

@@ -168,9 +168,10 @@ export class MainGameState {
 
             this.settingsState.modalsState.modalResultActive = true
 
-            this.currentStage = BaseGameState.BETS_PLACING
+
             this.settingsState.toHighlightLastResult = true
             window.setTimeout(() => {
+                this.currentStage = BaseGameState.BETS_PLACING
                 Sound.playChooseChip(true)
                 this.totalCurrentBet = 0
                 this.clearBoardFromBets()

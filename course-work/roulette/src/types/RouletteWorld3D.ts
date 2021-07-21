@@ -25,7 +25,7 @@ import {
     DEFAULT_CAMERA_Y,
     ZOOM_CAMERA_Z,
     ZOOM_CAMERA_X,
-    ZOOM_CAMERA_Y
+    ZOOM_CAMERA_Y, SPREAD_FOR_ACCELERATION
 } from '../utilities/World3DConfigurations'
 
 
@@ -126,50 +126,57 @@ export class RouletteWorld3D {
             BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE)
 
         const keyFramesR: Array<BABYLON.IAnimationKey> = Array<BABYLON.IAnimationKey>()
-        keyFramesR.push({frame: 0, value: this.spots!.rotation})
-        keyFramesR.push({frame: 16 * FRAME_RATE, value: new BABYLON.Vector3(0, this.spots!.rotation.y - Math.PI, 0)})
-        keyFramesR.push(
-            {frame: 32 * FRAME_RATE, value: new BABYLON.Vector3(0, this.spots!.rotation.y - 2 * Math.PI, 0)})
+
+        const someRandom: number = Math.random() <= 0.5 ? 1 : 2
+        for (let counter: number = 0; counter <= 5; counter += 2) {
+            keyFramesR.push({
+                frame: counter * 8 * FRAME_RATE / someRandom,
+                value: new BABYLON.Vector3(0, this.spots!.rotation.y - (counter / 2) * Math.PI, 0)
+            })
+        }
         rotateAnimation.setKeys(keyFramesR)
 
-        this.scene.beginDirectAnimation(this.spots, [rotateAnimation], 0, 32 * FRAME_RATE, true)
-        this.scene.beginDirectAnimation(this.centralStateInRoulette, [rotateAnimation], 0, 32 * FRAME_RATE, true)
+        this.scene.beginDirectAnimation(this.spots, [rotateAnimation], 0, 32 * FRAME_RATE / someRandom, true)
+        this.scene.beginDirectAnimation(this.centralStateInRoulette, [rotateAnimation], 0, 32 * FRAME_RATE / someRandom,
+            true)
     }
 
     public startDisperse(): void {
         this.speedForDisperse = START_SPEED_FOR_DISPERSE
         this.scene.stopAllAnimations()
         this.zoomInOnTheCamera()
-        this.disperseRecursive()
+        this.disperseRecursive(ACCELERATION_FOR_SPEED_FOR_DISPERSE + SPREAD_FOR_ACCELERATION * Math.random() *
+            (Math.random() < 0.5 ? -1 : 1))
     }
 
-    public disperseRecursive(): void {
+    public disperseRecursive(acceleration: number): void {
         this.timerForSpinningRouletteAnimationID = window.setTimeout(() => {
             this.spots!.rotation = new BABYLON.Vector3(0, this.spots!.rotation.y + this.speedForDisperse, 0)
             this.centralStateInRoulette!.rotation =
                 new BABYLON.Vector3(0, this.centralStateInRoulette!.rotation.y + this.speedForDisperse, 0)
-            this.speedForDisperse += ACCELERATION_FOR_SPEED_FOR_DISPERSE
+            this.speedForDisperse += acceleration
             if (this.speedForDisperse >= UPPER_DISPERSE_SPEED_LIMIT) {
                 window.clearTimeout(this.timerForSpinningRouletteAnimationID)
-                this.brakingRecursive()
+                this.brakingRecursive(ACCELERATION_FOR_SPEED_FOR_BRAKING + SPREAD_FOR_ACCELERATION * Math.random() *
+                    (Math.random() < 0.5 ? -1 : 1))
                 return
             }
-            this.disperseRecursive()
+            this.disperseRecursive(acceleration)
         }, INTERVAL_OF_MOVING)
     }
 
-    private brakingRecursive(): void {
+    private brakingRecursive(brakingAcceleration: number): void {
         this.timerForSpinningRouletteAnimationID = window.setTimeout(() => {
             this.spots!.rotation = new BABYLON.Vector3(0, this.spots!.rotation.y + this.speedForDisperse, 0)
             this.centralStateInRoulette!.rotation =
                 new BABYLON.Vector3(0, this.spots!.rotation.y + this.speedForDisperse, 0)
-            this.speedForDisperse -= ACCELERATION_FOR_SPEED_FOR_BRAKING
+            this.speedForDisperse -= brakingAcceleration
             if (this.speedForDisperse <= LOWER_BRAKING_SPEED_LIMIT) {
                 this.wayToGameState!.countResults(Number.parseInt(this.getTheNearestSpot()!.slice(4)))
                 window.clearTimeout(this.timerForSpinningRouletteAnimationID)
                 return
             }
-            this.brakingRecursive()
+            this.brakingRecursive(brakingAcceleration)
 
         }, INTERVAL_OF_MOVING)
     }

@@ -61,23 +61,6 @@ export class RouletteWorld3D {
     }
 
     private loadMeshes(): void {
-
-        BABYLON.SceneLoader.ImportMesh('',
-            MESH_ROOT_URL,
-            ROULETTE_FILE_NAME,
-            this.scene,
-            (importedMeshes: Array<BABYLON.AbstractMesh>) => {
-                this.roulette = this.scene.getMeshByName(ROULETTE_MESH_NAME)!
-                this.locateRoulette()
-                this.camera.setTarget(this.roulette)
-
-                this.spots = this.scene.getMeshByName(SPOTS_MESH_NAME)
-                this.centralStateInRoulette = this.scene.getMeshByName(CENTRAL_MESH_NAME)
-                this.checkStick = this.scene.getMeshByName(CHECK_STICK_MESH_NAME)
-                this.startDefaultAnimations()
-            })
-
-
         BABYLON.SceneLoader.ImportMesh('',
             MESH_ROOT_URL,
             TABLE_FILE_NAME,
@@ -85,7 +68,25 @@ export class RouletteWorld3D {
             (importedMeshes: Array<BABYLON.AbstractMesh>) => {
                 this.table = this.scene.getMeshByName(TABLE_MESH_NAME)!
                 this.locateTable()
+                this.camera.setTarget(this.table)
+                BABYLON.SceneLoader.ImportMesh('',
+                    MESH_ROOT_URL,
+                    ROULETTE_FILE_NAME,
+                    this.scene,
+                    (importedMeshes: Array<BABYLON.AbstractMesh>) => {
+                        this.roulette = this.scene.getMeshByName(ROULETTE_MESH_NAME)!
+                        this.locateRoulette()
+                        this.wayToGameState!.settingsState.loading = false
+                        this.camera.setTarget(this.roulette)
+
+                        this.spots = this.scene.getMeshByName(SPOTS_MESH_NAME)
+                        this.centralStateInRoulette = this.scene.getMeshByName(CENTRAL_MESH_NAME)
+                        this.checkStick = this.scene.getMeshByName(CHECK_STICK_MESH_NAME)
+                        this.startDefaultAnimations()
+                    },
+                    () => this.camera.setTarget(this.table!))
             })
+
 
         const assetsManager: BABYLON.AssetsManager = new BABYLON.AssetsManager(this.scene)
         assetsManager.useDefaultLoadingScreen = false
@@ -117,6 +118,7 @@ export class RouletteWorld3D {
     }
 
     public startDefaultAnimations(): void {
+
         const rotateAnimation: BABYLON.Animation = new BABYLON.Animation(
             'spotRotation', 'rotation',
             FRAME_RATE,

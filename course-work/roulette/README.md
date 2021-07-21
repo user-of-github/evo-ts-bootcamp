@@ -5,7 +5,7 @@
 &nbsp;  
 _Welcome to free online roulette !_  
 _Make bets, spin the roulette, check your luck and enjoy the process !_
-##[Live demo]()  
+##[Live demo](http://roulette-course-project.surge.sh/) 
 &nbsp;
 ### Technologies stack:
 
@@ -60,6 +60,9 @@ _Make bets, spin the roulette, check your luck and enjoy the process !_
   ![alt text](capture-demo-table-model.PNG "Table")
   
 &nbsp;
+__Important__: Requires GPU for normal rendering of 3D objects & game process in general
+
+&nbsp;  
 
 ###### Slutski Nikita
 

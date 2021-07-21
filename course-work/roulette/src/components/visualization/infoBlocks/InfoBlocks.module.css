@@ -51,13 +51,14 @@
     width: 3rem;
     color: white;
     height: 3rem;
+    margin: auto;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 2rem;
     border-radius: 100%;
     outline: none;
-    margin: auto;
+    cursor: url("../../../images/cursor.png"), auto;
     background-color: transparent;
     font-weight: 900;
     border: 2.5px dashed white;

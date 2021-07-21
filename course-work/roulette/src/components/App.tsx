@@ -8,6 +8,7 @@ import {ModalApplicationInformation, ModalPreviousResult, ModalResult, ModalWarn
 import {Visualization} from './visualization/Visualization'
 
 import Style from './App.module.css'
+import {LoadingScreen} from "./loadingScreen/LoadingScreen";
 
 
 export const App = (): JSX.Element => {
@@ -21,6 +22,7 @@ export const App = (): JSX.Element => {
                 <ModalResult state={mainState.current}/>
                 <ModalApplicationInformation state={mainState.current.settingsState.modalsState}/>
                 <ModalPreviousResult state={mainState.current.settingsState.modalsState}/>
+                <LoadingScreen state={mainState.current.settingsState}/>
             </section>
     )
 }

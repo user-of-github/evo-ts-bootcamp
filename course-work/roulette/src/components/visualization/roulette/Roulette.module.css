@@ -10,19 +10,4 @@
     width: 100%;
     height: 100%;
     margin: auto;
-    animation-name: canvasAppears;
-    animation-duration: 2500ms;
-    animation-timing-function: ease;
-}
-
-@keyframes canvasAppears {
-    0% {
-        opacity: 0;
-    }
-    66% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
 }

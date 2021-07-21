@@ -1,4 +1,4 @@
-import {ModalsController} from "./ModalsController";
+import {ModalsController} from './ModalsController'
 
 export interface SettingsState {
     voiceTurnedOn: boolean
@@ -7,4 +7,5 @@ export interface SettingsState {
     toShowResultsHistory: boolean
     modalsState: ModalsController
     currentTime: Date
+    loading: boolean
 }

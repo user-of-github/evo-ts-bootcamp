@@ -51,11 +51,12 @@ export class MainGameState {
                 modalWarningText: '',
                 modalInformationActive: false,
                 modalPreviousResultActive: false,
-                modalPreviousResultData: null
+                modalPreviousResultData: null,
             }, toHighlightLastResult: false,
             toShowCoefficientsTable: false,
             toShowResultsHistory: false,
-            currentTime: new Date()
+            currentTime: new Date(),
+            loading: true
         }
 
         this.startUpdatingTime()

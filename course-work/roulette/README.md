@@ -70,7 +70,9 @@ _Make bets, spin the roulette, check your luck and enjoy the process !_
   ![alt text](capture-demo-table-model.PNG "Table")
 
 &nbsp;
-__Important__: Requires GPU for normal rendering of 3D objects & game process in general
+__Important__: 
+* Tested on Microsoft Edge browser => Chrome / Edge will be preferable ( __Not Firefox, please__ 🙃 ) 
+* Requires GPU for normal rendering of 3D objects & game process in general
 
 &nbsp;
 

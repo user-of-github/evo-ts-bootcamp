@@ -7,6 +7,9 @@
     align-items: center;
     text-align: center;
     perspective: 1000px;
+    -webkit-perspective: 1000px;
+    -moz-perspective: 1000px;
+
     background-image: url("../../images/grass-texture.jpg");
     box-shadow: inset 0 0 10000px black;
 }

@@ -53,11 +53,11 @@ _Make bets, spin the roulette, check your luck and enjoy the process !_
 [Flat Icon](https://www.flaticon.com/),
 [Flat UI Colors 2](https://flatuicolors.com/)
 
-### Generalized structure of React components:
+### Generalized structure of interfaces & classes
 
 ![alt text](types-scheme-demo.svg "Roulette")
 
-### General structure of React components:
+### Generalized structure of React components:
 
 ![alt text](components-scheme-demo.svg "Roulette")
 

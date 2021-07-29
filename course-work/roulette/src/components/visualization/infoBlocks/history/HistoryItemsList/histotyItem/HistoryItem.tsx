@@ -9,7 +9,7 @@ import Style from './HistoryItem.module.css'
 
 
 const historyItemPressed = (story: ResultsHistoryItem, modalsState: ModalsController): void => {
-    Sound.playPressButton(true)
+    Sound.playPressButton()
     modalsState.modalPreviousResultData = story
     modalsState.modalPreviousResultActive = true
 }

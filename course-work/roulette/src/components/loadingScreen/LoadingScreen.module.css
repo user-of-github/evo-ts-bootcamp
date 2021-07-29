@@ -11,7 +11,8 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-image: url("../../images/grass-texture.jpg");
+    background-repeat: repeat;
     color: white;
 }
 
@@ -45,13 +46,55 @@
     font-weight: 100;
     font-family: 'Roboto Condensed', sans-serif;
     font-size: 3rem;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-duration: 3s;
+    animation-name: loadingText;
+    animation-delay: 0s;
+}
+
+.title::after {
+    display: inline;
+    content: " ...";
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-duration: 1s;
+    animation-name: loadingTextAfter;
+    animation-delay: 0s;
 }
 
 @keyframes loading {
-    from {
-        transform: rotate(0deg);
+    0% {
+        transform: translateY(-5%) rotate(0deg);
     }
-    to {
-        transform: rotate(360deg);
+    50% {
+        transform: translateY(5%) rotate(180deg);
+    }
+    100% {
+        transform: translateY(0) rotate(360deg);
+    }
+}
+
+@keyframes loadingTextAfter {
+    0% {
+        content: " .";
+    }
+    50% {
+        content: " ..";
+    }
+    100% {
+        content: " ...";
+    }
+}
+
+@keyframes loadingText {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
     }
 }

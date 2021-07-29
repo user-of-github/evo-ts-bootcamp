@@ -18,12 +18,12 @@ export const ModalWarning = observer((props: { state: ModalsController }): JSX.E
             state => (
                 <div className={Style.wrapper}
                      onClick={() => {
-                         Sound.playPressButton(true)
+                         Sound.playPressButton()
                          props.state.modalWarningActive = false
                      }}>
                     <div className={Style.containerWarning}
                          onClick={(event) => {
-                             Sound.playPressButton(true)
+                             Sound.playPressButton()
                              event.stopPropagation()
                          }}
                          style={{
@@ -45,14 +45,14 @@ export const ModalResult = observer((props: { state: MainGameState }): JSX.Eleme
             state => (
                 <div className={Style.wrapper}
                      onClick={() => {
-                         Sound.playPressButton(true)
+                         Sound.playPressButton()
                          props.state.settingsState.modalsState.modalResultActive = false
                      }}>
                     <div
                         className={`${Style.containerResult} ${props.state.resultsHistory[props.state.resultsHistory.length -
                         1].award > 0 ? Style.winBorder : Style.loseBorder}`}
                         onClick={(event) => {
-                            Sound.playPressButton(true)
+                            Sound.playPressButton()
                             event.stopPropagation()
                         }}
                         style={{
@@ -91,13 +91,13 @@ export const ModalApplicationInformation = observer((props: { state: ModalsContr
             state => (
                 <div className={Style.wrapper}
                      onClick={() => {
-                         Sound.playPressButton(true)
+                         Sound.playPressButton()
                          props.state.modalInformationActive = false
                      }}>
                     <div
                         className={Style.containerInformation}
                         onClick={(event) => {
-                            Sound.playPressButton(true)
+                            Sound.playPressButton()
                             event.stopPropagation()
                         }}
                         style={{
@@ -145,12 +145,12 @@ export const ModalPreviousResult = observer((props: { state: ModalsController })
             state => (
                 <div className={Style.wrapper}
                      onClick={() => {
-                         Sound.playPressButton(true)
+                         Sound.playPressButton()
                          props.state.modalPreviousResultActive = false
                      }}>
                     <div className={Style.containerHistory}
                          onClick={(event) => {
-                             Sound.playPressButton(true)
+                             Sound.playPressButton()
                              event.stopPropagation()
                          }}
                          style={{

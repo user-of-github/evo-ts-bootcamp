@@ -18,7 +18,7 @@ export const Coefficients = observer((props: { data: SettingsState }): JSX.Eleme
             <h1 className={StyleBase.title}>{TITLE_COEFFICIENTS}</h1>
             <button className={StyleBase.show}
                     onClick={() => {
-                        Sound.playPressButton(true)
+                        Sound.playPressButton()
                         props.data.toShowCoefficientsTable = !props.data.toShowCoefficientsTable
                     }}>
                 {props.data.toShowCoefficientsTable ? '↑' : '↓'}

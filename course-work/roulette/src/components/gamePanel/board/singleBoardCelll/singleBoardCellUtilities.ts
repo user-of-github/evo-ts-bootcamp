@@ -8,12 +8,12 @@ import Style from './SingleBoardCell.module.css'
 
 export const chipPutOnSpot = (state: MainGameState, cell: Spot): void => {
     if (state.chipsSet[state.chipActiveIndex].chip > state.userBalance) {
-        Sound.playNotEnoughMoney(state.settingsState.voiceTurnedOn)
+        Sound.playNotEnoughMoney()
         state.settingsState.modalsState.modalWarningText = NOT_ENOUGH_MONEY_ERROR
         state.settingsState.modalsState.modalWarningActive = true
         window.setTimeout(() => state.settingsState.modalsState.modalWarningActive = false, 2000)
     } else {
-        Sound.playAddChip(state.settingsState.voiceTurnedOn)
+        Sound.playAddChip()
         state.putChipOnCell(cell)
     }
 }

@@ -11,7 +11,7 @@ export const SetSound = observer((props: { data: MainGameState }): JSX.Element =
     <button className={Style.button}
             title={props.data.settingsState.voiceTurnedOn ? 'Turn off music' : 'Turn on music'}
             onClick={() => {
-                Sound.playPressButton(true)
+                Sound.playPressButton()
                 props.data.changeSoundState()
             }}>
         <img height="17px" width="17px" src={props.data.settingsState.voiceTurnedOn ? volumeOn : volumeOff} alt="volume checker"/>

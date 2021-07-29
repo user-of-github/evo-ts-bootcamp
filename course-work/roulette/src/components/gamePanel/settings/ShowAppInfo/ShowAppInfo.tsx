@@ -7,7 +7,7 @@ import infoImgSrc from '../../../../images/info.svg'
 import Style from '../Settings.module.css'
 
 const buttonShowAppInfoPressed = (data: ModalsController): void => {
-    Sound.playPressButton(true)
+    Sound.playPressButton()
     data.modalInformationActive = true
 }
 

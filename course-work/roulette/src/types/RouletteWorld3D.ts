@@ -2,6 +2,7 @@ import * as BABYLON from '@babylonjs/core'
 import '@babylonjs/inspector'
 
 import {MainGameState} from './MainGameState'
+import {Sound} from './Sound'
 import {
     MESH_ROOT_URL,
     ROULETTE_FILE_NAME,
@@ -78,7 +79,7 @@ export class RouletteWorld3D {
                         this.locateRoulette()
                         this.wayToGameState!.settingsState.loading = false
                         this.camera.setTarget(this.roulette)
-
+                        Sound.startBackgroundMusic()
                         this.spots = this.scene.getMeshByName(SPOTS_MESH_NAME)
                         this.centralStateInRoulette = this.scene.getMeshByName(CENTRAL_MESH_NAME)
                         this.checkStick = this.scene.getMeshByName(CHECK_STICK_MESH_NAME)!

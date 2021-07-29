@@ -21,10 +21,6 @@ export const winningMoney: HTMLAudioElement = new Audio('/files/sounds/plusWinMo
 
 pressButtonSoundRef.volume = 0.4
 
-backgroundMusicSoundRef.volume = 0.66
-backgroundMusicSoundRef.autoplay = true
-backgroundMusicSoundRef.loop = true
-
 jackpotMoneySoundRef.volume = 0.5
 
 dzenRef.volume = 0.1

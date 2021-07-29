@@ -20,7 +20,7 @@ export const History = observer(
                 <h1 className={StyleBase.title}>{TITLE_HISTORY}</h1>
                 <button className={StyleBase.show}
                         onClick={() => {
-                            Sound.playPressButton(true)
+                            Sound.playPressButton()
                             props.settings.toShowResultsHistory = !props.settings.toShowResultsHistory
                         }}>
                     {props.settings.toShowResultsHistory ? '↑' : '↓'}

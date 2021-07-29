@@ -139,7 +139,7 @@ export class MainGameState {
     }
 
     public countResults(rouletteResult: number): void {
-        Sound.playResultAnnouncement(this.settingsState.voiceTurnedOn, rouletteResult)
+        Sound.playResultAnnouncement(rouletteResult)
 
         window.setTimeout(() => {
             let totalWin: number = 0
@@ -152,8 +152,8 @@ export class MainGameState {
             })
 
 
-            totalWin > 0 && Sound.playWin(this.settingsState.voiceTurnedOn)
-            totalWin === 0 && Sound.playLose(this.settingsState.voiceTurnedOn)
+            totalWin > 0 && Sound.playWin()
+            totalWin === 0 && Sound.playLose()
 
 
             this.resultsHistory.push({
@@ -171,7 +171,7 @@ export class MainGameState {
             this.settingsState.toHighlightLastResult = true
             window.setTimeout(() => {
                 this.currentStage = BaseGameState.BETS_PLACING
-                Sound.playChooseChip(true)
+                Sound.playChooseChip()
                 this.totalCurrentBet = 0
                 this.clearBoardFromBets()
                 this.settingsState.toHighlightLastResult = false
@@ -198,7 +198,7 @@ export class MainGameState {
             return
 
         this.currentStage = BaseGameState.ROULETTE_SPINNING
-        Sound.playSpinningRoulette(this.settingsState.voiceTurnedOn)
+        Sound.playSpinningRoulette()
         this.wayTo3DWorld!.startDisperse()
     }
 
@@ -222,10 +222,7 @@ export class MainGameState {
 
     public changeSoundState(): void {
         this.settingsState.voiceTurnedOn = !this.settingsState.voiceTurnedOn
-        if (this.settingsState.voiceTurnedOn)
-            backgroundMusicSoundRef.play()
-        else
-            backgroundMusicSoundRef.pause()
+        this.settingsState.voiceTurnedOn ? Sound.backgroundMusicOn() : Sound.backgroundMusicOff()
     }
 
     private startUpdatingTime(): void {

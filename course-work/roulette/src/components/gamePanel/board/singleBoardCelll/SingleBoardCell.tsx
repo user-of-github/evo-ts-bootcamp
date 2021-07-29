@@ -18,7 +18,7 @@ export const SingleBoardCell = observer((props: { cell: Spot, state: MainGameSta
          }}
          onClick={() => chipPutOnSpot(props.state, props.cell)}
          onMouseOver={() => {
-             Sound.playDzen(props.state.settingsState.voiceTurnedOn)
+             Sound.playDzen()
              computeMouseOver(props.cell, props.state)
          }}
          onMouseLeave={() => props.state.currentlyHighlightedCells = null}>

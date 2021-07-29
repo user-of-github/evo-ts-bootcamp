@@ -4,57 +4,57 @@ import {
     jackpotMoneySoundRef,
     loseSoundRef, noBetsOnSpotsRef, notEnoughMoneySoundRef,
     pressButtonSoundRef, putSomeBetsSoundRef, spinningRouletteRef,
-    winSoundRef, resultsRef, winningMoney
+    winSoundRef, resultsRef, winningMoney, backgroundMusicSoundRef
 } from '../utilities/sounds'
 
 
 export class Sound {
-    public static playAddChip(voiceTurnedOn: boolean): void {
+    public static playAddChip(): void {
         addChipSoundRef.play()
     }
 
-    public static playPressButton(voiceTurnedOn: boolean): void {
+    public static playPressButton(): void {
         pressButtonSoundRef.play()
     }
 
-    public static playChooseChip(voiceTurnedOn: boolean): void {
+    public static playChooseChip(): void {
         chooseChipSoundRef.play()
     }
 
-    public static playJackpotMoney(voiceTurnedOn: boolean): void {
+    public static playJackpotMoney(): void {
         jackpotMoneySoundRef.play()
     }
 
-    public static playLose(voiceTurnedOn: boolean): void {
+    public static playLose(): void {
         loseSoundRef.play()
     }
 
-    public static playWin(voiceTurnedOn: boolean): void {
+    public static playWin(): void {
         winSoundRef.play().finally(() =>
-            Sound.playJackpotMoney(voiceTurnedOn))
+            Sound.playJackpotMoney())
     }
 
-    public static playPutBets(voiceTurnedOn: boolean): void {
+    public static playPutBets(): void {
         putSomeBetsSoundRef.play()
     }
 
-    public static playNotEnoughMoney(voiceTurnedOn: boolean): void {
+    public static playNotEnoughMoney(): void {
         notEnoughMoneySoundRef.play()
     }
 
-    public static playNoBets(voiceTurnedOn: boolean): void {
+    public static playNoBets(): void {
         noBetsOnSpotsRef.play()
     }
 
-    public static playDzen(voiceTurnedOn: boolean): void {
+    public static playDzen(): void {
         dzenRef.play()
     }
 
-    public static playSpinningRoulette(voiceTurnedOn: boolean): void {
+    public static playSpinningRoulette(): void {
         spinningRouletteRef.play()
     }
 
-    public static playResultAnnouncement(voiceTurnedOn: boolean, result: number): void {
+    public static playResultAnnouncement(result: number): void {
         resultsRef[result].play()
     }
 
@@ -64,5 +64,19 @@ export class Sound {
 
     public static stopWinningMoney(): void {
         winningMoney.pause()
+    }
+
+    public static startBackgroundMusic(): void {
+        backgroundMusicSoundRef.loop = true
+        backgroundMusicSoundRef.play()
+        Sound.backgroundMusicOn()
+    }
+
+    public static backgroundMusicOn(): void {
+        backgroundMusicSoundRef.volume = 0.66
+    }
+
+    public static backgroundMusicOff(): void {
+        backgroundMusicSoundRef.volume = 0
     }
 }

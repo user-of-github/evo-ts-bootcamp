@@ -56,19 +56,19 @@ _Make bets, spin the roulette, check your luck and enjoy the process !_
 
 ### Generalized structure of interfaces & classes
 
-![alt text](types-scheme-demo.svg "Roulette")
+![alt text](demo-pictures/types-scheme-demo.svg "Roulette")
 
 ### Generalized structure of React components:
 
-![alt text](components-scheme-demo.svg "Roulette")
+![alt text](demo-pictures/components-scheme-demo.svg "Roulette")
 
 ### Models in 3Ds Max:
 
 * __Roulette__
-  ![alt text](capture-demo-roulette-model.PNG "Roulette")
+  ![alt text](demo-pictures/capture-demo-roulette-model.PNG "Roulette")
   &nbsp;
 * __Table__
-  ![alt text](capture-demo-table-model.PNG "Table")
+  ![alt text](demo-pictures/capture-demo-table-model.PNG "Table")
 
 &nbsp;
 __Important__: 

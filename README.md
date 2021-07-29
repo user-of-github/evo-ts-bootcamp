@@ -1,7 +1,8 @@
-## Evolution Gaming TypeScript Bootcamp  
+# TypeScript Bootcamp  
 
-_[github.com/evolution-gaming/typescript-bootcamp](https://github.com/evolution-gaming/typescript-bootcamp)_  
-  
-&nbsp;  
+### [_Evolution TypeScript Bootcamp_](https://github.com/evolution-gaming/typescript-bootcamp)
+&nbsp;
 
-###### © Slutski Nikita
+
+###### Slutski Nikita
+###### Copyright © 2021, April —> July

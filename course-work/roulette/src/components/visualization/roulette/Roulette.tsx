@@ -17,7 +17,7 @@ export const Roulette = observer((props: { data: MainGameState }): JSX.Element =
             props.data.wayTo3DWorld = world3D.current
             world3D.current!.wayToGameState = props.data
         }
-    }, [])
+    })
 
     return (
         <section className={Style.container}>

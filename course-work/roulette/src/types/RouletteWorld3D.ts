@@ -81,7 +81,7 @@ export class RouletteWorld3D {
 
                         this.spots = this.scene.getMeshByName(SPOTS_MESH_NAME)
                         this.centralStateInRoulette = this.scene.getMeshByName(CENTRAL_MESH_NAME)
-                        this.checkStick = this.scene.getMeshByName(CHECK_STICK_MESH_NAME)
+                        this.checkStick = this.scene.getMeshByName(CHECK_STICK_MESH_NAME)!
                         this.startDefaultAnimations()
                     },
                     () => this.camera.setTarget(this.table!))
@@ -118,7 +118,6 @@ export class RouletteWorld3D {
     }
 
     public startDefaultAnimations(): void {
-
         const rotateAnimation: BABYLON.Animation = new BABYLON.Animation(
             'spotRotation', 'rotation',
             FRAME_RATE,
@@ -172,7 +171,7 @@ export class RouletteWorld3D {
                 new BABYLON.Vector3(0, this.spots!.rotation.y + this.speedForDisperse, 0)
             this.speedForDisperse -= brakingAcceleration
             if (this.speedForDisperse <= LOWER_BRAKING_SPEED_LIMIT) {
-                this.wayToGameState!.countResults(Number.parseInt(this.getTheNearestSpot()!.slice(4)))
+                this.wayToGameState!.countResults(this.getTheNearestSpot())
                 window.clearTimeout(this.timerForSpinningRouletteAnimationID)
                 return
             }
@@ -197,21 +196,41 @@ export class RouletteWorld3D {
         return camera
     }
 
-    private static getDistance(a: BABYLON.Vector3, b: BABYLON.Vector3): number {
-        return (a.x - b.x) * (a.x - b.x) + (a.z - b.z) * (a.z - b.z)
+    private static getDistance(spot: BABYLON.AbstractMesh, stick: BABYLON.AbstractMesh): number {
+        const spotMinimumBox: BABYLON.Vector3 = spot.getBoundingInfo().boundingBox.minimumWorld
+        const spotMaximumBox: BABYLON.Vector3 = spot.getBoundingInfo().boundingBox.maximumWorld
+
+        const stickMinimumBox: BABYLON.Vector3 = stick.getBoundingInfo().boundingBox.minimumWorld
+        const stickMaximumBox: BABYLON.Vector3 = stick.getBoundingInfo().boundingBox.maximumWorld
+
+        const positionSpot: BABYLON.Vector3 = new BABYLON.Vector3(
+            (spotMinimumBox.x + spotMaximumBox.x) / 2,
+            (spotMinimumBox.y + spotMaximumBox.y) / 2,
+            (spotMinimumBox.z + spotMaximumBox.z) / 2)
+
+        const positionStick: BABYLON.Vector3 = new BABYLON.Vector3(
+            (stickMinimumBox.x + stickMaximumBox.x) / 2,
+            (stickMinimumBox.y + stickMaximumBox.y) / 2,
+            (stickMinimumBox.z + stickMaximumBox.z) / 2)
+
+        return (positionSpot.x - positionStick.x) * (positionSpot.x - positionStick.x) +
+            (positionSpot.z - positionStick.z) * (positionSpot.z - positionStick.z)
     }
 
-    private getTheNearestSpot(): string {
-        let minimumDistanceMeshIndex: number = 0
+    private getTheNearestSpot(): number {
+        const FILTER_NAME_TEMPLATE: string = 'box'
+        let currentNearestSpotName: string = 'box0'
 
-        this.spots!.getChildren().forEach((value: BABYLON.Node, index: number, spots: Array<BABYLON.Node>) => {
-            if (RouletteWorld3D.getDistance((value as BABYLON.AbstractMesh).absolutePosition,
-                this.checkStick!.absolutePosition) <
-                RouletteWorld3D.getDistance((spots[minimumDistanceMeshIndex] as BABYLON.AbstractMesh).absolutePosition,
-                    this.checkStick!.absolutePosition))
-                minimumDistanceMeshIndex = index
-        })
-        return this.spots!.getChildren()[minimumDistanceMeshIndex].name
+        for (const value of this.spots!.getChildMeshes()) {
+            if (!value.name.includes(FILTER_NAME_TEMPLATE))
+                continue
+
+            if (RouletteWorld3D.getDistance(value, this.checkStick!) <
+                RouletteWorld3D.getDistance(this.scene!.getMeshByName(currentNearestSpotName)!, this.checkStick!))
+                currentNearestSpotName = value.name
+        }
+
+        return Number.parseInt(currentNearestSpotName.slice(FILTER_NAME_TEMPLATE.length))
     }
 
     private setUpLight(): BABYLON.HemisphericLight {

@@ -1,9 +1,9 @@
 # Casino Roulette "Field of miracles" 🎯🎰
 
-### _Final project made by [Slutski Nikita](https://github.com/user-of-github)_
+### _Project made by [Slutski Nikita](https://github.com/user-of-github)_
 
 &nbsp;  
-_Welcome to free online roulette !_  
+_Welcome to free online European roulette !_  
 _Make bets, spin the roulette, check your luck and enjoy the process !_
 
 ## [LIVE DEMO](http://roulette-course-project.surge.sh/)
@@ -12,9 +12,9 @@ _Make bets, spin the roulette, check your luck and enjoy the process !_
 
 ### Technologies stack:
 
+* [TypeScript](https://www.typescriptlang.org/)
 * [Babylon.JS](https://www.babylonjs.com/)
 * [React](https://reactjs.org/)
-* [TypeScript](https://www.typescriptlang.org/)
 * [MobX](https://mobx.js.org/README.html)
 
 ### Some game features:
@@ -41,17 +41,18 @@ _Make bets, spin the roulette, check your luck and enjoy the process !_
 
 ### Software for development:
 
-* [JetBrains WebStorm 2021.1](https://www.jetbrains.com/webstorm/)
-* [Autodesk 3Ds Max 2021 / 2022](https://www.autodesk.com/products/3ds-max/overview)
+* [JetBrains WebStorm](https://www.jetbrains.com/webstorm/)
+* [Autodesk 3Ds Max](https://www.autodesk.com/products/3ds-max/overview)
 * [Figma](https://www.figma.com/)
-* [Microsoft Edge 90.0](https://www.microsoft.com/en-us/edge) and its developer tools
+* [Microsoft Edge](https://www.microsoft.com/en-us/edge) and its developer tools
 
-### Some additional auxiliary services used for development:
+### Some additional auxiliary services used for development & deploy:
 
 [Easing functions](https://easings.net/),
 [Cubic bezier](https://cubic-bezier.com/),
 [Flat Icon](https://www.flaticon.com/),
-[Flat UI Colors 2](https://flatuicolors.com/)
+[Flat UI Colors](https://flatuicolors.com/),
+[Surge](https://surge.sh/)
 
 ### Generalized structure of interfaces & classes
 
@@ -71,7 +72,7 @@ _Make bets, spin the roulette, check your luck and enjoy the process !_
 
 &nbsp;
 __Important__: 
-* Tested on Microsoft Edge browser => Chrome / Edge will be preferable ( __Not Firefox, please__ 🙃 ) 
+* Tested on Microsoft Edge (Chronium) browser => Chrome / Edge will be preferable ( __Not Firefox__ 🙃 ) 
 * Requires GPU for normal rendering of 3D objects & game process in general
 
 &nbsp;

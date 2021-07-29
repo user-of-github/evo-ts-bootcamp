@@ -1,6 +1,5 @@
 import React from 'react'
 
-import cursor from '../images/cursor.png'
 import {MainGameState} from '../types/MainGameState'
 
 import {Panel} from './gamePanel/GamePanel'

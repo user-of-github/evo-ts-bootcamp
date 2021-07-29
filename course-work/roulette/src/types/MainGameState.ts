@@ -58,7 +58,6 @@ export class MainGameState {
             currentTime: new Date(),
             loading: true
         }
-
         this.startUpdatingTime()
         makeAutoObservable(this, {}, {deep: true})
 

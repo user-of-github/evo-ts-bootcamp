@@ -2,13 +2,15 @@
 
 ### _Final project made by student [Slutski Nikita](https://github.com/user-of-github)_
 
-__[This project is the property of its developer]__
+__[This project is full property of its developer]__
 
 &nbsp;
 
-* __Technologies__: TypeScript, React, MobX, BabylonJS
+* __Technologies__: TypeScript, React, BabylonJS, MobX
 * __Terms of development__: June 22, 2021 ——> July 21, 2021  
-  &nbsp; &nbsp;
+  + _(+ some fixes & updates after submission of course work)_
+    
+&nbsp; &nbsp;
 
 ###### Slutski Nikita
 

@@ -11,10 +11,8 @@ import {
     CENTRAL_MESH_NAME,
     ENV_TEXTURE_FILE_NAME,
     ENV_TEXTURE_TASK_NAME,
-    ROULETTE_MESH_NAME,
     FRAME_RATE,
     TABLE_FILE_NAME,
-    TABLE_MESH_NAME,
     ACCELERATION_FOR_SPEED_FOR_BRAKING,
     ACCELERATION_FOR_SPEED_FOR_DISPERSE,
     START_SPEED_FOR_DISPERSE,
@@ -26,18 +24,15 @@ import {
     DEFAULT_CAMERA_Y,
     ZOOM_CAMERA_Z,
     ZOOM_CAMERA_X,
-    ZOOM_CAMERA_Y, SPREAD_FOR_ACCELERATION
+    ZOOM_CAMERA_Y,
+    SPREAD_FOR_ACCELERATION
 } from '../utilities/World3DConfigurations'
 
 
 export class RouletteWorld3D {
-    private readonly canvasReference: HTMLCanvasElement
     private readonly engine: BABYLON.Engine
     private readonly scene: BABYLON.Scene
     private readonly camera: BABYLON.ArcRotateCamera
-    private readonly light: BABYLON.HemisphericLight
-    private roulette: BABYLON.AbstractMesh | null = null
-    private table: BABYLON.AbstractMesh | null = null
     private centralStateInRoulette: BABYLON.AbstractMesh | null = null
     private spots: BABYLON.AbstractMesh | null = null
     private checkStick: BABYLON.AbstractMesh | null = null
@@ -47,13 +42,11 @@ export class RouletteWorld3D {
 
 
     public constructor(mainCanvasForWorld3D: HTMLCanvasElement) {
-        this.canvasReference = mainCanvasForWorld3D
-        this.engine = new BABYLON.Engine(this.canvasReference)
+        this.engine = new BABYLON.Engine(mainCanvasForWorld3D)
         window.onresize = () => this.engine.resize()
         this.scene = new BABYLON.Scene(this.engine)
-        this.camera = this.setUpCamera()
-        this.setUpCamera()
-        this.light = this.setUpLight()
+        this.scene.createDefaultLight();
+        this.camera = this.setUpCamera(mainCanvasForWorld3D)
         this.speedForDisperse = START_SPEED_FOR_DISPERSE
         this.loadMeshes()
 
@@ -66,26 +59,28 @@ export class RouletteWorld3D {
             MESH_ROOT_URL,
             TABLE_FILE_NAME,
             this.scene,
-            (importedMeshes: Array<BABYLON.AbstractMesh>) => {
-                this.table = this.scene.getMeshByName(TABLE_MESH_NAME)!
-                this.locateTable()
-                this.camera.setTarget(this.table)
+            (importedTableMeshes: Array<BABYLON.AbstractMesh>) => {
+                const table: BABYLON.AbstractMesh = importedTableMeshes[0]
+                table.position = new BABYLON.Vector3(0, -9, 0)
+                table.rotation = new BABYLON.Vector3(0, 0.785, 0)
+                this.camera.setTarget(table)
                 BABYLON.SceneLoader.ImportMesh('',
                     MESH_ROOT_URL,
                     ROULETTE_FILE_NAME,
                     this.scene,
                     (importedMeshes: Array<BABYLON.AbstractMesh>) => {
-                        this.roulette = this.scene.getMeshByName(ROULETTE_MESH_NAME)!
-                        this.locateRoulette()
-                        this.wayToGameState!.settingsState.loading = false
-                        this.camera.setTarget(this.roulette)
+                        const roulette: BABYLON.AbstractMesh = importedMeshes[0]
+                        roulette.position = new BABYLON.Vector3(0, 0, 0)
+                        this.camera.setTarget(roulette)
                         Sound.startBackgroundMusic()
                         this.spots = this.scene.getMeshByName(SPOTS_MESH_NAME)
                         this.centralStateInRoulette = this.scene.getMeshByName(CENTRAL_MESH_NAME)
                         this.checkStick = this.scene.getMeshByName(CHECK_STICK_MESH_NAME)!
                         this.startDefaultAnimations()
+                        window.setTimeout(() => this.wayToGameState!.settingsState.loading = false, 1000)
                     },
-                    () => this.camera.setTarget(this.table!))
+                    () => this.camera.setTarget(table)
+                )
             })
 
 
@@ -100,22 +95,9 @@ export class RouletteWorld3D {
                     }
             }
         }
-        assetsManager.onFinish = () => this.engine.runRenderLoop(() => this.scene.render())
         assetsManager.load()
 
-
         this.engine.runRenderLoop(() => this.scene.render())
-    }
-
-    private locateRoulette(): void {
-        this.roulette!.position.x = this.roulette!.position.y = this.roulette!.position.z = 0
-    }
-
-    private locateTable(): void {
-        this.table!.position.x = 0
-        this.table!.position.z = 0
-        this.table!.position.y = -9
-        this.table!.rotation = new BABYLON.Vector3(0, 0.785, 0)
     }
 
     public startDefaultAnimations(): void {
@@ -145,6 +127,7 @@ export class RouletteWorld3D {
         this.speedForDisperse = START_SPEED_FOR_DISPERSE
         this.scene.stopAllAnimations()
         this.zoomInOnTheCamera()
+        Sound.playSpinningRoulette()
         this.disperseRecursive(ACCELERATION_FOR_SPEED_FOR_DISPERSE + SPREAD_FOR_ACCELERATION * Math.random() *
             (Math.random() < 0.5 ? -1 : 1))
     }
@@ -173,16 +156,16 @@ export class RouletteWorld3D {
             this.speedForDisperse -= brakingAcceleration
             if (this.speedForDisperse <= LOWER_BRAKING_SPEED_LIMIT) {
                 this.wayToGameState!.countResults(this.getTheNearestSpot())
+                Sound.stopSpinningRouletteSound()
                 window.clearTimeout(this.timerForSpinningRouletteAnimationID)
                 return
             }
             this.brakingRecursive(brakingAcceleration)
-
         }, INTERVAL_OF_MOVING)
     }
 
-    private setUpCamera(): BABYLON.ArcRotateCamera {
-        const camera = new BABYLON.ArcRotateCamera(
+    private setUpCamera(canvasReference: HTMLCanvasElement): BABYLON.ArcRotateCamera {
+        const camera: BABYLON.ArcRotateCamera = new BABYLON.ArcRotateCamera(
             'Main camera',
             0,
             0,
@@ -192,7 +175,7 @@ export class RouletteWorld3D {
         )
         camera.checkCollisions = true
         camera.panningSensibility = 1
-        camera.attachControl(this.canvasReference)
+        camera.attachControl(canvasReference)
 
         return camera
     }
@@ -232,14 +215,6 @@ export class RouletteWorld3D {
         }
 
         return Number.parseInt(currentNearestSpotName.slice(FILTER_NAME_TEMPLATE.length))
-    }
-
-    private setUpLight(): BABYLON.HemisphericLight {
-        return new BABYLON.HemisphericLight(
-            'MainHemisphericLight',
-            new BABYLON.Vector3(0, 2, 2),
-            this.scene
-        )
     }
 
     private zoomInOnTheCamera(): void {

@@ -198,7 +198,7 @@ export class MainGameState {
             return
 
         this.currentStage = BaseGameState.ROULETTE_SPINNING
-        Sound.playSpinningRoulette()
+
         this.wayTo3DWorld!.startDisperse()
     }
 

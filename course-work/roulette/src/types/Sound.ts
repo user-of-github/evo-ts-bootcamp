@@ -79,4 +79,9 @@ export class Sound {
     public static backgroundMusicOff(): void {
         backgroundMusicSoundRef.volume = 0
     }
+
+    public static stopSpinningRouletteSound(): void {
+        spinningRouletteRef.pause()
+        spinningRouletteRef.currentTime = 0
+    }
 }

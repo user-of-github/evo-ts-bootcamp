@@ -2,19 +2,13 @@ export const MESH_ROOT_URL: string = 'files/meshes/'
 
 export const ROULETTE_FILE_NAME: string = 'roulette-model.babylon'
 export const TABLE_FILE_NAME: string = 'table.babylon'
-export const BALL_FILE_NAME: string = 'ball.babylon'
 export const ENV_TEXTURE_FILE_NAME: string = 'studio.env'
 
 export const ENV_TEXTURE_TASK_NAME: string = 'ENV'
 
-export const ROULETTE_MESH_NAME: string = 'ROULETTE'
-export const TABLE_MESH_NAME: string = 'TABLE'
 export const CENTRAL_MESH_NAME: string = 'centralWithFloor'
-export const FUNNEL_FOR_BALL_MESH_NAME: string = 'funnelForBall'
 export const EXTERNAL_SPOTS_TORUS_MESH_NAME: string = 'externalSpotsOutline'
 export const INTERNAL_SPOTS_TORUS_MESH_NAME: string = 'internalSpotsOutline'
-export const CENTRAL_FLOOR_MESH_NAME: string = 'centralFloor'
-export const EXTERNAL_CORPUS_MESH_NAME: string = 'mainCorpus'
 export const SPOTS_MESH_NAME: string = 'spots'
 export const CHECK_STICK_MESH_NAME: string = 'checkStick'
 

@@ -7,36 +7,54 @@ import {ANIMATION_BEZIER} from '../../utilities/configuration'
 import Style from './LoadingScreen.module.css'
 
 
-const defaultStyles = {
-    transitionDuration: `${500}ms`,
+const defaultStylesWrapper = {
+    transitionDuration: `${1000}ms`,
     transitionProperty: 'opacity',
     transformOrigin: 'top',
     transitionTimingFunction: ANIMATION_BEZIER,
-    opacity: 0
+    opacity: 1
 }
 
-const transitionStyles = {
+const transitionStylesWrapper = {
     entering: {opacity: 0},
     entered: {opacity: 1},
     exiting: {opacity: 0},
     exited: {opacity: 0},
 }
 
+const defaultStylesRoulette = {
+    transitionDuration: `${1000}ms`,
+    transitionProperty: 'transform',
+    transformOrigin: 'center',
+    transitionTimingFunction: ANIMATION_BEZIER,
+    transform: 'scale(1)'
+}
+
+const transitionStylesRoulette = {
+    entering: {transform: 'scale(0)'},
+    entered: {transform: 'scale(1)'},
+    exiting: {transform: 'scale(10)'},
+    exited: {transform: 'scale(10)'},
+}
+
 
 export const LoadingScreen = observer((props: { state: SettingsState }) => (
-    <Transition in={props.state.loading} unmountOnExit={true} timeout={500}>
+    <Transition in={props.state.loading} unmountOnExit={true} timeout={1000}>
         {
             state => (
                 <div className={Style.wrapper} style={{
-                    ...defaultStyles, // @ts-ignore
-                    ...transitionStyles[state]
+                    ...defaultStylesWrapper, // @ts-ignore
+                    ...transitionStylesWrapper[state]
                 }}>
-                    <div className={Style.container}>
+                    <div className={Style.container} style={{
+                        ...defaultStylesRoulette, // @ts-ignore
+                        ...transitionStylesRoulette[state]
+                    }}>
                         <svg className={Style.svg} viewBox="0 0 118 118" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="ANIMATIONLOADING" filter="url(#filter0_d)">
                                 <circle id="Ellipse 1" cx="59" cy="59" r="55" fill="#7B4626"/>
                                 <circle id="Ellipse 13" cx="59" cy="59" r="45" fill="#FFECBA"/>
-                                <g id="SPOTS">
+                                <g id="SPOTS" className={Style.spinning}>
                                     <path id="Ellipse 2" d="M99 59C99 50.5528 96.3258 42.3225 91.3607 35.4886L59 59H99Z"
                                           fill="#9E2723"/>
                                     <path id="Ellipse 5"
@@ -68,7 +86,7 @@ export const LoadingScreen = observer((props: { state: SettingsState }) => (
                                           fill="#0E130D"/>
                                 </g>
                                 <circle id="Ellipse 3" cx="59" cy="59" r="30" fill="#E7D39F"/>
-                                <g id="CENTRAL">
+                                <g id="CENTRAL" className={Style.spinning}>
                                     <path id="Polygon 1"
                                           d="M52.0495 49.6216L58.5 47.5257L64.9505 49.6216L68.9371 55.1088V61.8912L64.9505 67.3784L58.5 69.4743L52.0495 67.3784L48.0628 61.8912V55.1088L52.0495 49.6216Z"
                                           fill="#D1D1D1" stroke="black"/>
@@ -93,8 +111,7 @@ export const LoadingScreen = observer((props: { state: SettingsState }) => (
                             </defs>
                         </svg>
                     </div>
-
-                    <h2 className={Style.title}>Loading</h2>
+                    <h1 className={Style.title}>Online Casino Roulette</h1>
                 </div>
             )
         }

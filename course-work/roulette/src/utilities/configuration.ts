@@ -1,5 +1,5 @@
 // Signature for the name of the money:
-export const CURRENCY: string = '$'
+export const CURRENCY: string = 'DEMO'
 
 // Modals animation:
 export const ANIMATION_BEZIER: string = 'cubic-bezier(.64,-0.1,.22,1.72)'

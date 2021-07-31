@@ -2,7 +2,6 @@ import {observer} from 'mobx-react-lite'
 import {Transition} from 'react-transition-group'
 
 import {MainGameState} from '../../../../types/MainGameState'
-import bgc from '../../../../images/grass-texture.jpg'
 import {defaultStyles, transitionStyles} from '../infoBlocksUtilities'
 import {Sound} from '../../../../types/Sound'
 import {TITLE_COEFFICIENTS} from '../../../../utilities/configuration'
@@ -14,7 +13,7 @@ import Style from './Coefficients.module.css'
 
 export const Coefficients = observer((props: { data: SettingsState }): JSX.Element => (
     <div className={`${StyleBase.containerBase} ${Style.container}`}>
-        <div className={StyleBase.row} style={{backgroundImage: `url(${bgc})`, color: 'white'}}>
+        <div className={StyleBase.row}>
             <h1 className={StyleBase.title}>{TITLE_COEFFICIENTS}</h1>
             <button className={StyleBase.show}
                     onClick={() => {

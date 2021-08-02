@@ -26,6 +26,10 @@ export const DEFAULT_CAMERA_X: number = 0
 export const DEFAULT_CAMERA_Y: number = 14
 export const DEFAULT_CAMERA_Z: number = -39
 
+export const RANDOM_CAMERA_X: number = 0
+export const RANDOM_CAMERA_Y: number = 11
+export const RANDOM_CAMERA_Z: number = -15
+
 export const ZOOM_CAMERA_X: number = 0
 export const ZOOM_CAMERA_Y: number = 21
 export const ZOOM_CAMERA_Z: number = 0

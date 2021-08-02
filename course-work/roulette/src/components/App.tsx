@@ -14,14 +14,14 @@ export const App = (): JSX.Element => {
     const mainState: React.MutableRefObject<MainGameState> = React.useRef<MainGameState>(new MainGameState())
 
     return (
-            <section className={Style.mainContainer}>
-                <Visualization data={mainState.current}/>
-                <Panel data={mainState.current}/>
-                <ModalWarning state={mainState.current.settingsState.modalsState}/>
-                <ModalResult state={mainState.current}/>
-                <ModalApplicationInformation state={mainState.current.settingsState.modalsState}/>
-                <ModalPreviousResult state={mainState.current.settingsState.modalsState}/>
-                <LoadingScreen state={mainState.current.settingsState}/>
-            </section>
+        <section className={Style.mainContainer}>
+            <Visualization data={mainState.current}/>
+            <Panel data={mainState.current}/>
+            <ModalWarning state={mainState.current.settingsState.modalsState}/>
+            <ModalResult state={mainState.current}/>
+            <ModalApplicationInformation state={mainState.current.settingsState.modalsState}/>
+            <ModalPreviousResult state={mainState.current.settingsState.modalsState}/>
+            <LoadingScreen state={mainState.current.settingsState}/>
+        </section>
     )
 }

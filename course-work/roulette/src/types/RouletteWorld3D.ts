@@ -25,7 +25,10 @@ import {
     ZOOM_CAMERA_Z,
     ZOOM_CAMERA_X,
     ZOOM_CAMERA_Y,
-    SPREAD_FOR_ACCELERATION
+    SPREAD_FOR_ACCELERATION,
+    RANDOM_CAMERA_X,
+    RANDOM_CAMERA_Y,
+    RANDOM_CAMERA_Z
 } from '../utilities/World3DConfigurations'
 
 
@@ -251,7 +254,8 @@ export class RouletteWorld3D {
             value: this.camera.position
         }, {
             frame: FRAME_RATE * 16,
-            value: new BABYLON.Vector3(DEFAULT_CAMERA_X, DEFAULT_CAMERA_Y, DEFAULT_CAMERA_Z)
+            value: Math.random() <= 0.5 ? new BABYLON.Vector3(DEFAULT_CAMERA_X, DEFAULT_CAMERA_Y, DEFAULT_CAMERA_Z) :
+                new BABYLON.Vector3(RANDOM_CAMERA_X, RANDOM_CAMERA_Y, RANDOM_CAMERA_Z)
         }]
 
         positionAnimation.setKeys(keys1);

@@ -69,6 +69,7 @@ export class Sound {
     public static startBackgroundMusic(): void {
         backgroundMusicSoundRef.loop = true
         backgroundMusicSoundRef.play()
+        backgroundMusicSoundRef.loop = true
         Sound.backgroundMusicOn()
     }
 

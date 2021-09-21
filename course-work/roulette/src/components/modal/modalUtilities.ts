@@ -27,6 +27,5 @@ export const APPLICATION_INFORMATION = {
     location: 'Minsk, Belarus',
     termsOfDeveloping: '22 June, 2021 ——> 21 July, 2021',
     technologiesStack: 'React, TypeScript, BabylonJS, MobX',
-    copyright: 'copyright © 2021 | All rights reserved',
-    inspiredBy: 'Evolution Gaming & Evo TypeScript Bootcamp'
+    copyright: 'copyright © 2021 | All rights reserved'
 }

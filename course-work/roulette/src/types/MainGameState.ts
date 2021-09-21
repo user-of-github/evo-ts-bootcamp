@@ -12,7 +12,6 @@ import {SettingsState} from './SettingsState'
 
 import {createBoardForBets} from '../utilities/boardCreator'
 import {getGameChips} from '../utilities/gameChipsGetter'
-import {backgroundMusicSoundRef,} from '../utilities/sounds'
 
 
 export class MainGameState {

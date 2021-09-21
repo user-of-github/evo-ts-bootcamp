@@ -75,7 +75,6 @@ export class RouletteWorld3D {
                         const roulette: BABYLON.AbstractMesh = importedMeshes[0]
                         roulette.position = new BABYLON.Vector3(0, 0, 0)
                         this.camera.setTarget(roulette)
-                        Sound.startBackgroundMusic()
                         this.spots = this.scene.getMeshByName(SPOTS_MESH_NAME)
                         this.centralStateInRoulette = this.scene.getMeshByName(CENTRAL_MESH_NAME)
                         this.checkStick = this.scene.getMeshByName(CHECK_STICK_MESH_NAME)!

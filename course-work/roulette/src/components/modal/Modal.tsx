@@ -125,9 +125,6 @@ export const ModalApplicationInformation = observer((props: { state: ModalsContr
                             <div className={Style.infoItem}>Technologies used :</div>
                             <div
                                 className={`${Style.infoItem} ${Style.yellow}`}>{APPLICATION_INFORMATION.technologiesStack}</div>
-                            <div className={Style.infoItem}>Inspired by :</div>
-                            <div
-                                className={`${Style.infoItem} ${Style.yellow}`}>{APPLICATION_INFORMATION.inspiredBy}</div>
                             <div className={Style.infoItem}>Other :</div>
                             <div
                                 className={`${Style.infoItem} ${Style.yellow}`}>{APPLICATION_INFORMATION.copyright}</div>

@@ -4,11 +4,13 @@ import {
     jackpotMoneySoundRef,
     loseSoundRef, noBetsOnSpotsRef, notEnoughMoneySoundRef,
     pressButtonSoundRef, putSomeBetsSoundRef, spinningRouletteRef,
-    winSoundRef, resultsRef, winningMoney, backgroundMusicSoundRef
+    winSoundRef, resultsRef, winningMoney
 } from '../utilities/sounds'
 
 
 export class Sound {
+    public static backgroundAudioRef: HTMLAudioElement | null = null
+
     public static playAddChip(): void {
         addChipSoundRef.play()
     }
@@ -66,19 +68,17 @@ export class Sound {
         winningMoney.pause()
     }
 
-    public static startBackgroundMusic(): void {
-        backgroundMusicSoundRef.loop = true
-        backgroundMusicSoundRef.play()
-        backgroundMusicSoundRef.loop = true
-        Sound.backgroundMusicOn()
-    }
 
     public static backgroundMusicOn(): void {
-        backgroundMusicSoundRef.volume = 0.66
+        if (Sound.backgroundAudioRef !== null) {
+            Sound.backgroundAudioRef.volume = 0.66
+        }
     }
 
     public static backgroundMusicOff(): void {
-        backgroundMusicSoundRef.volume = 0
+        if (Sound.backgroundAudioRef !== null) {
+            Sound.backgroundAudioRef.volume = 0
+        }
     }
 
     public static stopSpinningRouletteSound(): void {

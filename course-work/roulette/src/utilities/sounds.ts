@@ -7,7 +7,6 @@ for (let counter: number = 0; counter <= 36; ++counter) {
 
 export const addChipSoundRef: HTMLAudioElement = new Audio('/files/sounds/addChip.mp3')
 export const pressButtonSoundRef: HTMLAudioElement = new Audio('/files/sounds/pressButton.mp3')
-export const backgroundMusicSoundRef: HTMLAudioElement = new Audio('/files/sounds/background.mp3')
 export const chooseChipSoundRef: HTMLAudioElement = new Audio('/files/sounds/chooseChip.mp3')
 export const jackpotMoneySoundRef: HTMLAudioElement = new Audio('/files/sounds/jackpot.mp3')
 export const loseSoundRef: HTMLAudioElement = new Audio('/files/sounds/youLose.mp3')

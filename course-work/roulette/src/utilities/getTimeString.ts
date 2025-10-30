@@ -5,9 +5,5 @@ export const getTimeString = (time: Date): string => {
         ':'
         +
         (time.getMinutes() > 9 ? time.getMinutes() : ('0' + time.getMinutes())).toString()
-        +
-        ':'
-        +
-        (time.getSeconds() > 9 ? time.getSeconds() : ('0' + time.getSeconds())).toString()
-    )
+    );
 }

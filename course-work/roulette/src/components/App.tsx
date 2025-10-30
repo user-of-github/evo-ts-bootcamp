@@ -9,13 +9,14 @@ import {Visualization} from './visualization/Visualization'
 import Style from './App.module.css'
 import {LoadingScreen} from "./loadingScreen/LoadingScreen";
 import {Sound} from '../types/Sound'
+import { observer } from 'mobx-react-lite'
 
 
-export const App = (): JSX.Element => {
+export const App = observer((): JSX.Element => {
     const mainState: React.MutableRefObject<MainGameState> = React.useRef<MainGameState>(new MainGameState())
 
     const backgroundAudioReference: React.RefObject<HTMLAudioElement> = React.useRef<HTMLAudioElement>(null)
-    React.useLayoutEffect(() => {
+    React.useEffect(() => {
         Sound.backgroundAudioRef = backgroundAudioReference.current
         backgroundAudioReference.current!.volume = 0.66
     }, [])
@@ -35,4 +36,4 @@ export const App = (): JSX.Element => {
             <LoadingScreen state={mainState.current.settingsState}/>
         </section>
     )
-}
+});

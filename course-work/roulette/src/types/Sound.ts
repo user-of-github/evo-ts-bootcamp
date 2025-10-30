@@ -71,6 +71,7 @@ export class Sound {
 
     public static backgroundMusicOn(): void {
         if (Sound.backgroundAudioRef !== null) {
+            Sound.backgroundAudioRef.play()
             Sound.backgroundAudioRef.volume = 0.66
         }
     }

@@ -13,8 +13,7 @@ import StyleBase from '../InfoBlocks.module.css'
 import Style from './History.module.css'
 
 
-export const History = observer(
-    (props: { settings: SettingsState, history: Array<ResultsHistoryItem> }): JSX.Element => (
+export const History = observer((props: { settings: SettingsState, history: Array<ResultsHistoryItem> }): JSX.Element => (
         <div className={`${StyleBase.containerBase} ${Style.container}`}>
             <div className={StyleBase.row}>
                 <h1 className={StyleBase.title}>{TITLE_HISTORY}</h1>

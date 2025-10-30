@@ -24,6 +24,7 @@ _Make bets, spin the roulette, check your luck and enjoy the process !_
 
 &nbsp;
 
+
 ### Technologies stack:
 
 * [TypeScript](https://www.typescriptlang.org/)
@@ -91,7 +92,7 @@ __Important__:
 
 &nbsp;
 
-###### Slutski Nikita
+###### Slutski Mikita
 
 ###### Copyright &nbsp; © 2021 &nbsp;(June - July)
 

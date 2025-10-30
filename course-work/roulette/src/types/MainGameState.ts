@@ -55,7 +55,8 @@ export class MainGameState {
             toShowCoefficientsTable: false,
             toShowResultsHistory: false,
             currentTime: new Date(),
-            loading: true
+            loading: true,
+            showLoadingScreen: true
         }
         this.startUpdatingTime()
         makeAutoObservable(this, {}, {deep: true})
@@ -232,6 +233,6 @@ export class MainGameState {
         window.setTimeout(() => {
             this.settingsState.currentTime = new Date()
             this.updateTimeRecursive()
-        }, 500)
+        }, 3000)
     }
 }

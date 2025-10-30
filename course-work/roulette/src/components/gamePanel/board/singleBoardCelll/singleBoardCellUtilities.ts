@@ -73,27 +73,27 @@ export const getClassesString = (cell: Spot, mainState: MainGameState): string =
                 : ''
             break
         case SpotValueType.FIRST_TWELVE:
-            response += cell.type === SpotValueType.EXACT_NUMBER && cell.value >= 1 && cell.value <= 12
+            response += cell.type === SpotValueType.EXACT_NUMBER && (typeof cell.value === 'number' && cell.value >= 1 && cell.value <= 12)
                 ? Style.highlighted
                 : ''
             break
         case SpotValueType.SECOND_TWELVE:
-            response += cell.type === SpotValueType.EXACT_NUMBER && cell.value >= 13 && cell.value <= 24
+            response += cell.type === SpotValueType.EXACT_NUMBER && (typeof cell.value === 'number' && cell.value >= 13 && cell.value <= 24)
                 ? Style.highlighted
                 : ''
             break
         case SpotValueType.THIRD_TWELVE:
-            response += cell.type === SpotValueType.EXACT_NUMBER && cell.value >= 25 && cell.value <= 36
+            response += cell.type === SpotValueType.EXACT_NUMBER && (typeof cell.value === 'number' && cell.value >= 25 && cell.value <= 36)
                 ? Style.highlighted
                 : ''
             break
         case SpotValueType.FIRST_HALF:
-            response += cell.type === SpotValueType.EXACT_NUMBER && cell.value >= 1 && cell.value <= 18
+            response += cell.type === SpotValueType.EXACT_NUMBER && (typeof cell.value === 'number' && cell.value >= 1 && cell.value <= 18)
                 ? Style.highlighted
                 : ''
             break
         case SpotValueType.SECOND_HALF:
-            response += cell.type === SpotValueType.EXACT_NUMBER && cell.value > 18
+            response += cell.type === SpotValueType.EXACT_NUMBER && (typeof cell.value === 'number' && cell.value > 18)
                 ? Style.highlighted
                 : ''
             break

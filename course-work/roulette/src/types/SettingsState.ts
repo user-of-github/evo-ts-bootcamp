@@ -8,4 +8,5 @@ export interface SettingsState {
     modalsState: ModalsController
     currentTime: Date
     loading: boolean
+    showLoadingScreen: boolean
 }

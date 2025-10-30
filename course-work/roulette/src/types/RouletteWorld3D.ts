@@ -49,15 +49,8 @@ export class RouletteWorld3D {
         window.onresize = () => this.engine.resize()
         this.scene = new BABYLON.Scene(this.engine)
         //this.scene.clearColor = new BABYLON.Color4(0.902, 0.902, 0.980)
-        this.scene.createDefaultEnvironment({
-      createSkybox: false,
-      createGround: false,
-      cameraContrast: 2.5,
-      cameraExposure: 1
-    });
-        //this.scene.createDefaultLight(true);
-         const light = new BABYLON.PointLight('light', new BABYLON.Vector3(10, 10, 10), this.scene);
-    light.intensity = 5;
+
+        this.setupLighting()
         this.camera = this.setUpCamera(mainCanvasForWorld3D)
         this.speedForDisperse = START_SPEED_FOR_DISPERSE
         this.loadMeshes()
@@ -66,49 +59,73 @@ export class RouletteWorld3D {
         this.engine.runRenderLoop(() => this.scene.render())
     }
 
+      private setupLighting(): void {
+        // Создаем hemisphere light для общего освещения
+        const hemisphericLight = new BABYLON.HemisphericLight(
+            "HemiLight", 
+            new BABYLON.Vector3(0, 1, 0), 
+            this.scene
+        )
+        hemisphericLight.intensity = 0.7
+        hemisphericLight.specular = new BABYLON.Color3(0.5, 0.5, 0.5)
+        
+        // Добавляем directional light для теней и бликов
+        const directionalLight = new BABYLON.DirectionalLight(
+            "DirectionalLight", 
+            new BABYLON.Vector3(-1, -2, -1), 
+            this.scene
+        )
+        directionalLight.intensity = 0.5
+        
+        // Устанавливаем ambient color для сцены
+        this.scene.ambientColor = new BABYLON.Color3(0.3, 0.3, 0.3)
+    }
+
     private loadMeshes(): void {
-        BABYLON.SceneLoader.ImportMesh('',
-            MESH_ROOT_URL,
-            TABLE_FILE_NAME,
-            this.scene,
-            (importedTableMeshes: Array<BABYLON.AbstractMesh>) => {
-                const table: BABYLON.AbstractMesh = importedTableMeshes[0]
-                table.position = new BABYLON.Vector3(0, -9, 0)
-                table.rotation = new BABYLON.Vector3(0, 0.785, 0)
-                this.camera.setTarget(table)
-                BABYLON.SceneLoader.ImportMesh('',
-                    MESH_ROOT_URL,
-                    ROULETTE_FILE_NAME,
-                    this.scene,
-                    (importedMeshes: Array<BABYLON.AbstractMesh>) => {
-                        const roulette: BABYLON.AbstractMesh = importedMeshes[0]
-                        roulette.position = new BABYLON.Vector3(0, 0, 0)
-                        this.camera.setTarget(roulette)
-                        this.spots = this.scene.getMeshByName(SPOTS_MESH_NAME)
-                        this.centralStateInRoulette = this.scene.getMeshByName(CENTRAL_MESH_NAME)
-                        this.checkStick = this.scene.getMeshByName(CHECK_STICK_MESH_NAME)!
-                        this.startDefaultAnimations()
-                        window.setTimeout(() => this.wayToGameState!.settingsState.loading = false, 1000)
-                    },
-                    () => this.camera.setTarget(table)
-                )
-            })
-
-
         const assetsManager: BABYLON.AssetsManager = new BABYLON.AssetsManager(this.scene)
+        
         assetsManager.useDefaultLoadingScreen = false
         assetsManager.addCubeTextureTask(ENV_TEXTURE_TASK_NAME, MESH_ROOT_URL + ENV_TEXTURE_FILE_NAME);
+        
         assetsManager.onTaskSuccess = (task: BABYLON.AbstractAssetTask) => {
-            switch (task.name) {
-                case ENV_TEXTURE_TASK_NAME:
-                    if (task instanceof BABYLON.CubeTextureAssetTask) {
+            if (task.name === ENV_TEXTURE_TASK_NAME) {
+                if (task instanceof BABYLON.CubeTextureAssetTask) {
                         this.scene.environmentTexture = task.texture
                     }
             }
+
+            BABYLON.SceneLoader.ImportMesh('',
+                MESH_ROOT_URL,
+                TABLE_FILE_NAME,
+                this.scene,
+                (importedTableMeshes: Array<BABYLON.AbstractMesh>) => {
+                    const table: BABYLON.AbstractMesh = importedTableMeshes[0]
+                    table.position = new BABYLON.Vector3(0, -9, 0)
+                    table.rotation = new BABYLON.Vector3(0, 0.785, 0)
+                    this.camera.setTarget(table)
+
+                    BABYLON.SceneLoader.ImportMesh('',
+                        MESH_ROOT_URL,
+                        ROULETTE_FILE_NAME,
+                        this.scene,
+                        (importedMeshes: Array<BABYLON.AbstractMesh>) => {
+                            const roulette: BABYLON.AbstractMesh = importedMeshes[0]
+                            roulette.position = new BABYLON.Vector3(0, 0, 0)
+                            this.camera.setTarget(roulette)
+                            this.spots = this.scene.getMeshByName(SPOTS_MESH_NAME)
+                            this.centralStateInRoulette = this.scene.getMeshByName(CENTRAL_MESH_NAME)
+                            this.checkStick = this.scene.getMeshByName(CHECK_STICK_MESH_NAME)!
+                            this.startDefaultAnimations()
+                            window.setTimeout(() => this.wayToGameState!.settingsState.loading = false, 1000)
+                        },
+                        () => this.camera.setTarget(table)
+                    )
+                })
         }
+
         assetsManager.load()
 
-        this.engine.runRenderLoop(() => this.scene.render())
+        this.engine.runRenderLoop(this.scene.render.bind(this.scene))
     }
 
     public startDefaultAnimations(): void {
@@ -130,8 +147,7 @@ export class RouletteWorld3D {
         rotateAnimation.setKeys(keyFramesR)
 
         this.scene.beginDirectAnimation(this.spots, [rotateAnimation], 0, 32 * FRAME_RATE / someRandom, true)
-        this.scene.beginDirectAnimation(this.centralStateInRoulette, [rotateAnimation], 0, 32 * FRAME_RATE / someRandom,
-            true)
+        this.scene.beginDirectAnimation(this.centralStateInRoulette, [rotateAnimation], 0, 32 * FRAME_RATE / someRandom, true)
     }
 
     public startDisperse(): void {
@@ -139,16 +155,15 @@ export class RouletteWorld3D {
         this.scene.stopAllAnimations()
         this.zoomInOnTheCamera()
         Sound.playSpinningRoulette()
-        this.disperseRecursive(ACCELERATION_FOR_SPEED_FOR_DISPERSE + SPREAD_FOR_ACCELERATION * Math.random() *
-            (Math.random() < 0.5 ? -1 : 1))
+        this.disperseRecursive(ACCELERATION_FOR_SPEED_FOR_DISPERSE + SPREAD_FOR_ACCELERATION * Math.random() * (Math.random() < 0.5 ? -1 : 1))
     }
 
     public disperseRecursive(acceleration: number): void {
         this.timerForSpinningRouletteAnimationID = window.setTimeout(() => {
             this.spots!.rotation = new BABYLON.Vector3(0, this.spots!.rotation.y + this.speedForDisperse, 0)
-            this.centralStateInRoulette!.rotation =
-                new BABYLON.Vector3(0, this.centralStateInRoulette!.rotation.y + this.speedForDisperse, 0)
+            this.centralStateInRoulette!.rotation = new BABYLON.Vector3(0, this.centralStateInRoulette!.rotation.y + this.speedForDisperse, 0)
             this.speedForDisperse += acceleration
+
             if (this.speedForDisperse >= UPPER_DISPERSE_SPEED_LIMIT) {
                 window.clearTimeout(this.timerForSpinningRouletteAnimationID)
                 this.brakingRecursive(ACCELERATION_FOR_SPEED_FOR_BRAKING + SPREAD_FOR_ACCELERATION * Math.random() *
@@ -162,8 +177,7 @@ export class RouletteWorld3D {
     private brakingRecursive(brakingAcceleration: number): void {
         this.timerForSpinningRouletteAnimationID = window.setTimeout(() => {
             this.spots!.rotation = new BABYLON.Vector3(0, this.spots!.rotation.y + this.speedForDisperse, 0)
-            this.centralStateInRoulette!.rotation =
-                new BABYLON.Vector3(0, this.spots!.rotation.y + this.speedForDisperse, 0)
+            this.centralStateInRoulette!.rotation = new BABYLON.Vector3(0, this.spots!.rotation.y + this.speedForDisperse, 0)
             this.speedForDisperse -= brakingAcceleration
             if (this.speedForDisperse <= LOWER_BRAKING_SPEED_LIMIT) {
                 this.wayToGameState!.countResults(this.getTheNearestSpot())

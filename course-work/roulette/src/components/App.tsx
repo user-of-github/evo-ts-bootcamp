@@ -9,9 +9,10 @@ import {Visualization} from './visualization/Visualization'
 import Style from './App.module.css'
 import {LoadingScreen} from "./loadingScreen/LoadingScreen";
 import {Sound} from '../types/Sound'
+import { observer } from 'mobx-react-lite'
 
 
-export const App = (): JSX.Element => {
+export const App = observer((): JSX.Element => {
     const mainState: React.MutableRefObject<MainGameState> = React.useRef<MainGameState>(new MainGameState())
 
     const backgroundAudioReference: React.RefObject<HTMLAudioElement> = React.useRef<HTMLAudioElement>(null)
@@ -28,7 +29,6 @@ export const App = (): JSX.Element => {
                    autoPlay={true}/>
             <Visualization data={mainState.current}/>
             <Panel data={mainState.current}/>
-            
             <ModalWarning state={mainState.current.settingsState.modalsState}/>
             <ModalResult state={mainState.current}/>
             <ModalApplicationInformation state={mainState.current.settingsState.modalsState}/>
@@ -36,4 +36,4 @@ export const App = (): JSX.Element => {
             <LoadingScreen state={mainState.current.settingsState}/>
         </section>
     )
-}
+});

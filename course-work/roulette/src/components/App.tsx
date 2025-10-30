@@ -15,7 +15,7 @@ export const App = (): JSX.Element => {
     const mainState: React.MutableRefObject<MainGameState> = React.useRef<MainGameState>(new MainGameState())
 
     const backgroundAudioReference: React.RefObject<HTMLAudioElement> = React.useRef<HTMLAudioElement>(null)
-    React.useLayoutEffect(() => {
+    React.useEffect(() => {
         Sound.backgroundAudioRef = backgroundAudioReference.current
         backgroundAudioReference.current!.volume = 0.66
     }, [])
@@ -28,6 +28,7 @@ export const App = (): JSX.Element => {
                    autoPlay={true}/>
             <Visualization data={mainState.current}/>
             <Panel data={mainState.current}/>
+            
             <ModalWarning state={mainState.current.settingsState.modalsState}/>
             <ModalResult state={mainState.current}/>
             <ModalApplicationInformation state={mainState.current.settingsState.modalsState}/>

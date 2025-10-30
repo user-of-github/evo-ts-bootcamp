@@ -1,7 +1,10 @@
 # Casino Roulette "Field of miracles" 🎯🎰
 
-### _Project made by [Slutski Nikita](https://github.com/user-of-github)_
-
+### _Project made by [Slutski Mikita](https://github.com/user-of-github)_  
+___  
+### Attention  
+__This project was mad during my TypeScript internship at Evolution (Evolution Gaming TypeScript Bootcamp) in 2021. Now, in 2025, after 4 years, I have returned here to update libs' versions, migrate to vite, migrate to new TypeScript and React versions, restore working capacity for future demo of this my project__
+___  
 &nbsp;  
 _Welcome to free online European roulette !_  
 _Make bets, spin the roulette, check your luck and enjoy the process !_

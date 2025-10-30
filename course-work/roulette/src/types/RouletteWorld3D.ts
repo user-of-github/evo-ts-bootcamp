@@ -1,5 +1,5 @@
 import * as BABYLON from '@babylonjs/core'
-import '@babylonjs/inspector'
+//import '@babylonjs/inspector'
 
 import {MainGameState} from './MainGameState'
 import {Sound} from './Sound'
@@ -48,7 +48,16 @@ export class RouletteWorld3D {
         this.engine = new BABYLON.Engine(mainCanvasForWorld3D)
         window.onresize = () => this.engine.resize()
         this.scene = new BABYLON.Scene(this.engine)
-        this.scene.createDefaultLight();
+        //this.scene.clearColor = new BABYLON.Color4(0.902, 0.902, 0.980)
+        this.scene.createDefaultEnvironment({
+      createSkybox: false,
+      createGround: false,
+      cameraContrast: 2.5,
+      cameraExposure: 1
+    });
+        //this.scene.createDefaultLight(true);
+         const light = new BABYLON.PointLight('light', new BABYLON.Vector3(10, 10, 10), this.scene);
+    light.intensity = 5;
         this.camera = this.setUpCamera(mainCanvasForWorld3D)
         this.speedForDisperse = START_SPEED_FOR_DISPERSE
         this.loadMeshes()

@@ -1,3 +1,4 @@
+import '@babylonjs/loaders';
 import * as BABYLON from '@babylonjs/core'
 //import '@babylonjs/inspector'
 
@@ -45,7 +46,7 @@ export class RouletteWorld3D {
 
 
     public constructor(mainCanvasForWorld3D: HTMLCanvasElement) {
-        this.engine = new BABYLON.Engine(mainCanvasForWorld3D)
+        this.engine = new BABYLON.Engine(mainCanvasForWorld3D, true)
         window.onresize = () => this.engine.resize()
         this.scene = new BABYLON.Scene(this.engine)
         //this.scene.clearColor = new BABYLON.Color4(0.902, 0.902, 0.980)

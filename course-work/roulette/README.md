@@ -7,9 +7,11 @@ __This project was mad during my TypeScript internship at Evolution (Evolution G
 
 __What exactly changed__:  
 - Migrated from Webpack to Vite 7 
-- Updated React version from 17 to 18.3  
-- Updated TypeScript version from 4.# to 5.9  
-- Linked React Compiler v1.0  
+- Updated libs' versions:
+  - React version from 17 to 18  
+  - TypeScript version from 4 to 5.9  
+  - Babylon.js version from 4 to 8  
+- Linked React Compiler v1.0
 - Modified a bit loading screen (with a manual-start-game button, to force start background music if autoplay didn't work)  
 - Fixed a couple of moments, which for some reason stopped working in 2025  
 - The rest is not changed and stayed as it was in 2021

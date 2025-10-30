@@ -276,7 +276,7 @@ export class RouletteWorld3D {
             value: this.camera.position
         }, {
             frame: FRAME_RATE * 16,
-            value: Math.random() <= 0.5 ? new BABYLON.Vector3(DEFAULT_CAMERA_X, DEFAULT_CAMERA_Y, DEFAULT_CAMERA_Z) :
+            value: Math.random() <= 0.25 ? new BABYLON.Vector3(DEFAULT_CAMERA_X, DEFAULT_CAMERA_Y, DEFAULT_CAMERA_Z) :
                 new BABYLON.Vector3(RANDOM_CAMERA_X, RANDOM_CAMERA_Y, RANDOM_CAMERA_Z)
         }]
 

@@ -2,8 +2,18 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import autoprefixer from 'autoprefixer'
 
+
+const ReactCompilerConfig = {
+  target: '18'
+};
+
+
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react({
+      babel: {
+        plugins: [['babel-plugin-react-compiler', ReactCompilerConfig]]
+      }
+    })],
   css: {
     postcss: {
       plugins: [

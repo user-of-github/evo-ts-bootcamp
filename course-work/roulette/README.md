@@ -1,15 +1,24 @@
 # Casino Roulette "Field of miracles" 🎯🎰
 
-### _Project made by [Slutski Mikita](https://github.com/user-of-github)_  
+### _Project made by [Slutski Mikita](https://github.com/user-of-github) in 2021_  
 ___  
-### Attention  
-__This project was mad during my TypeScript internship at Evolution (Evolution Gaming TypeScript Bootcamp) in 2021. Now, in 2025, after 4 years, I have returned here to update libs' versions, migrate to vite, migrate to new TypeScript and React versions, restore working capacity for future demo of this my project__
+### Attention [Comment from 2025 :)]  
+__This project was mad during my TypeScript internship at Evolution (Evolution Gaming TypeScript Bootcamp) in 2021. Now, in 2025, after 4 years, I have returned here to update libs' versions, migrate to Vite, restore working capacity for future demo of this my project__   
+
+__What exactly changed__:  
+- Migrated from Webpack to Vite 7 
+- Updated React version from 17 to 18.3  
+- Updated TypeScript version from 4.# to 5.9  
+- Linked React Compiler v1.0  
+- Modified a bit loading screen (with a manual-start-game button, to force start background music if autoplay didn't work)  
+- Fixed a couple of moments, which for some reason stopped working in 2025  
+- The rest is not changed and stayed as it was in 2021
 ___  
 &nbsp;  
 _Welcome to free online European roulette !_  
 _Make bets, spin the roulette, check your luck and enjoy the process !_
 
-## [LIVE DEMO](http://roulette-course-project.surge.sh/)
+## [LIVE DEMO](https://roulette-course-project.netlify.app/)
 
 &nbsp;
 

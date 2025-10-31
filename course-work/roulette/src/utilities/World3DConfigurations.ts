@@ -1,3 +1,6 @@
+import * as BABYLON from '@babylonjs/core'
+
+
 export const MESH_ROOT_URL: string = 'files/meshes/'
 
 export const ROULETTE_FILE_NAME: string = 'roulette-model.babylon'
@@ -22,14 +25,18 @@ export const UPPER_DISPERSE_SPEED_LIMIT: number = 0.07
 export const LOWER_BRAKING_SPEED_LIMIT: number = 0.001
 export const INTERVAL_OF_MOVING: number = 14
 
-export const DEFAULT_CAMERA_X: number = 0
-export const DEFAULT_CAMERA_Y: number = 14
-export const DEFAULT_CAMERA_Z: number = -39
+const DEFAULT_CAMERA_X: number = 0
+const DEFAULT_CAMERA_Y: number = 14
+const DEFAULT_CAMERA_Z: number = -39
 
-export const RANDOM_CAMERA_X: number = 0
-export const RANDOM_CAMERA_Y: number = 11
-export const RANDOM_CAMERA_Z: number = -15
+const RANDOM_CAMERA_X: number = 0
+const RANDOM_CAMERA_Y: number = 11
+const RANDOM_CAMERA_Z: number = -15
 
-export const ZOOM_CAMERA_X: number = 0
-export const ZOOM_CAMERA_Y: number = 21
-export const ZOOM_CAMERA_Z: number = 0
+const ZOOM_CAMERA_X: number = 0
+const ZOOM_CAMERA_Y: number = 21
+const ZOOM_CAMERA_Z: number = 0
+
+export const CAMERA_POSITION_NEAR = new BABYLON.Vector3(RANDOM_CAMERA_X, RANDOM_CAMERA_Y, RANDOM_CAMERA_Z);
+export const CAMERA_POSITION_DEFAULT = new BABYLON.Vector3(DEFAULT_CAMERA_X, DEFAULT_CAMERA_Y, DEFAULT_CAMERA_Z);
+export const CAMERA_POSITION_ZOOM = new BABYLON.Vector3(ZOOM_CAMERA_X, ZOOM_CAMERA_Y, ZOOM_CAMERA_Z);

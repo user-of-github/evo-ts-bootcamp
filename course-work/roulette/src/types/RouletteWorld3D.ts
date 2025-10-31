@@ -20,16 +20,10 @@ import {
     LOWER_BRAKING_SPEED_LIMIT,
     UPPER_DISPERSE_SPEED_LIMIT,
     INTERVAL_OF_MOVING,
-    DEFAULT_CAMERA_Z,
-    DEFAULT_CAMERA_X,
-    DEFAULT_CAMERA_Y,
-    ZOOM_CAMERA_Z,
-    ZOOM_CAMERA_X,
-    ZOOM_CAMERA_Y,
     SPREAD_FOR_ACCELERATION,
-    RANDOM_CAMERA_X,
-    RANDOM_CAMERA_Y,
-    RANDOM_CAMERA_Z
+    CAMERA_POSITION_DEFAULT,
+    CAMERA_POSITION_ZOOM,
+    CAMERA_POSITION_NEAR,
 } from '../utilities/World3DConfigurations'
 
 
@@ -43,16 +37,21 @@ export class RouletteWorld3D {
     private timerForSpinningRouletteAnimationID: number = 0
     private speedForDisperse: number
     public wayToGameState: MainGameState | null = null
+    private readonly cameraPositionAnimation = new BABYLON.Animation("camPosTo",
+            'position',
+            FRAME_RATE,
+            BABYLON.Animation.ANIMATIONTYPE_VECTOR3,
+            BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT
+        );
 
 
-    public constructor(mainCanvasForWorld3D: HTMLCanvasElement) {
+    public constructor(private readonly mainCanvasForWorld3D: HTMLCanvasElement) {
         this.engine = new BABYLON.Engine(mainCanvasForWorld3D, true)
         window.onresize = () => this.engine.resize()
         this.scene = new BABYLON.Scene(this.engine)
-        //this.scene.clearColor = new BABYLON.Color4(0.902, 0.902, 0.980)
 
         this.setupLighting()
-        this.camera = this.setUpCamera(mainCanvasForWorld3D)
+        this.camera = this.setUpCamera()
         this.speedForDisperse = START_SPEED_FOR_DISPERSE
         this.loadMeshes()
 
@@ -61,7 +60,6 @@ export class RouletteWorld3D {
     }
 
       private setupLighting(): void {
-        // Создаем hemisphere light для общего освещения
         const hemisphericLight = new BABYLON.HemisphericLight(
             "HemiLight", 
             new BABYLON.Vector3(0, 1, 0), 
@@ -70,7 +68,6 @@ export class RouletteWorld3D {
         hemisphericLight.intensity = 0.7
         hemisphericLight.specular = new BABYLON.Color3(0.5, 0.5, 0.5)
         
-        // Добавляем directional light для теней и бликов
         const directionalLight = new BABYLON.DirectionalLight(
             "DirectionalLight", 
             new BABYLON.Vector3(-1, -2, -1), 
@@ -78,7 +75,6 @@ export class RouletteWorld3D {
         )
         directionalLight.intensity = 0.5
         
-        // Устанавливаем ambient color для сцены
         this.scene.ambientColor = new BABYLON.Color3(0.3, 0.3, 0.3)
     }
 
@@ -190,18 +186,17 @@ export class RouletteWorld3D {
         }, INTERVAL_OF_MOVING)
     }
 
-    private setUpCamera(canvasReference: HTMLCanvasElement): BABYLON.ArcRotateCamera {
+    private setUpCamera(): BABYLON.ArcRotateCamera {
         const camera: BABYLON.ArcRotateCamera = new BABYLON.ArcRotateCamera(
             'Main camera',
             0,
             0,
             0,
-            new BABYLON.Vector3(DEFAULT_CAMERA_X, DEFAULT_CAMERA_Y, DEFAULT_CAMERA_Z),
+            CAMERA_POSITION_DEFAULT,
             this.scene
         )
         camera.checkCollisions = true
         camera.panningSensibility = 1
-        camera.attachControl(canvasReference)
 
         return camera
     }
@@ -245,44 +240,32 @@ export class RouletteWorld3D {
 
     private zoomInOnTheCamera(): void {
         this.camera.animations.length = 0
-        const positionAnimation = new BABYLON.Animation("camPosTo",
-            'position',
-            FRAME_RATE,
-            BABYLON.Animation.ANIMATIONTYPE_VECTOR3,
-            BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
 
         const keys1: Array<BABYLON.IAnimationKey> = [{
             frame: 0,
             value: this.camera.position
         }, {
             frame: FRAME_RATE * 32,
-            value: new BABYLON.Vector3(ZOOM_CAMERA_X, ZOOM_CAMERA_Y, ZOOM_CAMERA_Z)
+            value: CAMERA_POSITION_ZOOM
         }]
 
-        positionAnimation.setKeys(keys1);
-        this.camera.animations.push(positionAnimation)
+        this.cameraPositionAnimation.setKeys(keys1);
+        this.camera.animations.push(this.cameraPositionAnimation)
         this.scene.beginAnimation(this.camera, 0, FRAME_RATE * 32, false, 1)
     }
 
     public moveTheCameraAway(): void {
         this.camera.animations.length = 0
-        const positionAnimation = new BABYLON.Animation("camPosAway",
-            'position',
-            FRAME_RATE,
-            BABYLON.Animation.ANIMATIONTYPE_VECTOR3,
-            BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT)
-
         const keys1: Array<BABYLON.IAnimationKey> = [{
             frame: 0,
             value: this.camera.position
         }, {
             frame: FRAME_RATE * 16,
-            value: Math.random() <= 0.25 ? new BABYLON.Vector3(DEFAULT_CAMERA_X, DEFAULT_CAMERA_Y, DEFAULT_CAMERA_Z) :
-                new BABYLON.Vector3(RANDOM_CAMERA_X, RANDOM_CAMERA_Y, RANDOM_CAMERA_Z)
+            value: Math.random() <= 0.25 ? CAMERA_POSITION_DEFAULT :CAMERA_POSITION_NEAR
         }]
 
-        positionAnimation.setKeys(keys1);
-        this.camera.animations.push(positionAnimation)
+        this.cameraPositionAnimation.setKeys(keys1);
+        this.camera.animations.push(this.cameraPositionAnimation)
         this.scene.beginAnimation(this.camera, 0, FRAME_RATE * 16, false, 1)
     }
 }

@@ -1,6 +1,6 @@
-# Casino Roulette "Field of miracles" 🎯🎰
+# 3D Casino Roulette "Field of miracles" 🎯🎰
 
-### _Project made by [Slutski Mikita](https://github.com/user-of-github) in 2021_  
+### _Project made by [Me](https://github.com/user-of-github) in 2021_  
 ___  
 ### Attention [Comment from 2025 :)]  
 __This project was mad during my TypeScript internship at Evolution (Evolution Gaming TypeScript Bootcamp) in 2021. Now, in 2025, after 4 years, I have returned here to update libs' versions, migrate to Vite, restore working capacity for future demo of this my project__   
@@ -13,8 +13,9 @@ __What exactly changed__:
   - Babylon.js version from 4 to 8  
 - Linked React Compiler v1.0
 - Modified a bit loading screen (with a manual-start-game button, to force start background music if autoplay didn't work)  
-- Fixed a couple of moments, which for some reason stopped working in 2025  
-- The rest is not changed and stayed as it was in 2021
+- Fixed a couple of moments, which for some reason stopped working in 2025 
+- Some very small optimizations
+- Whole project (99% of code) is left the same as it was developed in 2021. I just made it work a little more stable in the realities of 2025
 ___  
 &nbsp;  
 _Welcome to free online European roulette !_  

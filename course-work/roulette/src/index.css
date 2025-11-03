@@ -31,3 +31,10 @@ body #root {
     width: 100% !important;
     overflow: hidden;
 }
+
+
+/* BABYLON INSPECTOR */
+
+#inspector-host, #scene-explorer-host {
+    z-index: 999999 !important;
+}

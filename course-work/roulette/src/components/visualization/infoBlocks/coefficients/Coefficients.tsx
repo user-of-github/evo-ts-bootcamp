@@ -32,8 +32,8 @@ export const Coefficients = observer((props: { data: SettingsState }): JSX.Eleme
                          ...transitionStyles[state]
                      }}>
                     {
-                        Array.from(MainGameState.COEFFICIENTS).map(value => (
-                            <div className={Style.item}>
+                        Object.entries(MainGameState.COEFFICIENTS).map(value => (
+                            <div className={Style.item} key={value[1]}>
                                 <span className={Style.itemSpan}>{value[0]}</span>
                                 <span className={`${Style.itemSpanValue} ${Style.coefficient}`}>{value[1]}</span>
                             </div>

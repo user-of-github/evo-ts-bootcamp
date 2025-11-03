@@ -1,22 +1,37 @@
-import {makeAutoObservable} from 'mobx'
+import { makeAutoObservable } from 'mobx'
 
-import {Board} from './Board'
-import {Chip} from './Chip'
-import {BaseGameState} from './BaseGameState'
-import {RouletteSpot, Spot, SpotColor, SpotValueType} from './Spot'
-import {HighlightedCellsOnHover} from './HighlightedCellsOnHover'
-import {ResultsHistoryItem} from './ResultsHistoryItem'
-import {RouletteWorld3D} from './RouletteWorld3D'
-import {Sound} from './Sound'
-import {SettingsState} from './SettingsState'
+import { Board } from './Board'
+import { Chip } from './Chip'
+import { BaseGameState } from './BaseGameState'
+import { RouletteSpot, Spot, SpotColor, SpotValueType } from './Spot'
+import { HighlightedCellsOnHover } from './HighlightedCellsOnHover'
+import { ResultsHistoryItem } from './ResultsHistoryItem'
+import { RouletteWorld3D } from './RouletteWorld3D'
+import { Sound } from './Sound'
+import { SettingsState } from './SettingsState'
 
-import {createBoardForBets} from '../utilities/boardCreator'
-import {getGameChips} from '../utilities/gameChipsGetter'
+import { createBoardForBets } from '../utilities/boardCreator'
+import { getGameChips } from '../utilities/gameChipsGetter'
 
 
 export class MainGameState {
     private static readonly DEFAULT_START_BALANCE: number = 5000
-    public static readonly COEFFICIENTS: Map<SpotValueType, number> = MainGameState.getGameCoefficients()
+    public static readonly COEFFICIENTS: Record<SpotValueType, number> = Object.freeze({
+        [SpotValueType.EXACT_NUMBER]: 36,
+        [SpotValueType.RED_ONLY]: 2,
+        [SpotValueType.BLACK_ONLY]: 2,
+        [SpotValueType.EVEN_ONLY]: 2,
+        [SpotValueType.ODD_ONLY]: 2,
+        [SpotValueType.FIRST_HALF]: 2,
+        [SpotValueType.SECOND_HALF]: 2,
+        [SpotValueType.FIRST_TWELVE]: 3,
+        [SpotValueType.SECOND_TWELVE]: 3,
+        [SpotValueType.THIRD_TWELVE]: 3,
+        [SpotValueType.FIRST_2_TO_1]: 3,
+        [SpotValueType.SECOND_2_TO_1]: 3,
+        [SpotValueType.THIRD_2_TO_1]: 3,
+    })
+
     private readonly spotsOnRoulette: Array<RouletteSpot>
 
     public board: Board
@@ -59,7 +74,7 @@ export class MainGameState {
             showLoadingScreen: true
         }
         this.startUpdatingTime()
-        makeAutoObservable(this, {}, {deep: true})
+        makeAutoObservable(this, {}, { deep: true })
 
         this.spotsOnRoulette = this.formRouletteSpotsArray()
         this.resultsHistory = Array<ResultsHistoryItem>()
@@ -94,7 +109,7 @@ export class MainGameState {
         const response: Array<RouletteSpot> = Array<RouletteSpot>(37)
         this.board.spots.forEach((spot: Spot) => {
             if (spot.type === SpotValueType.EXACT_NUMBER)
-                response[spot.value as number] = {color: spot.color, value: spot.value as number}
+                response[spot.value as number] = { color: spot.color, value: spot.value as number }
         })
 
         return response
@@ -148,7 +163,7 @@ export class MainGameState {
 
             onlySpotsWithBets.forEach((spot: Spot) => {
                 if (this.checkIfBetWon(spot, rouletteResult))
-                    totalWin += spot.totalBet * MainGameState.COEFFICIENTS.get(spot.type)!
+                    totalWin += spot.totalBet * MainGameState.COEFFICIENTS[spot.type]
             })
 
 
@@ -200,24 +215,6 @@ export class MainGameState {
         this.currentStage = BaseGameState.ROULETTE_SPINNING
 
         this.wayTo3DWorld!.startDisperse()
-    }
-
-    private static getGameCoefficients(): Map<SpotValueType, number> {
-        return new Map<SpotValueType, number>([
-            [SpotValueType.EXACT_NUMBER, 36],
-            [SpotValueType.RED_ONLY, 2],
-            [SpotValueType.BLACK_ONLY, 2],
-            [SpotValueType.EVEN_ONLY, 2],
-            [SpotValueType.ODD_ONLY, 2],
-            [SpotValueType.FIRST_HALF, 2],
-            [SpotValueType.SECOND_HALF, 2],
-            [SpotValueType.FIRST_TWELVE, 3],
-            [SpotValueType.SECOND_TWELVE, 3],
-            [SpotValueType.THIRD_TWELVE, 3],
-            [SpotValueType.FIRST_2_TO_1, 3],
-            [SpotValueType.SECOND_2_TO_1, 3],
-            [SpotValueType.THIRD_2_TO_1, 3],
-        ])
     }
 
     public changeSoundState(): void {

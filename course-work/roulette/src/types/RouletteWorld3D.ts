@@ -60,22 +60,9 @@ export class RouletteWorld3D {
     }
 
       private setupLighting(): void {
-        const hemisphericLight = new BABYLON.HemisphericLight(
-            "HemiLight", 
-            new BABYLON.Vector3(0, 1, 0), 
-            this.scene
-        )
-        hemisphericLight.intensity = 0.7
-        hemisphericLight.specular = new BABYLON.Color3(0.5, 0.5, 0.5)
-        
-        const directionalLight = new BABYLON.DirectionalLight(
-            "DirectionalLight", 
-            new BABYLON.Vector3(-1, -2, -1), 
-            this.scene
-        )
-        directionalLight.intensity = 0.5
-        
-        this.scene.ambientColor = new BABYLON.Color3(0.3, 0.3, 0.3)
+        this.scene.createDefaultLight()
+        this.scene.environmentIntensity = 1.6
+        this.scene.lights[0].intensity = 0.85
     }
 
     private loadMeshes(): void {
